@@ -24,7 +24,7 @@ import { ChevronLeft, Search } from 'lucide-react';
 const AdminClients = () => {
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   const filteredProfiles = mockProfiles.filter((profile) => {
     const query = searchQuery.toLowerCase().trim();
     if (!query) return true;
@@ -43,9 +43,9 @@ const AdminClients = () => {
 
   return (
     <AdminLayout>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-display text-3xl">מאגר לקוחות</h1>
-        <div className="relative w-72">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <h1 className="font-display text-2xl md:text-3xl">מאגר לקוחות</h1>
+        <div className="relative w-full sm:w-72">
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="חיפוש לפי שם או טלפון..."
@@ -56,7 +56,59 @@ const AdminClients = () => {
         </div>
       </div>
 
-      <Card>
+      {/* Mobile cards */}
+      <div className="md:hidden space-y-3">
+        {filteredProfiles.length === 0 && (
+          <p className="text-center text-muted-foreground py-8">לא נמצאו לקוחות</p>
+        )}
+        {filteredProfiles.map((profile) => {
+          const punchCard = mockPunchCards.find(
+            (pc) => pc.user_id === profile.id && pc.is_active && pc.entries_remaining > 0
+          );
+          const totalPaid = mockPayments
+            .filter((p) => p.user_id === profile.id)
+            .reduce((sum, p) => sum + p.amount, 0);
+          const attendanceCount = mockAttendance.filter(
+            (a) => a.user_id === profile.id && a.attended
+          ).length;
+
+          return (
+            <Card key={profile.id}>
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <p className="font-semibold text-base">{profile.full_name}</p>
+                    <p className="text-sm text-muted-foreground">{profile.phone || '—'}</p>
+                    <p className="text-xs text-muted-foreground">{profile.email}</p>
+                  </div>
+                  {punchCard ? (
+                    <Badge className="bg-success text-success-foreground shrink-0">
+                      {punchCard.entries_remaining} כניסות
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline" className="text-muted-foreground shrink-0">אין כרטיסיה</Badge>
+                  )}
+                </div>
+                <div className="flex items-center justify-between pt-3 border-t">
+                  <span className="font-bold text-success">{totalPaid.toLocaleString()} ₪</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedClientId(profile.id)}
+                    className="text-primary"
+                  >
+                    {attendanceCount} שיעורים
+                    <ChevronLeft className="h-4 w-4 mr-1" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Desktop table */}
+      <Card className="hidden md:block">
         <CardHeader>
           <CardTitle className="font-display">
             {searchQuery ? `תוצאות חיפוש (${filteredProfiles.length})` : `כל הלקוחות (${mockProfiles.length})`}
@@ -123,7 +175,7 @@ const AdminClients = () => {
       </Card>
 
       <Dialog open={!!selectedClientId} onOpenChange={() => setSelectedClientId(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="w-[95vw] max-w-2xl">
           <DialogHeader>
             <DialogTitle className="font-display text-xl">
               היסטוריית שיעורים - {selectedClient?.full_name}
@@ -131,30 +183,32 @@ const AdminClients = () => {
           </DialogHeader>
           <div className="space-y-4">
             {attendedClasses.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-right">שם השיעור</TableHead>
-                    <TableHead className="text-right">תאריך</TableHead>
-                    <TableHead className="text-right">מיקום</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {attendedClasses.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="font-medium">{item.class?.name || '—'}</TableCell>
-                      <TableCell>
-                        {item.class ? new Date(item.class.date).toLocaleDateString('he-IL', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        }) : '—'}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">{item.class?.location || '—'}</TableCell>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-right">שם השיעור</TableHead>
+                      <TableHead className="text-right">תאריך</TableHead>
+                      <TableHead className="text-right hidden sm:table-cell">מיקום</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {attendedClasses.map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell className="font-medium">{item.class?.name || '—'}</TableCell>
+                        <TableCell>
+                          {item.class ? new Date(item.class.date).toLocaleDateString('he-IL', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric',
+                          }) : '—'}
+                        </TableCell>
+                        <TableCell className="text-muted-foreground hidden sm:table-cell">{item.class?.location || '—'}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             ) : (
               <div className="text-center py-8 text-muted-foreground">
                 אין רישומי השתתפות עדיין
