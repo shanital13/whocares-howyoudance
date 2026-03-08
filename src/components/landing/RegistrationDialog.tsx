@@ -69,18 +69,6 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
             <p className="font-display text-xl text-foreground mb-2">נרשמת בהצלחה! 💃</p>
             <p className="text-muted-foreground">נתראה בשיעור</p>
           </div>
-        ) : activePunchCard ? (
-          <div className="space-y-4 py-4">
-            <div className="p-4 rounded-lg bg-success/10 border border-success/20">
-              <p className="font-bold text-success">יש לך כרטיסיה פעילה! 🎫</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                נשארו {activePunchCard.entries_remaining} כניסות
-              </p>
-            </div>
-            <Button className="w-full rounded-full font-bold" onClick={() => handleRegister('punch_card_existing')}>
-              הרשמה עם הכרטיסיה
-            </Button>
-          </div>
         ) : (
           <div className="space-y-4 py-4">
             <p className="text-muted-foreground text-center">בחרי סוג כניסה:</p>
@@ -97,14 +85,17 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               className="w-full h-auto py-4 flex flex-col items-center gap-1 rounded-xl"
               onClick={() => handleRegister('new_punch_card')}
             >
-              <span className="font-bold text-lg">{PUNCH_CARD_ENTRIES} כניסות</span>
-              <Badge className="bg-accent text-accent-foreground">חוסכת!</Badge>
+              <span className="font-bold text-lg">אני בכרטיסיה 🎫</span>
               <span className="font-display text-xl">{PUNCH_CARD_PRICE} ฿</span>
-              <span className="text-xs text-primary-foreground/80">תשלום במזומן בשיעור</span>
+              <span className="text-xs text-primary-foreground/80">{PUNCH_CARD_ENTRIES} כניסות | תשלום במזומן</span>
+              {activePunchCard && (
+                <Badge className="bg-success text-success-foreground mt-1">
+                  יש לך כרטיסיה פעילה — נשארו {activePunchCard.entries_remaining} כניסות
+                </Badge>
+              )}
             </Button>
           </div>
         )}
-      </DialogContent>
     </Dialog>
   );
 };
