@@ -1,9 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
 
 const HeroSection = () => {
-  const { user, signInWithGoogle } = useAuth();
-
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Gradient background */}
@@ -27,15 +24,14 @@ const HeroSection = () => {
         <p className="text-lg text-primary-foreground/70 mb-10 font-light">
           בואי לרקוד. בואי להיות. בלי שיפוטיות, בלי ציפיות.
         </p>
-        {!user && (
+        <a href="#classes">
           <Button
             size="lg"
-            onClick={signInWithGoogle}
             className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-10 py-6 font-bold rounded-full shadow-xl"
           >
             הצטרפי עכשיו 💃
           </Button>
-        )}
+        </a>
         <a href="#classes" className="block mt-8 text-primary-foreground/60 hover:text-primary-foreground transition-colors">
           ↓ לשיעורים הקרובים
         </a>
