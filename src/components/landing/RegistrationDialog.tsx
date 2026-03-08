@@ -96,6 +96,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
             </Button>
           </div>
         )}
+      </DialogContent>
     </Dialog>
   );
 };
