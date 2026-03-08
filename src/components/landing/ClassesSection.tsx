@@ -20,10 +20,6 @@ const ClassesSection = () => {
   const [selectedClass, setSelectedClass] = useState<DanceClass | null>(null);
 
   const handleRegister = (danceClass: DanceClass) => {
-    if (!user) {
-      signInWithGoogle();
-      return;
-    }
     setSelectedClass(danceClass);
   };
 
