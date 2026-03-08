@@ -3,6 +3,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Dialog,
   DialogContent,
@@ -18,10 +19,21 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { mockProfiles, mockPunchCards, mockPayments, mockAttendance, mockClasses } from '@/lib/mock-data';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Search } from 'lucide-react';
 
 const AdminClients = () => {
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const filteredProfiles = mockProfiles.filter((profile) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true;
+    return (
+      profile.full_name.toLowerCase().includes(query) ||
+      (profile.phone && profile.phone.includes(query))
+    );
+  });
+
   const selectedClient = mockProfiles.find((p) => p.id === selectedClientId);
   const clientAttendance = mockAttendance.filter((a) => a.user_id === selectedClientId && a.attended);
   const attendedClasses = clientAttendance.map((a) => {
@@ -31,7 +43,18 @@ const AdminClients = () => {
 
   return (
     <AdminLayout>
-      <h1 className="font-display text-3xl mb-8">מאגר לקוחות</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="font-display text-3xl">מאגר לקוחות</h1>
+        <div className="relative w-72">
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="חיפוש לפי שם או טלפון..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pr-10"
+          />
+        </div>
+      </div>
 
       <Card>
         <CardHeader>
