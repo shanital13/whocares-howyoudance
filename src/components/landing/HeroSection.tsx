@@ -1,9 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
 
 const HeroSection = () => {
-  const { user, signInWithGoogle } = useAuth();
-
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Gradient background */}
