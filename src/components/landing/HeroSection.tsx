@@ -1,27 +1,24 @@
 import { Button } from '@/components/ui/button';
+import heroImage from '@/assets/hero-image.jpeg';
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-      {/* Gradient background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'linear-gradient(135deg, hsl(320 70% 45% / 0.85), hsl(260 60% 50% / 0.8), hsl(200 70% 40% / 0.85), hsl(160 60% 40% / 0.8))',
-        }}
-      />
-      {/* Decorative blobs */}
-      <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-accent/20 blur-3xl animate-float" />
-      <div className="absolute bottom-20 left-10 w-80 h-80 rounded-full bg-primary/20 blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="למי אכפת איך את רוקדת?"
+          className="w-full h-full object-cover object-top"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+      </div>
 
-      <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-        <h1 className="font-display text-5xl md:text-7xl text-primary-foreground mb-6 leading-tight">
-          למי אכפת איך את רוקדת?
-        </h1>
-        <p className="text-xl md:text-2xl text-primary-foreground/90 mb-4 font-light leading-relaxed">
+      <div className="relative z-10 text-center px-6 max-w-3xl mx-auto mt-[30vh]">
+        <p className="text-xl md:text-2xl text-primary-foreground/90 mb-4 font-light leading-relaxed drop-shadow-lg">
           מסע של התפתחות, שחרור בושה וחסמים דרך תנועה
         </p>
-        <p className="text-lg text-primary-foreground/70 mb-10 font-light">
+        <p className="text-lg text-primary-foreground/70 mb-10 font-light drop-shadow-md">
           בואי לרקוד. בואי להיות. בלי שיפוטיות, בלי ציפיות.
         </p>
         <a href="#classes">
@@ -32,7 +29,7 @@ const HeroSection = () => {
             הצטרפי עכשיו 💃
           </Button>
         </a>
-        <a href="#classes" className="block mt-8 text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+        <a href="#classes" className="block mt-8 text-primary-foreground/60 hover:text-primary-foreground transition-colors drop-shadow-md">
           ↓ לשיעורים הקרובים
         </a>
       </div>
