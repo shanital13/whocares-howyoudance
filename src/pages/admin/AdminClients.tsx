@@ -58,7 +58,9 @@ const AdminClients = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-display">כל הלקוחות ({mockProfiles.length})</CardTitle>
+          <CardTitle className="font-display">
+            {searchQuery ? `תוצאות חיפוש (${filteredProfiles.length})` : `כל הלקוחות (${mockProfiles.length})`}
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
