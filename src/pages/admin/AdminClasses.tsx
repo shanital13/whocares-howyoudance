@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/table';
 import { mockClasses } from '@/lib/mock-data';
 import { DanceClass, LEVEL_LABELS, ClassLevel } from '@/lib/types';
-import { Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { Plus, Edit, Trash2, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminClasses = () => {
@@ -121,9 +121,9 @@ const AdminClasses = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" asChild>
+                      <Button variant="ghost" size="icon" asChild title="רשימת משתתפות">
                         <Link to={`/admin/class/${cls.id}`}>
-                          <Eye className="h-4 w-4" />
+                          <Users className="h-4 w-4" />
                         </Link>
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => openEdit(cls)}>

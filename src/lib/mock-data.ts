@@ -49,11 +49,11 @@ export const mockClasses: DanceClass[] = [
 ];
 
 export const mockProfiles: Profile[] = [
-  { id: 'u1', full_name: 'נועה כהן', email: 'noa@example.com', created_at: '2026-01-15' },
-  { id: 'u2', full_name: 'מיכל לוי', email: 'michal@example.com', created_at: '2026-01-20' },
-  { id: 'u3', full_name: 'שירה אברהם', email: 'shira@example.com', created_at: '2026-02-01' },
-  { id: 'u4', full_name: 'יעל דוד', email: 'yael@example.com', created_at: '2026-02-10' },
-  { id: 'u5', full_name: 'רונית מזרחי', email: 'ronit@example.com', created_at: '2026-02-20' },
+  { id: 'u1', full_name: 'נועה כהן', email: 'noa@example.com', phone: '052-1234567', created_at: '2026-01-15' },
+  { id: 'u2', full_name: 'מיכל לוי', email: 'michal@example.com', phone: '054-9876543', created_at: '2026-01-20' },
+  { id: 'u3', full_name: 'שירה אברהם', email: 'shira@example.com', phone: '050-5551234', created_at: '2026-02-01' },
+  { id: 'u4', full_name: 'יעל דוד', email: 'yael@example.com', phone: '053-7778899', created_at: '2026-02-10' },
+  { id: 'u5', full_name: 'רונית מזרחי', email: 'ronit@example.com', phone: '058-1112233', created_at: '2026-02-20' },
 ];
 
 export const mockPunchCards: PunchCard[] = [
