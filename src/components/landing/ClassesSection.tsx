@@ -1,10 +1,9 @@
-import { Calendar, MapPin, Clock, Users } from 'lucide-react';
+import { Calendar, MapPin, Clock } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { mockClasses } from '@/lib/mock-data';
 import { LEVEL_LABELS, type DanceClass } from '@/lib/types';
-import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
 import RegistrationDialog from './RegistrationDialog';
 
@@ -16,14 +15,9 @@ const levelColors: Record<string, string> = {
 };
 
 const ClassesSection = () => {
-  const { user, signInWithGoogle } = useAuth();
   const [selectedClass, setSelectedClass] = useState<DanceClass | null>(null);
 
   const handleRegister = (danceClass: DanceClass) => {
-    if (!user) {
-      signInWithGoogle();
-      return;
-    }
     setSelectedClass(danceClass);
   };
 
@@ -76,7 +70,7 @@ const ClassesSection = () => {
                   className="w-full mt-4 rounded-full font-bold"
                   onClick={() => handleRegister(cls)}
                 >
-                  {user ? 'הרשמה לשיעור' : 'התחברי להרשמה'}
+                  אני מגיעה! 💃
                 </Button>
               </CardContent>
             </Card>
