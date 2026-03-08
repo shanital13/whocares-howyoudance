@@ -53,6 +53,8 @@
     --gradient-primary: linear-gradient(135deg, hsl(320 70% 50%), hsl(280 60% 55%));
     --gradient-hero: linear-gradient(135deg, hsl(320 70% 45% / 0.9), hsl(200 70% 40% / 0.9), hsl(160 60% 40% / 0.9));
     --gradient-card: linear-gradient(160deg, hsl(320 70% 50% / 0.05), hsl(175 60% 40% / 0.05));
+    --gradient-warm: linear-gradient(135deg, hsl(320 70% 50% / 0.08), hsl(45 90% 55% / 0.08));
+    --gradient-cool: linear-gradient(135deg, hsl(200 70% 50% / 0.08), hsl(175 60% 40% / 0.08));
   }
 
   .dark {
@@ -85,9 +87,24 @@
 
   html {
     direction: rtl;
+    scroll-behavior: smooth;
   }
 
   body {
     @apply bg-background text-foreground font-body;
+  }
+}
+
+@layer utilities {
+  .story-link * {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .glass {
+    @apply bg-background/60 backdrop-blur-xl border border-border/50;
   }
 }
