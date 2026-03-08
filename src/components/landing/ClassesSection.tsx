@@ -70,7 +70,7 @@ const ClassesSection = () => {
                   className="w-full mt-4 rounded-full font-bold"
                   onClick={() => handleRegister(cls)}
                 >
-                  {user ? 'הרשמה לשיעור' : 'התחברי להרשמה'}
+                  אני מגיעה! 💃
                 </Button>
               </CardContent>
             </Card>
