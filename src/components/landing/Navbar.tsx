@@ -7,20 +7,23 @@ const Navbar = () => {
   const { user, isAdmin, signInWithGoogle, signOut } = useAuth();
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 bg-background/80 backdrop-blur-md border-b">
+    <nav className="fixed top-0 inset-x-0 z-50 glass">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="font-display text-lg text-primary">
           למי אכפת איך את רוקדת?
         </Link>
-        <div className="flex items-center gap-3">
-          <a href="#classes" className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
-            שיעורים
+        <div className="flex items-center gap-4">
+          <a href="#classes" className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block story-link">
+            <span>שיעורים</span>
           </a>
-          <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
-            עליי
+          <a href="#about" className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block story-link">
+            <span>עליי</span>
           </a>
-          <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
-            צרי קשר
+          <a href="#gallery" className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block story-link">
+            <span>גלריה</span>
+          </a>
+          <a href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block story-link">
+            <span>צרי קשר</span>
           </a>
           {user ? (
             <div className="flex items-center gap-2">
