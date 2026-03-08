@@ -76,7 +76,7 @@ const AdminClients = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockProfiles.map((profile) => {
+              {filteredProfiles.map((profile) => {
                 const punchCard = mockPunchCards.find(
                   (pc) => pc.user_id === profile.id && pc.is_active && pc.entries_remaining > 0
                 );
