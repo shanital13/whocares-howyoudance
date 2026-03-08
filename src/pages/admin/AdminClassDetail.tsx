@@ -24,42 +24,27 @@ const AdminClassDetail = () => {
 
   const [attendanceMap, setAttendanceMap] = useState<Record<string, boolean>>(() => {
     const map: Record<string, boolean> = {};
-    mockAttendance
-      .filter((a) => a.class_id === id)
-      .forEach((a) => {
-        map[a.user_id] = a.attended;
-      });
+    mockAttendance.filter((a) => a.class_id === id).forEach((a) => { map[a.user_id] = a.attended; });
     return map;
   });
 
   const [paymentMap, setPaymentMap] = useState<Record<string, string>>({});
-
   const [entryTypeMap, setEntryTypeMap] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
-    registrations.forEach((r) => {
-      map[r.user_id] = r.entry_type;
-    });
+    registrations.forEach((r) => { map[r.user_id] = r.entry_type; });
     return map;
   });
 
   if (!danceClass) {
-    return (
-      <AdminLayout>
-        <p className="text-muted-foreground">שיעור לא נמצא</p>
-      </AdminLayout>
-    );
+    return <AdminLayout><p className="text-muted-foreground">שיעור לא נמצא</p></AdminLayout>;
   }
 
   const toggleAttendance = (userId: string) => {
     const newVal = !attendanceMap[userId];
     setAttendanceMap((prev) => ({ ...prev, [userId]: newVal }));
-
     const punchCard = mockPunchCards.find((pc) => pc.user_id === userId && pc.is_active);
     if (newVal && punchCard && punchCard.entries_remaining > 0) {
-      toast({
-        title: 'ניקוב כרטיסיה',
-        description: `נוקבה כניסה מהכרטיסיה. נשארו ${punchCard.entries_remaining - 1} כניסות`,
-      });
+      toast({ title: 'ניקוב כרטיסיה', description: `נשארו ${punchCard.entries_remaining - 1} כניסות` });
     }
   };
 
@@ -75,22 +60,83 @@ const AdminClassDetail = () => {
 
   return (
     <AdminLayout>
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="font-display text-3xl">{danceClass.name}</h1>
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-1">
+          <h1 className="font-display text-2xl md:text-3xl">{danceClass.name}</h1>
           <Badge variant="outline">{LEVEL_LABELS[danceClass.level]}</Badge>
         </div>
-        <p className="text-muted-foreground">
-          {new Date(danceClass.date).toLocaleDateString('he-IL', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-          })}{' '}
-          | {danceClass.time} | {danceClass.location}
+        <p className="text-muted-foreground text-sm">
+          {new Date(danceClass.date).toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })}
+          {' '} | {danceClass.time} | {danceClass.location}
         </p>
       </div>
 
-      <Card>
+      {/* Mobile cards */}
+      <div className="md:hidden space-y-3">
+        <p className="text-sm font-medium text-muted-foreground">נרשמות ({registrations.length})</p>
+        {registrations.map((reg) => {
+          const profile = mockProfiles.find((p) => p.id === reg.user_id);
+          const currentEntryType = entryTypeMap[reg.user_id] || reg.entry_type;
+          const punchCard = mockPunchCards.find((pc) => pc.user_id === reg.user_id && pc.is_active && pc.entries_remaining > 0);
+          const hasPunchCard = !!punchCard;
+          const attended = attendanceMap[reg.user_id] || false;
+
+          return (
+            <Card key={reg.id}>
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="font-semibold">{profile?.full_name}</p>
+                    <p className="text-xs text-muted-foreground">{profile?.phone || '—'}</p>
+                  </div>
+                  <button
+                    onClick={() => toggleAttendance(reg.user_id)}
+                    className={`flex items-center justify-center w-8 h-8 rounded border-2 transition-colors ${
+                      attended
+                        ? 'bg-primary border-primary text-primary-foreground'
+                        : 'bg-background border-muted-foreground/30 hover:border-muted-foreground/50'
+                    }`}
+                  >
+                    {attended ? <Check className="h-4 w-4" /> : <X className="h-4 w-4 text-muted-foreground/30" />}
+                  </button>
+                </div>
+                <div className="flex gap-2">
+                  <Select value={currentEntryType} onValueChange={(v) => changeEntryType(reg.user_id, v)}>
+                    <SelectTrigger className="flex-1 h-8 text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="punch_card">כרטיסיה</SelectItem>
+                      <SelectItem value="single">חד-פעמי</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {hasPunchCard ? (
+                    <Badge className="bg-success text-success-foreground shrink-0">
+                      {punchCard.entries_remaining} כניסות
+                    </Badge>
+                  ) : (
+                    <Select value={paymentMap[reg.user_id] || ''} onValueChange={(v) => markPayment(reg.user_id, v)}>
+                      <SelectTrigger className="flex-1 h-8 text-xs">
+                        <SelectValue placeholder="תשלום" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value={SINGLE_PRICE.toString()}>{SINGLE_PRICE} ₪</SelectItem>
+                        <SelectItem value={PUNCH_CARD_PRICE.toString()}>{PUNCH_CARD_PRICE} ₪</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+        {registrations.length === 0 && (
+          <p className="text-center text-muted-foreground py-8">אין נרשמות לשיעור זה עדיין</p>
+        )}
+      </div>
+
+      {/* Desktop table */}
+      <Card className="hidden md:block">
         <CardHeader>
           <CardTitle className="font-display">נרשמות לשיעור ({registrations.length})</CardTitle>
         </CardHeader>
@@ -109,9 +155,7 @@ const AdminClassDetail = () => {
               {registrations.map((reg) => {
                 const profile = mockProfiles.find((p) => p.id === reg.user_id);
                 const currentEntryType = entryTypeMap[reg.user_id] || reg.entry_type;
-                const punchCard = mockPunchCards.find(
-                  (pc) => pc.user_id === reg.user_id && pc.is_active && pc.entries_remaining > 0
-                );
+                const punchCard = mockPunchCards.find((pc) => pc.user_id === reg.user_id && pc.is_active && pc.entries_remaining > 0);
                 const hasPunchCard = !!punchCard;
                 const attended = attendanceMap[reg.user_id] || false;
 
@@ -124,13 +168,8 @@ const AdminClassDetail = () => {
                       </div>
                     </TableCell>
                     <TableCell className="align-middle">
-                      <Select
-                        value={currentEntryType}
-                        onValueChange={(v) => changeEntryType(reg.user_id, v)}
-                      >
-                        <SelectTrigger className="w-32 h-9">
-                          <SelectValue />
-                        </SelectTrigger>
+                      <Select value={currentEntryType} onValueChange={(v) => changeEntryType(reg.user_id, v)}>
+                        <SelectTrigger className="w-32 h-9"><SelectValue /></SelectTrigger>
                         <SelectContent>
                           <SelectItem value="punch_card">כרטיסיה</SelectItem>
                           <SelectItem value="single">חד-פעמי</SelectItem>
@@ -139,9 +178,7 @@ const AdminClassDetail = () => {
                     </TableCell>
                     <TableCell className="align-middle">
                       {hasPunchCard ? (
-                        <Badge className="bg-success text-success-foreground">
-                          פעילה ({punchCard.entries_remaining} כניסות)
-                        </Badge>
+                        <Badge className="bg-success text-success-foreground">פעילה ({punchCard.entries_remaining} כניסות)</Badge>
                       ) : (
                         <Badge variant="outline" className="text-muted-foreground">אין</Badge>
                       )}
@@ -162,20 +199,11 @@ const AdminClassDetail = () => {
                       {hasPunchCard && currentEntryType === 'punch_card' ? (
                         <span className="text-sm text-success font-medium">כרטיסיה פעילה ✓</span>
                       ) : (
-                        <Select
-                          value={paymentMap[reg.user_id] || ''}
-                          onValueChange={(v) => markPayment(reg.user_id, v)}
-                        >
-                          <SelectTrigger className="w-40 h-9">
-                            <SelectValue placeholder="סמן תשלום" />
-                          </SelectTrigger>
+                        <Select value={paymentMap[reg.user_id] || ''} onValueChange={(v) => markPayment(reg.user_id, v)}>
+                          <SelectTrigger className="w-40 h-9"><SelectValue placeholder="סמן תשלום" /></SelectTrigger>
                           <SelectContent>
-                            <SelectItem value={SINGLE_PRICE.toString()}>
-                              {SINGLE_PRICE} ₪ (חד-פעמי)
-                            </SelectItem>
-                            <SelectItem value={PUNCH_CARD_PRICE.toString()}>
-                              {PUNCH_CARD_PRICE} ₪ (כרטיסיה)
-                            </SelectItem>
+                            <SelectItem value={SINGLE_PRICE.toString()}>{SINGLE_PRICE} ₪ (חד-פעמי)</SelectItem>
+                            <SelectItem value={PUNCH_CARD_PRICE.toString()}>{PUNCH_CARD_PRICE} ₪ (כרטיסיה)</SelectItem>
                           </SelectContent>
                         </Select>
                       )}
