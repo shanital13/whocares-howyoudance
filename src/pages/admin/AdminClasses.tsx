@@ -88,11 +88,30 @@ const AdminClasses = () => {
     <AdminLayout>
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-display text-2xl md:text-3xl">ניהול שיעורים</h1>
-        <Button onClick={openNew} className="rounded-full" size="sm">
-          <Plus className="h-4 w-4 ml-1" />
-          שיעור חדש
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => setLevelDialogOpen(true)} variant="outline" size="sm">
+            <Tag className="h-4 w-4 ml-1" />
+            רמות
+          </Button>
+          <Button onClick={openNew} className="rounded-full" size="sm">
+            <Plus className="h-4 w-4 ml-1" />
+            שיעור חדש
+          </Button>
+        </div>
       </div>
+
+      {Object.keys(customLevels).length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {Object.entries(customLevels).map(([key, label]) => (
+            <Badge key={key} variant="secondary" className="gap-2">
+              {label}
+              <button onClick={() => handleDeleteLevel(key)} className="hover:text-destructive">
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          ))}
+        </div>
+      )}
 
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
