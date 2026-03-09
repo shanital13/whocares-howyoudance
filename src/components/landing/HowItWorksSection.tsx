@@ -5,43 +5,25 @@ const steps = [
   {
     icon: UserPlus,
     title: 'נרשמות',
-    description: 'בוחרות שיעור ומשריינות מקום.',
-    position: 'md:right-[8%] md:top-[8%] right-1/2 translate-x-1/2 md:translate-x-0',
+    description: 'בוחרות שיעור\nומשריינות מקום.',
+    desktopPosition: 'md:right-[10%] md:top-[15%]',
+    mobileOrder: 1,
   },
   {
     icon: MapPin,
     title: 'מגיעות',
-    description: 'אין צורך בניסיון.',
-    position: 'md:right-[38%] md:top-[42%] right-1/2 translate-x-1/2 md:translate-x-0',
+    description: 'אין צורך בניסיון.\nפשוט באות.',
+    desktopPosition: 'md:right-[40%] md:top-[55%]',
+    mobileOrder: 2,
   },
   {
     icon: Music,
     title: 'רוקדות',
     description: 'מוזיקה, תנועה ושחרור.',
-    position: 'md:right-[70%] md:top-[16%] right-1/2 translate-x-1/2 md:translate-x-0',
+    desktopPosition: 'md:right-[72%] md:top-[18%]',
+    mobileOrder: 3,
   },
 ];
-
-const footsteps = [
-  { top: '16%', right: '14%', rotate: '-16deg', tone: 'primary' },
-  { top: '26%', right: '24%', rotate: '12deg', tone: 'secondary' },
-  { top: '40%', right: '34%', rotate: '-14deg', tone: 'primary' },
-  { top: '52%', right: '44%', rotate: '14deg', tone: 'secondary' },
-  { top: '36%', right: '56%', rotate: '-10deg', tone: 'primary' },
-  { top: '24%', right: '68%', rotate: '16deg', tone: 'secondary' },
-  { top: '18%', right: '80%', rotate: '-12deg', tone: 'primary' },
-];
-
-const FootstepMark = ({ tone }: { tone: 'primary' | 'secondary' }) => {
-  const toneClass = tone === 'primary' ? 'bg-primary/35' : 'bg-secondary/35';
-
-  return (
-    <div className="flex items-end gap-2 animate-fade-in">
-      <div className={`h-9 w-4 rounded-full ${toneClass}`} />
-      <div className={`h-11 w-4 rounded-full ${toneClass}`} />
-    </div>
-  );
-};
 
 const HowItWorksSection = () => {
   const scrollToClasses = () => {
@@ -49,84 +31,206 @@ const HowItWorksSection = () => {
   };
 
   return (
-    <section id="how-it-works" className="relative overflow-hidden bg-background px-6 py-24 md:py-28">
-      <div className="pointer-events-none absolute inset-0 opacity-50">
-        <div className="absolute -right-10 top-12 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute left-[8%] top-[42%] h-72 w-72 rounded-full bg-secondary/10 blur-3xl" />
-        <div className="absolute bottom-10 right-[35%] h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
+    <section id="how-it-works" className="relative overflow-hidden bg-background px-6 py-20 md:py-28">
+      {/* Background blobs */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-primary/8 blur-3xl" />
+        <div className="absolute left-[5%] top-[50%] h-80 w-80 rounded-full bg-secondary/8 blur-3xl" />
+        <div className="absolute bottom-0 right-[30%] h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl">
-        <h2 className="mb-16 text-center text-5xl md:text-6xl text-foreground">איך זה עובד</h2>
+      {/* Subtle motion lines decoration */}
+      <svg className="pointer-events-none absolute top-20 right-[15%] w-20 h-20 text-primary/15 hidden md:block" viewBox="0 0 100 100" fill="none">
+        <path d="M20 80 Q50 30 80 60" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      </svg>
+      <svg className="pointer-events-none absolute bottom-32 left-[12%] w-16 h-16 text-secondary/15 hidden md:block" viewBox="0 0 100 100" fill="none">
+        <path d="M30 20 Q60 50 40 80" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      </svg>
 
-        <div className="relative min-h-[620px] md:min-h-[460px]">
+      <div className="relative z-10 mx-auto max-w-6xl">
+        {/* Title - NEHAMA font, broken into two lines */}
+        <motion.div 
+          className="mb-16 md:mb-20 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="font-nehama text-5xl md:text-7xl text-foreground leading-tight">
+            איך זה
+            <br />
+            <span className="text-primary">עובד</span>
+          </h2>
+        </motion.div>
+
+        {/* Desktop curved path layout */}
+        <div className="relative hidden md:block" style={{ minHeight: '520px' }}>
+          {/* Curved dance path SVG */}
           <svg
             className="pointer-events-none absolute inset-0 h-full w-full"
-            viewBox="0 0 1000 460"
-            preserveAspectRatio="none"
+            viewBox="0 0 1000 520"
+            preserveAspectRatio="xMidYMid meet"
             aria-hidden="true"
           >
+            {/* Main dance trail - organic curve */}
             <path
-              d="M 920 92 C 810 20, 690 250, 560 212 C 420 172, 325 365, 190 160"
-              stroke="hsl(var(--secondary))"
-              strokeWidth="6"
+              d="M 180 140 C 280 80, 350 320, 480 300 C 600 280, 680 140, 820 180"
+              stroke="hsl(var(--secondary) / 0.2)"
+              strokeWidth="8"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray="4 14"
-              opacity="0.26"
             />
-            <path
-              d="M 900 112 C 782 44, 676 258, 540 228 C 404 198, 302 380, 172 182"
-              stroke="hsl(var(--primary))"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-              opacity="0.32"
-            />
+            
+            {/* Curved arrow from step 1 to step 2 */}
+            <motion.g
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <path
+                d="M 240 200 C 290 260, 340 340, 420 320"
+                stroke="hsl(245 100% 70%)"
+                strokeWidth="4"
+                fill="none"
+                strokeLinecap="round"
+                strokeDasharray="12 8"
+              />
+              {/* Arrow head */}
+              <path
+                d="M 408 330 L 420 320 L 412 308"
+                stroke="hsl(245 100% 70%)"
+                strokeWidth="4"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </motion.g>
+
+            {/* Curved arrow from step 2 to step 3 */}
+            <motion.g
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <path
+                d="M 560 300 C 620 280, 700 200, 760 190"
+                stroke="hsl(245 100% 70%)"
+                strokeWidth="4"
+                fill="none"
+                strokeLinecap="round"
+                strokeDasharray="12 8"
+              />
+              {/* Arrow head */}
+              <path
+                d="M 750 202 L 760 190 L 748 182"
+                stroke="hsl(245 100% 70%)"
+                strokeWidth="4"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </motion.g>
+
+            {/* Small decorative dots along the path */}
+            <circle cx="300" cy="160" r="4" fill="hsl(var(--primary) / 0.3)" />
+            <circle cx="380" cy="280" r="3" fill="hsl(var(--secondary) / 0.4)" />
+            <circle cx="600" cy="260" r="4" fill="hsl(var(--primary) / 0.3)" />
+            <circle cx="700" cy="200" r="3" fill="hsl(var(--secondary) / 0.4)" />
           </svg>
 
-          {footsteps.map((step, index) => (
-            <motion.div
-              key={`${step.top}-${step.right}`}
-              className="absolute"
-              style={{ top: step.top, right: step.right, transform: `rotate(${step.rotate})` }}
-              animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 2.4, repeat: Infinity, delay: index * 0.12, ease: 'easeInOut' }}
-            >
-              <FootstepMark tone={step.tone as 'primary' | 'secondary'} />
-            </motion.div>
-          ))}
-
+          {/* Step bubbles - positioned along the curve */}
           {steps.map((step, i) => {
             const Icon = step.icon;
             return (
               <motion.article
                 key={step.title}
-                initial={{ opacity: 0, y: 20, scale: 0.94 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5, delay: i * 0.14 }}
-                whileHover={{ scale: 1.07, y: -6 }}
-                className={`absolute w-56 -translate-x-1/2 rounded-full bg-peach p-7 text-center shadow-lg transition-all hover:shadow-2xl ${step.position}`}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                whileHover={{ scale: 1.08, y: -8 }}
+                className={`absolute w-52 h-52 flex flex-col items-center justify-center rounded-full bg-peach p-6 text-center shadow-lg cursor-default transition-shadow duration-300 hover:shadow-2xl ${step.desktopPosition}`}
               >
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20">
-                  <Icon className="h-7 w-7 text-primary" strokeWidth={2.4} />
+                <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/15">
+                  <Icon className="h-7 w-7 text-primary" strokeWidth={2.2} />
                 </div>
-                <h3 className="mb-1 text-2xl text-foreground">{step.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                <h3 className="font-nehama text-2xl text-foreground mb-1">{step.title}</h3>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{step.description}</p>
               </motion.article>
             );
           })}
         </div>
 
-        <button
+        {/* Mobile vertical layout */}
+        <div className="md:hidden flex flex-col items-center gap-6">
+          {steps.map((step, i) => {
+            const Icon = step.icon;
+            const isLast = i === steps.length - 1;
+            return (
+              <div key={step.title} className="flex flex-col items-center">
+                <motion.article
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  className="w-56 h-56 flex flex-col items-center justify-center rounded-full bg-peach p-6 text-center shadow-lg"
+                >
+                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/15">
+                    <Icon className="h-7 w-7 text-primary" strokeWidth={2.2} />
+                  </div>
+                  <h3 className="font-nehama text-2xl text-foreground mb-1">{step.title}</h3>
+                  <p className="font-body text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{step.description}</p>
+                </motion.article>
+                
+                {/* Mobile curved arrow between steps */}
+                {!isLast && (
+                  <motion.svg
+                    className="w-12 h-16 text-secondary my-2"
+                    viewBox="0 0 50 70"
+                    fill="none"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.1 + 0.2 }}
+                  >
+                    <path
+                      d="M25 5 Q10 30 25 50 Q40 70 25 65"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeDasharray="8 6"
+                      fill="none"
+                    />
+                    <path
+                      d="M20 58 L25 65 L30 58"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                    />
+                  </motion.svg>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Scroll to classes button */}
+        <motion.button
           onClick={scrollToClasses}
-          className="group mx-auto mt-12 flex flex-col items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
+          className="group mx-auto mt-16 flex flex-col items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
           aria-label="גלול לשיעורים הקרובים"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.5 }}
         >
           <span className="font-body text-lg">לשיעורים הקרובים</span>
           <ChevronDown className="h-8 w-8 animate-float" strokeWidth={2.5} />
-        </button>
+        </motion.button>
       </div>
     </section>
   );
