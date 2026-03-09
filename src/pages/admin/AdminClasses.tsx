@@ -36,6 +36,7 @@ const AdminClasses = () => {
   const [customLevels, setCustomLevels] = useState<Record<string, string>>({});
   const [levelDialogOpen, setLevelDialogOpen] = useState(false);
   const [newLevelForm, setNewLevelForm] = useState({ key: '', label: '' });
+  const [hiddenLevels, setHiddenLevels] = useState<string[]>([]);
 
   const [form, setForm] = useState({
     name: '',
@@ -46,7 +47,18 @@ const AdminClasses = () => {
     is_recurring: false,
   });
 
-  const allLevels = { ...LEVEL_LABELS, ...customLevels };
+  // Merge defaults (minus hidden) with custom overrides
+  const allLevels: Record<string, string> = {};
+  for (const [key, label] of Object.entries(LEVEL_LABELS)) {
+    if (!hiddenLevels.includes(key)) {
+      allLevels[key] = customLevels[key] || label;
+    }
+  }
+  for (const [key, label] of Object.entries(customLevels)) {
+    if (!(key in LEVEL_LABELS)) {
+      allLevels[key] = label;
+    }
+  }
 
   const openNew = () => {
     setEditingClassId(null);
