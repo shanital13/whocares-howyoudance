@@ -51,71 +51,77 @@ const AdminRevenue = () => {
 
   return (
     <AdminLayout>
-      <h1 className="font-display text-2xl md:text-3xl mb-6">דשבורד הכנסות</h1>
+      <h1 className="font-nehama text-[28px] md:text-[32px] mb-6 text-foreground">דשבורד הכנסות</h1>
 
       {/* Filters */}
       <div className="flex flex-wrap items-end gap-2 mb-6">
         {(['week', 'month', 'custom'] as FilterPeriod[]).map((p) => (
-          <Button key={p} variant={period === p ? 'default' : 'outline'} size="sm" className="rounded-full" onClick={() => setPeriod(p)}>
+          <Button
+            key={p}
+            variant={period === p ? 'default' : 'outline'}
+            size="sm"
+            className={`rounded-[10px] font-body ${period === p ? 'bg-primary hover:bg-primary/90' : 'border-border/60'}`}
+            onClick={() => setPeriod(p)}
+          >
             {p === 'week' ? 'שבוע אחרון' : p === 'month' ? 'חודש אחרון' : 'תקופה מותאמת'}
           </Button>
         ))}
         {period === 'custom' && (
           <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <div>
-              <Label className="text-xs">מתאריך</Label>
-              <Input type="date" value={customFrom} onChange={(e) => setCustomFrom(e.target.value)} className="w-full sm:w-40" />
+              <Label className="text-xs font-body">מתאריך</Label>
+              <Input type="date" value={customFrom} onChange={(e) => setCustomFrom(e.target.value)} className="w-full sm:w-40 h-11 rounded-[10px] border-border/60 font-body" />
             </div>
             <div>
-              <Label className="text-xs">עד תאריך</Label>
-              <Input type="date" value={customTo} onChange={(e) => setCustomTo(e.target.value)} className="w-full sm:w-40" />
+              <Label className="text-xs font-body">עד תאריך</Label>
+              <Input type="date" value={customTo} onChange={(e) => setCustomTo(e.target.value)} className="w-full sm:w-40 h-11 rounded-[10px] border-border/60 font-body" />
             </div>
           </div>
         )}
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <Card>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
+        <Card className="rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">סה"כ הכנסות</CardTitle>
-            <DollarSign className="h-5 w-5 text-success" />
+            <CardTitle className="text-sm font-body font-medium text-muted-foreground">סה"כ הכנסות</CardTitle>
+            <DollarSign className="h-5 w-5 text-success" strokeWidth={1.8} />
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-success">{totalRevenue.toLocaleString()} ₪</p>
+            <p className="text-3xl font-body font-bold text-success">{totalRevenue.toLocaleString()} ₪</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">כניסות חד-פעמיות</CardTitle>
-            <TrendingUp className="h-5 w-5 text-primary" />
+            <CardTitle className="text-sm font-body font-medium text-muted-foreground">כניסות חד-פעמיות</CardTitle>
+            <TrendingUp className="h-5 w-5 text-primary" strokeWidth={1.8} />
           </CardHeader>
-          <CardContent><p className="text-3xl font-bold">{singleCount}</p></CardContent>
+          <CardContent><p className="text-3xl font-body font-bold">{singleCount}</p></CardContent>
         </Card>
-        <Card>
+        <Card className="rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">כרטיסיות שנמכרו</CardTitle>
-            <TrendingUp className="h-5 w-5 text-warning" />
+            <CardTitle className="text-sm font-body font-medium text-muted-foreground">כרטיסיות שנמכרו</CardTitle>
+            <TrendingUp className="h-5 w-5 text-warning" strokeWidth={1.8} />
           </CardHeader>
-          <CardContent><p className="text-3xl font-bold">{punchCardCount}</p></CardContent>
+          <CardContent><p className="text-3xl font-body font-bold">{punchCardCount}</p></CardContent>
         </Card>
       </div>
 
       {/* Chart */}
       {chartData.length > 0 && (
-        <Card className="mb-6">
+        <Card className="mb-6 rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
           <CardHeader>
-            <CardTitle className="font-display">הכנסות לאורך זמן</CardTitle>
+            <CardTitle className="font-nehama text-[22px]">הכנסות לאורך זמן</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-48 md:h-64" dir="ltr">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-                  <YAxis tick={{ fontSize: 12 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(0,0%,92%)" />
+                  <XAxis dataKey="date" tick={{ fontSize: 12, fontFamily: 'Rubik' }} />
+                  <YAxis tick={{ fontSize: 12, fontFamily: 'Rubik' }} />
                   <Tooltip formatter={(v: number) => [`${v} ₪`, 'הכנסה']} />
-                  <Bar dataKey="amount" fill="hsl(320, 70%, 50%)" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="amount" fill="hsl(351, 100%, 68%)" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -124,57 +130,57 @@ const AdminRevenue = () => {
       )}
 
       {/* Payments list */}
-      <Card>
+      <Card className="rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
         <CardHeader>
-          <CardTitle className="font-display">פירוט תשלומים</CardTitle>
+          <CardTitle className="font-nehama text-[22px]">פירוט תשלומים</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           {/* Mobile cards */}
-          <div className="md:hidden divide-y">
+          <div className="md:hidden divide-y divide-border/50">
             {filteredPayments.map((payment) => {
               const profile = mockProfiles.find((p) => p.id === payment.user_id);
               return (
                 <div key={payment.id} className="flex items-center justify-between p-4">
                   <div>
-                    <p className="font-medium">{profile?.full_name}</p>
-                    <p className="text-xs text-muted-foreground">{new Date(payment.created_at).toLocaleDateString('he-IL')}</p>
+                    <p className="font-body font-medium text-foreground">{profile?.full_name}</p>
+                    <p className="text-xs font-body text-muted-foreground">{new Date(payment.created_at).toLocaleDateString('he-IL')}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge variant={payment.payment_type === 'single' ? 'outline' : 'default'}>
+                    <Badge variant={payment.payment_type === 'single' ? 'outline' : 'default'} className="font-body">
                       {payment.payment_type === 'single' ? 'חד-פעמי' : 'כרטיסיה'}
                     </Badge>
-                    <span className="font-bold">{payment.amount} ₪</span>
+                    <span className="font-body font-bold">{payment.amount} ₪</span>
                   </div>
                 </div>
               );
             })}
             {filteredPayments.length === 0 && (
-              <p className="text-center text-muted-foreground py-8">אין תשלומים בתקופה זו</p>
+              <p className="text-center text-muted-foreground py-8 font-body">אין תשלומים בתקופה זו</p>
             )}
           </div>
           {/* Desktop table */}
           <Table className="hidden md:table">
             <TableHeader>
-              <TableRow>
-                <TableHead>תאריך</TableHead>
-                <TableHead>לקוחה</TableHead>
-                <TableHead>סוג</TableHead>
-                <TableHead>סכום</TableHead>
+              <TableRow className="bg-[hsl(0,0%,95%)] hover:bg-[hsl(0,0%,95%)]">
+                <TableHead className="font-body">תאריך</TableHead>
+                <TableHead className="font-body">לקוחה</TableHead>
+                <TableHead className="font-body">סוג</TableHead>
+                <TableHead className="font-body">סכום</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredPayments.map((payment) => {
                 const profile = mockProfiles.find((p) => p.id === payment.user_id);
                 return (
-                  <TableRow key={payment.id}>
-                    <TableCell>{new Date(payment.created_at).toLocaleDateString('he-IL')}</TableCell>
-                    <TableCell className="font-medium">{profile?.full_name}</TableCell>
+                  <TableRow key={payment.id} className="hover:bg-[hsl(0,0%,97%)] transition-colors">
+                    <TableCell className="font-body">{new Date(payment.created_at).toLocaleDateString('he-IL')}</TableCell>
+                    <TableCell className="font-body font-medium">{profile?.full_name}</TableCell>
                     <TableCell>
-                      <Badge variant={payment.payment_type === 'single' ? 'outline' : 'default'}>
+                      <Badge variant={payment.payment_type === 'single' ? 'outline' : 'default'} className="font-body">
                         {payment.payment_type === 'single' ? 'חד-פעמי' : 'כרטיסיה'}
                       </Badge>
                     </TableCell>
-                    <TableCell className="font-bold">{payment.amount} ₪</TableCell>
+                    <TableCell className="font-body font-bold">{payment.amount} ₪</TableCell>
                   </TableRow>
                 );
               })}
