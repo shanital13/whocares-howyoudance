@@ -1,4 +1,4 @@
-export type ClassLevel = 'beginner' | 'intermediate' | 'advanced' | 'all';
+export type ClassLevel = 'beginner' | 'intermediate' | 'advanced' | 'all' | string;
 
 export interface DanceClass {
   id: string;

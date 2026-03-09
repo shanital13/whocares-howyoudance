@@ -22,13 +22,16 @@ import {
 } from '@/components/ui/table';
 import { mockClasses } from '@/lib/mock-data';
 import { DanceClass, LEVEL_LABELS, ClassLevel } from '@/lib/types';
-import { Plus, Edit, Trash2, Users, MapPin, Clock } from 'lucide-react';
+import { Plus, Edit, Trash2, Users, MapPin, Clock, Tag, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminClasses = () => {
   const [classes, setClasses] = useState<DanceClass[]>(mockClasses);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingClass, setEditingClass] = useState<DanceClass | null>(null);
+  const [customLevels, setCustomLevels] = useState<Record<string, string>>({});
+  const [levelDialogOpen, setLevelDialogOpen] = useState(false);
+  const [newLevelForm, setNewLevelForm] = useState({ key: '', label: '' });
 
   const [form, setForm] = useState({
     name: '',
@@ -38,6 +41,8 @@ const AdminClasses = () => {
     time: '',
     is_recurring: false,
   });
+
+  const allLevels = { ...LEVEL_LABELS, ...customLevels };
 
   const openNew = () => {
     setEditingClass(null);
@@ -62,15 +67,51 @@ const AdminClasses = () => {
 
   const handleDelete = (id: string) => setClasses((prev) => prev.filter((c) => c.id !== id));
 
+  const handleAddLevel = () => {
+    if (newLevelForm.key && newLevelForm.label) {
+      const key = newLevelForm.key.toLowerCase().replace(/\s+/g, '_');
+      setCustomLevels((prev) => ({ ...prev, [key]: newLevelForm.label }));
+      setNewLevelForm({ key: '', label: '' });
+      setLevelDialogOpen(false);
+    }
+  };
+
+  const handleDeleteLevel = (key: string) => {
+    setCustomLevels((prev) => {
+      const updated = { ...prev };
+      delete updated[key];
+      return updated;
+    });
+  };
+
   return (
     <AdminLayout>
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-display text-2xl md:text-3xl">ניהול שיעורים</h1>
-        <Button onClick={openNew} className="rounded-full" size="sm">
-          <Plus className="h-4 w-4 ml-1" />
-          שיעור חדש
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => setLevelDialogOpen(true)} variant="outline" size="sm">
+            <Tag className="h-4 w-4 ml-1" />
+            רמות
+          </Button>
+          <Button onClick={openNew} className="rounded-full" size="sm">
+            <Plus className="h-4 w-4 ml-1" />
+            שיעור חדש
+          </Button>
+        </div>
       </div>
+
+      {Object.keys(customLevels).length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {Object.entries(customLevels).map(([key, label]) => (
+            <Badge key={key} variant="secondary" className="gap-2">
+              {label}
+              <button onClick={() => handleDeleteLevel(key)} className="hover:text-destructive">
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          ))}
+        </div>
+      )}
 
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
@@ -179,7 +220,7 @@ const AdminClasses = () => {
               <Select value={form.level} onValueChange={(v) => setForm({ ...form, level: v as ClassLevel })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {Object.entries(LEVEL_LABELS).map(([key, label]) => (
+                  {Object.entries(allLevels).map(([key, label]) => (
                     <SelectItem key={key} value={key}>{label}</SelectItem>
                   ))}
                 </SelectContent>
@@ -211,6 +252,35 @@ const AdminClasses = () => {
             </div>
             <Button className="w-full" onClick={handleSave}>
               {editingClass ? 'שמור שינויים' : 'צור שיעור'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={levelDialogOpen} onOpenChange={setLevelDialogOpen}>
+        <DialogContent className="w-[95vw] max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-display text-xl">הוספת רמה חדשה</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label>שם הרמה (בעברית)</Label>
+              <Input
+                placeholder="למשל: בוגרות מתקדמות"
+                value={newLevelForm.label}
+                onChange={(e) => setNewLevelForm({ ...newLevelForm, label: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label>מזהה (באנגלית)</Label>
+              <Input
+                placeholder="למשל: expert"
+                value={newLevelForm.key}
+                onChange={(e) => setNewLevelForm({ ...newLevelForm, key: e.target.value })}
+              />
+            </div>
+            <Button className="w-full" onClick={handleAddLevel}>
+              הוסף רמה
             </Button>
           </div>
         </DialogContent>
