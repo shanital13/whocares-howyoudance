@@ -197,24 +197,24 @@ const AdminClassDetail = () => {
                     <p className="font-body font-semibold text-foreground">{profile?.full_name || '—'}</p>
                     <p className="text-xs font-body text-muted-foreground">{profile?.phone || '—'}</p>
                   </div>
-                  <button
-                    onClick={() => toggleAttendance(reg.user_id)}
-                    className={`flex items-center justify-center w-8 h-8 rounded-[10px] border-2 transition-colors ${
-                      attended
-                        ? 'bg-primary border-primary text-primary-foreground'
-                        : 'bg-background border-border hover:border-muted-foreground/50'
-                    }`}
-                  >
-                    {attended ? <Check className="h-4 w-4" /> : <X className="h-4 w-4 text-muted-foreground/30" />}
-                  </button>
-                </div>
-                <div className="flex gap-2">
-                  <Select value={currentEntryType} onValueChange={(v) => changeEntryType(reg.user_id, v)}>
-                    <SelectTrigger className="flex-1 h-9 text-xs rounded-[10px] border-border/60 font-body">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="punch_card" className="font-body">כרטיסיה</SelectItem>
+                   <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => toggleAttendance(reg.user_id)}
+                        className={`flex items-center justify-center w-8 h-8 rounded-[10px] border-2 transition-colors ${
+                          attended
+                            ? 'bg-primary border-primary text-primary-foreground'
+                            : 'bg-background border-border hover:border-muted-foreground/50'
+                        }`}
+                      >
+                        {attended ? <Check className="h-4 w-4" /> : <X className="h-4 w-4 text-muted-foreground/30" />}
+                      </button>
+                      <button
+                        onClick={() => handleDeleteRegistration(reg.id, profile?.full_name || '—')}
+                        className="flex items-center justify-center w-8 h-8 rounded-[10px] border-2 border-border hover:border-destructive hover:bg-destructive/10 transition-colors"
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </button>
+                    </div>
                       <SelectItem value="single" className="font-body">חד-פעמי</SelectItem>
                     </SelectContent>
                   </Select>
