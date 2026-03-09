@@ -37,6 +37,8 @@ const AdminClasses = () => {
   const [levelDialogOpen, setLevelDialogOpen] = useState(false);
   const [newLevelForm, setNewLevelForm] = useState({ key: '', label: '' });
   const [hiddenLevels, setHiddenLevels] = useState<string[]>([]);
+  const [editingLevelKey, setEditingLevelKey] = useState<string | null>(null);
+  const [editingLevelLabel, setEditingLevelLabel] = useState('');
 
   const [form, setForm] = useState({
     name: '',
