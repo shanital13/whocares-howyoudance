@@ -13,6 +13,7 @@ export interface DbDanceClass {
   is_recurring: boolean;
   recurring_day: number | null;
   max_participants: number | null;
+  arrival_instructions: string;
   created_at: string;
 }
 
