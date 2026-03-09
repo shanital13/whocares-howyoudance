@@ -6,6 +6,7 @@ export interface DbDanceClass {
   id: string;
   name: string;
   level: string;
+  description: string;
   location: string;
   date: string;
   time: string;
