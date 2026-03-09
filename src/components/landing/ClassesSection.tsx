@@ -45,14 +45,9 @@ const ClassesSection = () => {
               }}
             >
               <CardContent className="p-6">
-                {/* Class name and level */}
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-foreground leading-tight flex-1">{cls.name}</h3>
-                  {cls.available_spots <= 3 && cls.available_spots > 0 && (
-                    <Badge variant="outline" className="bg-warning/15 text-warning border-warning/30 text-xs mr-2">
-                      כמעט מלא
-                    </Badge>
-                  )}
+                {/* Class name */}
+                <div className="mb-4">
+                  <h3 className="text-foreground leading-tight">{cls.name}</h3>
                 </div>
 
                 {/* Class details */}
