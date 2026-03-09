@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useClasses } from '@/hooks/use-supabase-data';
+import { useClasses, useRegistrations } from '@/hooks/use-supabase-data';
 import { type DanceClass } from '@/lib/types';
 import { useState } from 'react';
 import RegistrationDialog from './RegistrationDialog';
@@ -7,9 +7,9 @@ import EventCard from './EventCard';
 
 const ClassesSection = () => {
   const { data: dbClasses = [] } = useClasses();
+  const { data: allRegistrations = [] } = useRegistrations();
   const [selectedClass, setSelectedClass] = useState<DanceClass | null>(null);
 
-  // Map DB classes to DanceClass type
   const classes: DanceClass[] = dbClasses.map((c) => ({
     id: c.id,
     name: c.name,
@@ -24,6 +24,15 @@ const ClassesSection = () => {
     created_at: c.created_at,
   }));
 
+  // Count registrations per class
+  const regCountByClass = useMemo(() => {
+    const counts: Record<string, number> = {};
+    allRegistrations.forEach((r) => {
+      counts[r.class_id] = (counts[r.class_id] || 0) + 1;
+    });
+    return counts;
+  }, [allRegistrations]);
+
   const displayedClasses = useMemo(() => {
     const now = new Date();
     const nextWeekEnd = new Date(now);
@@ -35,6 +44,10 @@ const ClassesSection = () => {
       return classDate >= now && classDate <= nextWeekEnd;
     });
   }, [classes]);
+
+  const selectedIsFull = selectedClass?.max_participants != null
+    ? (regCountByClass[selectedClass.id] || 0) >= selectedClass.max_participants
+    : false;
 
   return (
     <section id="classes" className="py-24 px-6 bg-background relative overflow-hidden">
@@ -55,7 +68,13 @@ const ClassesSection = () => {
         {displayedClasses.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {displayedClasses.map((cls, i) => (
-              <EventCard key={cls.id} danceClass={cls} variant={i} onRegister={() => setSelectedClass(cls)} />
+              <EventCard
+                key={cls.id}
+                danceClass={cls}
+                variant={i}
+                registrationCount={regCountByClass[cls.id] || 0}
+                onRegister={() => setSelectedClass(cls)}
+              />
             ))}
           </div>
         ) : (
@@ -65,7 +84,11 @@ const ClassesSection = () => {
         )}
       </div>
 
-      <RegistrationDialog danceClass={selectedClass} onClose={() => setSelectedClass(null)} />
+      <RegistrationDialog
+        danceClass={selectedClass}
+        isWaitlist={selectedIsFull}
+        onClose={() => setSelectedClass(null)}
+      />
     </section>
   );
 };

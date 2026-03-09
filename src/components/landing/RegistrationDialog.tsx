@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
   danceClass: DanceClass | null;
+  isWaitlist?: boolean;
   onClose: () => void;
 }
 
@@ -49,7 +50,7 @@ const defaultContent: LevelContent = {
   forWhom: 'מתאים לכל מי שרוצה לרקוד ולהנות.',
 };
 
-const RegistrationDialog = ({ danceClass, onClose }: Props) => {
+const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) => {
   const [entryType, setEntryType] = useState<'single' | 'punch_card' | null>(null);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -238,9 +239,9 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               <button
                 onClick={handleSubmit}
                 className="w-full py-3 rounded-full font-nehama text-lg text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
-                style={{ background: 'hsl(var(--primary))' }}
+                style={{ background: isWaitlist ? 'hsl(var(--foreground))' : 'hsl(var(--primary))' }}
               >
-                שומרת מקום ✨
+                {isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
               </button>
             </motion.div>
           ) : (
@@ -269,9 +270,14 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
                 <Check className="h-10 w-10 text-success" strokeWidth={2.5} />
               </motion.div>
 
-              <h2 className="font-nehama text-4xl text-foreground mb-3">המקום שמור! 🎉</h2>
+              <h2 className="font-nehama text-4xl text-foreground mb-3">
+                {isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉'}
+              </h2>
               <p className="font-body text-muted-foreground text-base leading-relaxed mb-2">
-                {fullName.trim()}, נתראה בשיעור!
+                {isWaitlist
+                  ? `${fullName.trim()}, נעדכן אותך ברגע שיתפנה מקום 💛`
+                  : `${fullName.trim()}, נתראה בשיעור!`
+                }
               </p>
               <p className="font-body text-sm text-muted-foreground">
                 {entryType === 'single'

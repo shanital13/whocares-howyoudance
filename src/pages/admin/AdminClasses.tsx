@@ -48,6 +48,7 @@ const AdminClasses = () => {
     date: '',
     time: '',
     is_recurring: false,
+    max_participants: '' as string | number,
   });
 
   // Merge defaults (minus hidden) with custom overrides
@@ -65,22 +66,24 @@ const AdminClasses = () => {
 
   const openNew = () => {
     setEditingClassId(null);
-    setForm({ name: '', level: 'all', description: '', location: '', date: '', time: '', is_recurring: false });
+    setForm({ name: '', level: 'all', description: '', location: '', date: '', time: '', is_recurring: false, max_participants: '' });
     setDialogOpen(true);
   };
 
   const openEdit = (cls: any) => {
     setEditingClassId(cls.id);
-    setForm({ name: cls.name, level: cls.level, description: cls.description || '', location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring });
+    setForm({ name: cls.name, level: cls.level, description: cls.description || '', location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring, max_participants: cls.max_participants ?? '' });
     setDialogOpen(true);
   };
 
   const handleSave = async () => {
     try {
+      const maxP = form.max_participants === '' ? null : Number(form.max_participants);
+      const payload = { name: form.name, level: form.level, description: form.description, location: form.location, date: form.date, time: form.time, is_recurring: form.is_recurring, recurring_day: null, max_participants: maxP };
       if (editingClassId) {
-        await updateClass.mutateAsync({ id: editingClassId, ...form, recurring_day: null, max_participants: null });
+        await updateClass.mutateAsync({ id: editingClassId, ...payload });
       } else {
-        await createClass.mutateAsync({ ...form, recurring_day: null, max_participants: null });
+        await createClass.mutateAsync(payload);
       }
       setDialogOpen(false);
     } catch (err: any) {
@@ -301,6 +304,17 @@ const AdminClasses = () => {
                 className="rounded accent-primary"
               />
               <Label htmlFor="recurring" className="font-body text-sm">שיעור שבועי קבוע</Label>
+            </div>
+            <div>
+              <Label className="font-body text-sm">מקסימום משתתפות</Label>
+              <Input
+                type="number"
+                min={1}
+                value={form.max_participants}
+                onChange={(e) => setForm({ ...form, max_participants: e.target.value })}
+                placeholder="ללא הגבלה"
+                className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
+              />
             </div>
             <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleSave}>
               {editingClassId ? 'שמור שינויים' : 'צור שיעור'}
