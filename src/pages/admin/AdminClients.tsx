@@ -18,14 +18,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { mockProfiles, mockPunchCards, mockPayments, mockAttendance, mockClasses } from '@/lib/mock-data';
+import { useProfiles, usePunchCards, usePayments, useAttendance, useClasses } from '@/hooks/use-supabase-data';
 import { ChevronLeft, Search } from 'lucide-react';
 
 const AdminClients = () => {
+  const { data: profiles = [], isLoading } = useProfiles();
+  const { data: punchCards = [] } = usePunchCards();
+  const { data: payments = [] } = usePayments();
+  const { data: attendanceData = [] } = useAttendance();
+  const { data: classes = [] } = useClasses();
+
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredProfiles = mockProfiles.filter((profile) => {
+  const filteredProfiles = profiles.filter((profile) => {
     const query = searchQuery.toLowerCase().trim();
     if (!query) return true;
     return (
@@ -34,12 +40,16 @@ const AdminClients = () => {
     );
   });
 
-  const selectedClient = mockProfiles.find((p) => p.id === selectedClientId);
-  const clientAttendance = mockAttendance.filter((a) => a.user_id === selectedClientId && a.attended);
+  const selectedClient = profiles.find((p) => p.id === selectedClientId);
+  const clientAttendance = attendanceData.filter((a) => a.user_id === selectedClientId && a.attended);
   const attendedClasses = clientAttendance.map((a) => {
-    const danceClass = mockClasses.find((c) => c.id === a.class_id);
+    const danceClass = classes.find((c) => c.id === a.class_id);
     return { ...a, class: danceClass };
   });
+
+  if (isLoading) {
+    return <AdminLayout><p className="text-muted-foreground font-body text-center py-8">טוען לקוחות...</p></AdminLayout>;
+  }
 
   return (
     <AdminLayout>
@@ -62,13 +72,13 @@ const AdminClients = () => {
           <p className="text-center text-muted-foreground py-8 font-body">לא נמצאו לקוחות</p>
         )}
         {filteredProfiles.map((profile) => {
-          const punchCard = mockPunchCards.find(
+          const punchCard = punchCards.find(
             (pc) => pc.user_id === profile.id && pc.is_active && pc.entries_remaining > 0
           );
-          const totalPaid = mockPayments
+          const totalPaid = payments
             .filter((p) => p.user_id === profile.id)
             .reduce((sum, p) => sum + p.amount, 0);
-          const attendanceCount = mockAttendance.filter(
+          const attendanceCount = attendanceData.filter(
             (a) => a.user_id === profile.id && a.attended
           ).length;
 
@@ -111,7 +121,7 @@ const AdminClients = () => {
       <Card className="hidden md:block rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
         <CardHeader>
           <CardTitle className="font-nehama text-[22px]">
-            {searchQuery ? `תוצאות חיפוש (${filteredProfiles.length})` : `כל הלקוחות (${mockProfiles.length})`}
+            {searchQuery ? `תוצאות חיפוש (${filteredProfiles.length})` : `כל הלקוחות (${profiles.length})`}
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
@@ -129,13 +139,13 @@ const AdminClients = () => {
             </TableHeader>
             <TableBody>
               {filteredProfiles.map((profile) => {
-                const punchCard = mockPunchCards.find(
+                const punchCard = punchCards.find(
                   (pc) => pc.user_id === profile.id && pc.is_active && pc.entries_remaining > 0
                 );
-                const totalPaid = mockPayments
+                const totalPaid = payments
                   .filter((p) => p.user_id === profile.id)
                   .reduce((sum, p) => sum + p.amount, 0);
-                const attendanceCount = mockAttendance.filter(
+                const attendanceCount = attendanceData.filter(
                   (a) => a.user_id === profile.id && a.attended
                 ).length;
 

@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { mockClasses, mockRegistrations, mockProfiles, mockPunchCards, mockAttendance } from '@/lib/mock-data';
+import { useClasses, useRegistrations, useProfiles, usePunchCards, useAttendance, useUpsertAttendance, useCreatePayment } from '@/hooks/use-supabase-data';
 import { LEVEL_LABELS, SINGLE_PRICE, PUNCH_CARD_PRICE } from '@/lib/types';
 import { useState, useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
@@ -19,21 +19,17 @@ import { Check, X, Save } from 'lucide-react';
 
 const AdminClassDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const danceClass = mockClasses.find((c) => c.id === id);
-  const registrations = mockRegistrations.filter((r) => r.class_id === id);
+  const { data: classes = [] } = useClasses();
+  const { data: registrations = [] } = useRegistrations(id);
+  const { data: profiles = [] } = useProfiles();
+  const { data: punchCards = [] } = usePunchCards();
+  const { data: attendanceData = [] } = useAttendance(id);
+  const upsertAttendance = useUpsertAttendance();
+  const createPayment = useCreatePayment();
 
-  const [attendanceMap, setAttendanceMap] = useState<Record<string, boolean>>(() => {
-    const map: Record<string, boolean> = {};
-    mockAttendance.filter((a) => a.class_id === id).forEach((a) => { map[a.user_id] = a.attended; });
-    return map;
-  });
+  const danceClass = classes.find((c) => c.id === id);
 
-  const [paymentMap, setPaymentMap] = useState<Record<string, string>>({});
-  const [entryTypeMap, setEntryTypeMap] = useState<Record<string, string>>(() => {
-    const map: Record<string, string> = {};
-    registrations.forEach((r) => { map[r.user_id] = r.entry_type; });
-    return map;
-  });
+  const [entryTypeMap, setEntryTypeMap] = useState<Record<string, string>>({});
   const [saveIndicator, setSaveIndicator] = useState(false);
 
   const showSaved = useCallback(() => {
@@ -45,18 +41,27 @@ const AdminClassDetail = () => {
     return <AdminLayout><p className="text-muted-foreground font-body">שיעור לא נמצא</p></AdminLayout>;
   }
 
-  const toggleAttendance = (userId: string) => {
+  const attendanceMap: Record<string, boolean> = {};
+  attendanceData.forEach((a) => { attendanceMap[a.user_id] = a.attended; });
+
+  const toggleAttendance = async (userId: string) => {
     const newVal = !attendanceMap[userId];
-    setAttendanceMap((prev) => ({ ...prev, [userId]: newVal }));
-    const punchCard = mockPunchCards.find((pc) => pc.user_id === userId && pc.is_active);
-    if (newVal && punchCard && punchCard.entries_remaining > 0) {
+    await upsertAttendance.mutateAsync({ user_id: userId, class_id: id!, attended: newVal });
+    const punchCard = punchCards.find((pc) => pc.user_id === userId && pc.is_active && pc.entries_remaining > 0);
+    if (newVal && punchCard) {
       toast({ title: 'ניקוב כרטיסיה', description: `נשארו ${punchCard.entries_remaining - 1} כניסות` });
     }
     showSaved();
   };
 
-  const markPayment = (userId: string, amount: string) => {
-    setPaymentMap((prev) => ({ ...prev, [userId]: amount }));
+  const markPayment = async (userId: string, amount: string) => {
+    const amountNum = parseInt(amount);
+    await createPayment.mutateAsync({
+      user_id: userId,
+      amount: amountNum,
+      payment_type: amountNum === PUNCH_CARD_PRICE ? 'punch_card' : 'single',
+      class_id: id,
+    });
     showSaved();
   };
 
@@ -70,14 +75,12 @@ const AdminClassDetail = () => {
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-1">
           <h1 className="font-nehama text-[28px] md:text-[32px] text-foreground">{danceClass.name}</h1>
-          <Badge variant="outline" className="font-body">{LEVEL_LABELS[danceClass.level]}</Badge>
+          <Badge variant="outline" className="font-body">{LEVEL_LABELS[danceClass.level] || danceClass.level}</Badge>
         </div>
         <p className="text-muted-foreground text-sm font-body">
           {new Date(danceClass.date).toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })}
           {' '} | {danceClass.time} | {danceClass.location}
         </p>
-
-        {/* Auto-save indicator */}
         <div className={`mt-2 flex items-center gap-1.5 text-xs font-body transition-opacity duration-300 ${saveIndicator ? 'opacity-100' : 'opacity-0'}`}>
           <Save className="h-3.5 w-3.5 text-success" strokeWidth={2} />
           <span className="text-success font-medium">נשמר אוטומטית</span>
@@ -88,9 +91,9 @@ const AdminClassDetail = () => {
       <div className="md:hidden space-y-3">
         <p className="text-sm font-body font-medium text-muted-foreground">נרשמות ({registrations.length})</p>
         {registrations.map((reg) => {
-          const profile = mockProfiles.find((p) => p.id === reg.user_id);
+          const profile = profiles.find((p) => p.id === reg.user_id);
           const currentEntryType = entryTypeMap[reg.user_id] || reg.entry_type;
-          const punchCard = mockPunchCards.find((pc) => pc.user_id === reg.user_id && pc.is_active && pc.entries_remaining > 0);
+          const punchCard = punchCards.find((pc) => pc.user_id === reg.user_id && pc.is_active && pc.entries_remaining > 0);
           const hasPunchCard = !!punchCard;
           const attended = attendanceMap[reg.user_id] || false;
 
@@ -99,7 +102,7 @@ const AdminClassDetail = () => {
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="font-body font-semibold text-foreground">{profile?.full_name}</p>
+                    <p className="font-body font-semibold text-foreground">{profile?.full_name || '—'}</p>
                     <p className="text-xs font-body text-muted-foreground">{profile?.phone || '—'}</p>
                   </div>
                   <button
@@ -128,7 +131,7 @@ const AdminClassDetail = () => {
                       {punchCard.entries_remaining} כניסות
                     </Badge>
                   ) : (
-                    <Select value={paymentMap[reg.user_id] || ''} onValueChange={(v) => markPayment(reg.user_id, v)}>
+                    <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
                       <SelectTrigger className="flex-1 h-9 text-xs rounded-[10px] border-border/60 font-body">
                         <SelectValue placeholder="תשלום" />
                       </SelectTrigger>
@@ -166,9 +169,9 @@ const AdminClassDetail = () => {
             </TableHeader>
             <TableBody>
               {registrations.map((reg) => {
-                const profile = mockProfiles.find((p) => p.id === reg.user_id);
+                const profile = profiles.find((p) => p.id === reg.user_id);
                 const currentEntryType = entryTypeMap[reg.user_id] || reg.entry_type;
-                const punchCard = mockPunchCards.find((pc) => pc.user_id === reg.user_id && pc.is_active && pc.entries_remaining > 0);
+                const punchCard = punchCards.find((pc) => pc.user_id === reg.user_id && pc.is_active && pc.entries_remaining > 0);
                 const hasPunchCard = !!punchCard;
                 const attended = attendanceMap[reg.user_id] || false;
 
@@ -176,7 +179,7 @@ const AdminClassDetail = () => {
                   <TableRow key={reg.id} className="align-middle hover:bg-[hsl(0,0%,97%)] transition-colors">
                     <TableCell className="align-middle">
                       <div>
-                        <p className="font-body font-medium text-foreground">{profile?.full_name}</p>
+                        <p className="font-body font-medium text-foreground">{profile?.full_name || '—'}</p>
                         <p className="text-xs font-body text-muted-foreground">{profile?.phone || '—'}</p>
                       </div>
                     </TableCell>
@@ -212,7 +215,7 @@ const AdminClassDetail = () => {
                       {hasPunchCard && currentEntryType === 'punch_card' ? (
                         <span className="text-sm text-success font-body font-medium">כרטיסיה פעילה ✓</span>
                       ) : (
-                        <Select value={paymentMap[reg.user_id] || ''} onValueChange={(v) => markPayment(reg.user_id, v)}>
+                        <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
                           <SelectTrigger className="w-40 h-9 rounded-[10px] border-border/60 font-body"><SelectValue placeholder="סמן תשלום" /></SelectTrigger>
                           <SelectContent>
                             <SelectItem value={SINGLE_PRICE.toString()} className="font-body">{SINGLE_PRICE} ₪ (חד-פעמי)</SelectItem>

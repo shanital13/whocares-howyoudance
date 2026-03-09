@@ -20,15 +20,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { mockClasses } from '@/lib/mock-data';
-import { DanceClass, LEVEL_LABELS, ClassLevel } from '@/lib/types';
+import { useClasses, useCreateClass, useUpdateClass, useDeleteClass } from '@/hooks/use-supabase-data';
+import { LEVEL_LABELS, ClassLevel } from '@/lib/types';
 import { Plus, Edit, Trash2, Users, MapPin, Clock, Tag, X, Copy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminClasses = () => {
-  const [classes, setClasses] = useState<DanceClass[]>(mockClasses);
+  const { data: classes = [], isLoading } = useClasses();
+  const createClass = useCreateClass();
+  const updateClass = useUpdateClass();
+  const deleteClass = useDeleteClass();
+
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingClass, setEditingClass] = useState<DanceClass | null>(null);
+  const [editingClassId, setEditingClassId] = useState<string | null>(null);
   const [customLevels, setCustomLevels] = useState<Record<string, string>>({});
   const [levelDialogOpen, setLevelDialogOpen] = useState(false);
   const [newLevelForm, setNewLevelForm] = useState({ key: '', label: '' });
@@ -45,36 +49,39 @@ const AdminClasses = () => {
   const allLevels = { ...LEVEL_LABELS, ...customLevels };
 
   const openNew = () => {
-    setEditingClass(null);
+    setEditingClassId(null);
     setForm({ name: '', level: 'all', location: '', date: '', time: '', is_recurring: false });
     setDialogOpen(true);
   };
 
-  const openEdit = (cls: DanceClass) => {
-    setEditingClass(cls);
+  const openEdit = (cls: any) => {
+    setEditingClassId(cls.id);
     setForm({ name: cls.name, level: cls.level, location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring });
     setDialogOpen(true);
   };
 
-  const handleSave = () => {
-    if (editingClass) {
-      setClasses((prev) => prev.map((c) => (c.id === editingClass.id ? { ...c, ...form } : c)));
+  const handleSave = async () => {
+    if (editingClassId) {
+      await updateClass.mutateAsync({ id: editingClassId, ...form, recurring_day: null, max_participants: null });
     } else {
-      setClasses((prev) => [...prev, { id: Date.now().toString(), ...form, created_at: new Date().toISOString() }]);
+      await createClass.mutateAsync({ ...form, recurring_day: null, max_participants: null });
     }
     setDialogOpen(false);
   };
 
-  const handleDelete = (id: string) => setClasses((prev) => prev.filter((c) => c.id !== id));
+  const handleDelete = (id: string) => deleteClass.mutate(id);
 
-  const handleDuplicate = (cls: DanceClass) => {
-    const newClass: DanceClass = {
-      ...cls,
-      id: Date.now().toString(),
+  const handleDuplicate = async (cls: any) => {
+    await createClass.mutateAsync({
       name: `${cls.name} (עותק)`,
-      created_at: new Date().toISOString(),
-    };
-    setClasses((prev) => [...prev, newClass]);
+      level: cls.level,
+      location: cls.location,
+      date: cls.date,
+      time: cls.time,
+      is_recurring: cls.is_recurring,
+      recurring_day: cls.recurring_day,
+      max_participants: cls.max_participants,
+    });
   };
 
   const handleAddLevel = () => {
@@ -93,6 +100,10 @@ const AdminClasses = () => {
       return updated;
     });
   };
+
+  if (isLoading) {
+    return <AdminLayout><p className="text-muted-foreground font-body text-center py-8">טוען שיעורים...</p></AdminLayout>;
+  }
 
   return (
     <AdminLayout>
@@ -131,7 +142,7 @@ const AdminClasses = () => {
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <p className="font-body font-semibold text-foreground">{cls.name}</p>
-                  <Badge variant="outline" className="mt-1 text-xs font-body">{LEVEL_LABELS[cls.level]}</Badge>
+                  <Badge variant="outline" className="mt-1 text-xs font-body">{allLevels[cls.level] || cls.level}</Badge>
                 </div>
                 {cls.is_recurring
                   ? <Badge variant="secondary" className="font-body">שבועי</Badge>
@@ -189,7 +200,7 @@ const AdminClasses = () => {
               {classes.map((cls) => (
                 <TableRow key={cls.id} className="hover:bg-[hsl(0,0%,97%)] transition-colors">
                   <TableCell className="font-body font-medium">{cls.name}</TableCell>
-                  <TableCell><Badge variant="outline" className="font-body">{LEVEL_LABELS[cls.level]}</Badge></TableCell>
+                  <TableCell><Badge variant="outline" className="font-body">{allLevels[cls.level] || cls.level}</Badge></TableCell>
                   <TableCell className="font-body">{cls.location}</TableCell>
                   <TableCell className="font-body">{new Date(cls.date).toLocaleDateString('he-IL')}</TableCell>
                   <TableCell className="font-body">{cls.time}</TableCell>
@@ -223,7 +234,7 @@ const AdminClasses = () => {
         <DialogContent className="w-[95vw] max-w-lg rounded-xl">
           <DialogHeader>
             <DialogTitle className="font-nehama text-[22px]">
-              {editingClass ? 'עריכת שיעור' : 'שיעור חדש'}
+              {editingClassId ? 'עריכת שיעור' : 'שיעור חדש'}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
@@ -267,7 +278,7 @@ const AdminClasses = () => {
               <Label htmlFor="recurring" className="font-body text-sm">שיעור שבועי קבוע</Label>
             </div>
             <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleSave}>
-              {editingClass ? 'שמור שינויים' : 'צור שיעור'}
+              {editingClassId ? 'שמור שינויים' : 'צור שיעור'}
             </Button>
           </div>
         </DialogContent>

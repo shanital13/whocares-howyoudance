@@ -13,13 +13,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { mockPayments, mockProfiles } from '@/lib/mock-data';
+import { usePayments, useProfiles } from '@/hooks/use-supabase-data';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { DollarSign, TrendingUp } from 'lucide-react';
 
 type FilterPeriod = 'week' | 'month' | 'custom';
 
 const AdminRevenue = () => {
+  const { data: payments = [] } = usePayments();
+  const { data: profiles = [] } = useProfiles();
+
   const [period, setPeriod] = useState<FilterPeriod>('month');
   const [customFrom, setCustomFrom] = useState('');
   const [customTo, setCustomTo] = useState('');
@@ -31,8 +34,8 @@ const AdminRevenue = () => {
     if (period === 'week') { fromDate = new Date(now); fromDate.setDate(fromDate.getDate() - 7); }
     else if (period === 'month') { fromDate = new Date(now); fromDate.setMonth(fromDate.getMonth() - 1); }
     else { fromDate = customFrom ? new Date(customFrom) : new Date(0); toDate = customTo ? new Date(customTo) : now; }
-    return mockPayments.filter((p) => { const d = new Date(p.created_at); return d >= fromDate && d <= toDate; });
-  }, [period, customFrom, customTo]);
+    return payments.filter((p) => { const d = new Date(p.created_at); return d >= fromDate && d <= toDate; });
+  }, [period, customFrom, customTo, payments]);
 
   const totalRevenue = filteredPayments.reduce((sum, p) => sum + p.amount, 0);
   const singleCount = filteredPayments.filter((p) => p.payment_type === 'single').length;
@@ -53,7 +56,6 @@ const AdminRevenue = () => {
     <AdminLayout>
       <h1 className="font-nehama text-[28px] md:text-[32px] mb-6 text-foreground">דשבורד הכנסות</h1>
 
-      {/* Filters */}
       <div className="flex flex-wrap items-end gap-2 mb-6">
         {(['week', 'month', 'custom'] as FilterPeriod[]).map((p) => (
           <Button
@@ -80,7 +82,6 @@ const AdminRevenue = () => {
         )}
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
         <Card className="rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -107,7 +108,6 @@ const AdminRevenue = () => {
         </Card>
       </div>
 
-      {/* Chart */}
       {chartData.length > 0 && (
         <Card className="mb-6 rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
           <CardHeader>
@@ -129,20 +129,18 @@ const AdminRevenue = () => {
         </Card>
       )}
 
-      {/* Payments list */}
       <Card className="rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
         <CardHeader>
           <CardTitle className="font-nehama text-[22px]">פירוט תשלומים</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
-          {/* Mobile cards */}
           <div className="md:hidden divide-y divide-border/50">
             {filteredPayments.map((payment) => {
-              const profile = mockProfiles.find((p) => p.id === payment.user_id);
+              const profile = profiles.find((p) => p.id === payment.user_id);
               return (
                 <div key={payment.id} className="flex items-center justify-between p-4">
                   <div>
-                    <p className="font-body font-medium text-foreground">{profile?.full_name}</p>
+                    <p className="font-body font-medium text-foreground">{profile?.full_name || '—'}</p>
                     <p className="text-xs font-body text-muted-foreground">{new Date(payment.created_at).toLocaleDateString('he-IL')}</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -158,7 +156,6 @@ const AdminRevenue = () => {
               <p className="text-center text-muted-foreground py-8 font-body">אין תשלומים בתקופה זו</p>
             )}
           </div>
-          {/* Desktop table */}
           <Table className="hidden md:table">
             <TableHeader>
               <TableRow className="bg-[hsl(0,0%,95%)] hover:bg-[hsl(0,0%,95%)]">
@@ -170,11 +167,11 @@ const AdminRevenue = () => {
             </TableHeader>
             <TableBody>
               {filteredPayments.map((payment) => {
-                const profile = mockProfiles.find((p) => p.id === payment.user_id);
+                const profile = profiles.find((p) => p.id === payment.user_id);
                 return (
                   <TableRow key={payment.id} className="hover:bg-[hsl(0,0%,97%)] transition-colors">
                     <TableCell className="font-body">{new Date(payment.created_at).toLocaleDateString('he-IL')}</TableCell>
-                    <TableCell className="font-body font-medium">{profile?.full_name}</TableCell>
+                    <TableCell className="font-body font-medium">{profile?.full_name || '—'}</TableCell>
                     <TableCell>
                       <Badge variant={payment.payment_type === 'single' ? 'outline' : 'default'} className="font-body">
                         {payment.payment_type === 'single' ? 'חד-פעמי' : 'כרטיסיה'}
