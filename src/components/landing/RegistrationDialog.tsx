@@ -321,7 +321,9 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                 {errors.entryType && <p className="text-[11px] text-destructive text-right mt-1">{errors.entryType}</p>}
               </div>
 
-              {errors.submit && <p className="text-[11px] text-destructive text-right mb-2">{errors.submit}</p>}
+              {errors.submit && (
+                <p className="text-base font-semibold text-destructive text-center mb-2 font-body">{errors.submit}</p>
+              )}
 
               {/* Submit button */}
               <button

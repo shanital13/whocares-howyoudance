@@ -40,7 +40,7 @@ const WhoAmISection = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative w-64 h-80 md:w-80 md:h-[420px] flex-shrink-0"
+            className="relative w-72 h-96 md:w-[400px] md:h-[520px] flex-shrink-0"
           >
             {/* Background blob behind video */}
             <div className="absolute -inset-4 bg-peach rounded-[2rem] rotate-3" />
