@@ -215,6 +215,14 @@ const AdminClassDetail = () => {
                         <Trash2 className="h-4 w-4 text-destructive" />
                       </button>
                     </div>
+                </div>
+                <div className="flex gap-2">
+                  <Select value={currentEntryType} onValueChange={(v) => changeEntryType(reg.user_id, v)}>
+                    <SelectTrigger className="flex-1 h-9 text-xs rounded-[10px] border-border/60 font-body">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="punch_card" className="font-body">כרטיסיה</SelectItem>
                       <SelectItem value="single" className="font-body">חד-פעמי</SelectItem>
                     </SelectContent>
                   </Select>
