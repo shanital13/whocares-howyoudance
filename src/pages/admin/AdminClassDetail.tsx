@@ -325,6 +325,16 @@ const AdminClassDetail = () => {
                         </Select>
                       )}
                     </TableCell>
+                    <TableCell className="align-middle text-center">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => handleDeleteRegistration(reg.id, profile?.full_name || '—')}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" strokeWidth={1.8} />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
