@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useProfiles, usePunchCards, usePayments, useAttendance, useClasses } from '@/hooks/use-supabase-data';
+import { useProfiles, usePunchCards, usePayments, useAttendance, useClasses, useRegistrations } from '@/hooks/use-supabase-data';
 import { ChevronLeft, Search } from 'lucide-react';
 
 const AdminClients = () => {
