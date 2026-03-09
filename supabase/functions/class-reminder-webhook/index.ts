@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 const WEBHOOK_URL =
-  "https://hook.eu2.make.com/miyvfiv1ru7thsy7lix5ty11xpxb5an7";
+  "https://hook.eu2.make.com/4bas7h7wpr8chx2h1u4od8ik54a8pn34";
 
 const LEVEL_LABELS: Record<string, string> = {
   beginner: "מתחילות",
