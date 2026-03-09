@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { mockClasses } from '@/lib/mock-data';
 import { type DanceClass } from '@/lib/types';
 import { useState } from 'react';
@@ -6,6 +7,21 @@ import EventCard from './EventCard';
 
 const ClassesSection = () => {
   const [selectedClass, setSelectedClass] = useState<DanceClass | null>(null);
+
+  const displayedClasses = useMemo(() => {
+    const now = new Date();
+    const nextWeekEnd = new Date(now);
+    nextWeekEnd.setDate(nextWeekEnd.getDate() + 7);
+
+    return mockClasses.filter((cls) => {
+      // One-time special events: always show
+      if (!cls.is_recurring) return true;
+
+      // Recurring classes: show only if they fall within the next 7 days
+      const classDate = new Date(cls.date);
+      return classDate >= now && classDate <= nextWeekEnd;
+    });
+  }, []);
 
   return (
     <section id="classes" className="py-24 px-6 bg-background relative overflow-hidden">
@@ -39,16 +55,22 @@ const ClassesSection = () => {
         <h2 className="font-nehama text-4xl md:text-5xl text-center mb-16 text-foreground">השיעורים הקרובים</h2>
 
         {/* Poster-style Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-          {mockClasses.map((cls, i) => (
-            <EventCard
-              key={cls.id}
-              danceClass={cls}
-              variant={i}
-              onRegister={() => setSelectedClass(cls)}
-            />
-          ))}
-        </div>
+        {displayedClasses.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            {displayedClasses.map((cls, i) => (
+              <EventCard
+                key={cls.id}
+                danceClass={cls}
+                variant={i}
+                onRegister={() => setSelectedClass(cls)}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-muted-foreground font-body text-lg">
+            אין שיעורים קרובים כרגע — עקבו אחרינו לעדכונים 💃
+          </p>
+        )}
       </div>
 
       <RegistrationDialog
