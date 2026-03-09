@@ -67,7 +67,7 @@ const AdminClasses = () => {
 
   const openNew = () => {
     setEditingClassId(null);
-    setForm({ name: '', level: 'all', description: '', location: '', date: '', time: '', is_recurring: false, max_participants: '' });
+    setForm({ name: '', level: 'all', description: '', location: '', date: '', time: '', is_recurring: false, max_participants: '', arrival_instructions: '' });
     setDialogOpen(true);
   };
 
