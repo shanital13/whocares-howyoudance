@@ -36,6 +36,7 @@ const AdminClasses = () => {
   const [customLevels, setCustomLevels] = useState<Record<string, string>>({});
   const [levelDialogOpen, setLevelDialogOpen] = useState(false);
   const [newLevelForm, setNewLevelForm] = useState({ key: '', label: '' });
+  const [hiddenLevels, setHiddenLevels] = useState<string[]>([]);
 
   const [form, setForm] = useState({
     name: '',
@@ -46,7 +47,18 @@ const AdminClasses = () => {
     is_recurring: false,
   });
 
-  const allLevels = { ...LEVEL_LABELS, ...customLevels };
+  // Merge defaults (minus hidden) with custom overrides
+  const allLevels: Record<string, string> = {};
+  for (const [key, label] of Object.entries(LEVEL_LABELS)) {
+    if (!hiddenLevels.includes(key)) {
+      allLevels[key] = customLevels[key] || label;
+    }
+  }
+  for (const [key, label] of Object.entries(customLevels)) {
+    if (!(key in LEVEL_LABELS)) {
+      allLevels[key] = label;
+    }
+  }
 
   const openNew = () => {
     setEditingClassId(null);
@@ -298,45 +310,56 @@ const AdminClasses = () => {
             {/* Existing levels */}
             <div className="space-y-2">
               <Label className="font-body text-sm font-medium text-muted-foreground">רמות קיימות</Label>
-              {Object.entries(allLevels).map(([key, label]) => {
-                const isDefault = key in LEVEL_LABELS;
-                return (
+              {Object.entries(allLevels).map(([key, label]) => (
                   <div key={key} className="flex items-center justify-between py-2 px-3 rounded-[10px] border border-border/60 bg-background">
                     <div className="flex items-center gap-2">
                       <span className="font-body text-sm font-medium">{label}</span>
                       <span className="text-xs text-muted-foreground font-body">({key})</span>
                     </div>
-                    {!isDefault && (
-                      <div className="flex gap-1">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7"
-                          onClick={() => {
-                            const newLabel = prompt('שם חדש לרמה:', label);
-                            if (newLabel) {
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        onClick={() => {
+                          const newLabel = prompt('שם חדש לרמה:', label);
+                          if (newLabel) {
+                            if (key in LEVEL_LABELS) {
+                              // Override default level with custom label
+                              setCustomLevels((prev) => ({ ...prev, [key]: newLabel }));
+                            } else {
                               setCustomLevels((prev) => ({ ...prev, [key]: newLabel }));
                             }
-                          }}
-                        >
-                          <Edit className="h-3.5 w-3.5" strokeWidth={1.8} />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-destructive"
-                          onClick={() => handleDeleteLevel(key)}
-                        >
-                          <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
-                        </Button>
-                      </div>
-                    )}
-                    {isDefault && (
-                      <Badge variant="outline" className="text-xs font-body">ברירת מחדל</Badge>
-                    )}
+                          }
+                        }}
+                      >
+                        <Edit className="h-3.5 w-3.5" strokeWidth={1.8} />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-destructive"
+                        onClick={() => {
+                          if (key in LEVEL_LABELS) {
+                            // "Delete" a default level by hiding it
+                            setCustomLevels((prev) => {
+                              const updated = { ...prev };
+                              delete updated[key];
+                              return updated;
+                            });
+                            // We can't truly delete defaults from LEVEL_LABELS constant,
+                            // but we can track hidden levels
+                            setHiddenLevels((prev) => [...prev, key]);
+                          } else {
+                            handleDeleteLevel(key);
+                          }
+                        }}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
+                      </Button>
+                    </div>
                   </div>
-                );
-              })}
+                ))}
             </div>
 
             {/* Add new level */}
