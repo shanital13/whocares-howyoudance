@@ -67,6 +67,16 @@ const AdminClasses = () => {
 
   const handleDelete = (id: string) => setClasses((prev) => prev.filter((c) => c.id !== id));
 
+  const handleDuplicate = (cls: DanceClass) => {
+    const newClass: DanceClass = {
+      ...cls,
+      id: Date.now().toString(),
+      name: `${cls.name} (עותק)`,
+      created_at: new Date().toISOString(),
+    };
+    setClasses((prev) => [...prev, newClass]);
+  };
+
   const handleAddLevel = () => {
     if (newLevelForm.key && newLevelForm.label) {
       const key = newLevelForm.key.toLowerCase().replace(/\s+/g, '_');
