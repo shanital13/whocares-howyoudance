@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Clock, Sparkles } from 'lucide-react';
+import { Calendar, MapPin, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -26,69 +26,52 @@ const ClassesSection = () => {
   };
 
   return (
-    <section id="classes" className="py-24 px-6 bg-background relative">
-      <div className="absolute inset-0" style={{ background: 'var(--gradient-warm)' }} />
+    <section id="classes" className="py-24 px-6 bg-peach">
+      <div className="max-w-6xl mx-auto">
+        {/* Title */}
+        <h2 className="text-center mb-16 text-foreground">השיעורים הקרובים</h2>
 
-      <div className="max-w-6xl mx-auto relative">
-        <div className="text-center mb-16">
-          <span className="text-primary font-display text-sm tracking-wider mb-3 block">✦ שיעורים</span>
-          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">השיעורים הקרובים</h2>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">בחרי את השיעור שמתאים לך והצטרפי אלינו</p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-8">
+        {/* Classes Grid */}
+        <div className="grid md:grid-cols-3 gap-6">
           {mockClasses.map((cls, i) => (
             <Card
               key={cls.id}
-              className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-3xl bg-card animate-fade-in opacity-0"
-              style={{ animationDelay: `${0.1 + i * 0.15}s`, animationFillMode: 'forwards' }}
+              className="group border-0 overflow-hidden bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in opacity-0"
+              style={{ 
+                animationDelay: `${0.1 + i * 0.1}s`, 
+                animationFillMode: 'forwards',
+                borderRadius: '20px',
+                boxShadow: '0 10px 25px rgba(0,0,0,0.05)'
+              }}
             >
-              {/* Gradient top bar */}
-              <div className="h-1.5" style={{ background: 'var(--gradient-primary)' }} />
-              <CardContent className="p-4 md:p-7">
-                <div className="flex justify-between items-start mb-3 md:mb-5">
-                  <div>
-                    <h3 className="font-display text-xl md:text-2xl text-foreground group-hover:text-primary transition-colors">
-                      {cls.name}
-                    </h3>
-                    {cls.is_recurring && (
-                      <span className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                        <Sparkles className="h-3 w-3" />
-                        שיעור שבועי קבוע
-                      </span>
-                    )}
-                  </div>
-                  <Badge variant="outline" className={`${levelColors[cls.level]} border font-medium text-xs md:text-sm`}>
-                    {LEVEL_LABELS[cls.level]}
-                  </Badge>
+              <CardContent className="p-6">
+                {/* Class name */}
+                <div className="mb-4">
+                  <h3 className="text-foreground leading-tight">{cls.name}</h3>
                 </div>
 
-                <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
-                  <div className="flex items-center gap-2 md:gap-3 text-muted-foreground text-sm md:text-base">
-                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Calendar className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
-                    </div>
+                {/* Class details */}
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                    <Calendar className="h-4 w-4 text-primary shrink-0" />
                     <span>{formatDate(cls.date)}</span>
                   </div>
-                  <div className="flex items-center gap-2 md:gap-3 text-muted-foreground text-sm md:text-base">
-                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Clock className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
-                    </div>
+                  <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                    <Clock className="h-4 w-4 text-primary shrink-0" />
                     <span>{cls.time}</span>
                   </div>
-                  <div className="flex items-center gap-2 md:gap-3 text-muted-foreground text-sm md:text-base">
-                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
-                    </div>
+                  <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                    <MapPin className="h-4 w-4 text-primary shrink-0" />
                     <span>{cls.location}</span>
                   </div>
                 </div>
 
+                {/* Signup button */}
                 <Button
-                  className="w-full rounded-full font-bold text-sm md:text-base py-3 md:py-5 shadow-md hover:shadow-lg transition-all"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full font-medium transition-all hover:scale-105"
                   onClick={() => setSelectedClass(cls)}
                 >
-                  אני מגיעה! 💃
+                  נרשמת?
                 </Button>
               </CardContent>
             </Card>

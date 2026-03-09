@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Secular One", "sans-serif"],
-        body: ["Heebo", "sans-serif"],
+        display: ["Poppins", "sans-serif"],
+        body: ["Rubik", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -58,6 +58,9 @@ export default {
         warning: {
           DEFAULT: "hsl(var(--warning))",
           foreground: "hsl(var(--warning-foreground))",
+        },
+        peach: {
+          DEFAULT: "hsl(var(--peach))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
