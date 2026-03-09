@@ -292,30 +292,79 @@ const AdminClasses = () => {
       <Dialog open={levelDialogOpen} onOpenChange={setLevelDialogOpen}>
         <DialogContent className="w-[95vw] max-w-md rounded-xl">
           <DialogHeader>
-            <DialogTitle className="font-nehama text-[22px]">הוספת רמה חדשה</DialogTitle>
+            <DialogTitle className="font-nehama text-[22px]">ניהול רמות</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <div>
-              <Label className="font-body text-sm">שם הרמה (בעברית)</Label>
-              <Input
-                placeholder="למשל: בוגרות מתקדמות"
-                value={newLevelForm.label}
-                onChange={(e) => setNewLevelForm({ ...newLevelForm, label: e.target.value })}
-                className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
-              />
+            {/* Existing levels */}
+            <div className="space-y-2">
+              <Label className="font-body text-sm font-medium text-muted-foreground">רמות קיימות</Label>
+              {Object.entries(allLevels).map(([key, label]) => {
+                const isDefault = key in LEVEL_LABELS;
+                return (
+                  <div key={key} className="flex items-center justify-between py-2 px-3 rounded-[10px] border border-border/60 bg-background">
+                    <div className="flex items-center gap-2">
+                      <span className="font-body text-sm font-medium">{label}</span>
+                      <span className="text-xs text-muted-foreground font-body">({key})</span>
+                    </div>
+                    {!isDefault && (
+                      <div className="flex gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7"
+                          onClick={() => {
+                            const newLabel = prompt('שם חדש לרמה:', label);
+                            if (newLabel) {
+                              setCustomLevels((prev) => ({ ...prev, [key]: newLabel }));
+                            }
+                          }}
+                        >
+                          <Edit className="h-3.5 w-3.5" strokeWidth={1.8} />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-destructive"
+                          onClick={() => handleDeleteLevel(key)}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
+                        </Button>
+                      </div>
+                    )}
+                    {isDefault && (
+                      <Badge variant="outline" className="text-xs font-body">ברירת מחדל</Badge>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            <div>
-              <Label className="font-body text-sm">מזהה (באנגלית)</Label>
-              <Input
-                placeholder="למשל: expert"
-                value={newLevelForm.key}
-                onChange={(e) => setNewLevelForm({ ...newLevelForm, key: e.target.value })}
-                className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
-              />
+
+            {/* Add new level */}
+            <div className="pt-3 border-t border-border/50 space-y-3">
+              <Label className="font-body text-sm font-medium text-muted-foreground">הוספת רמה חדשה</Label>
+              <div className="grid grid-cols-2 gap-2">
+                <Input
+                  placeholder="שם (בעברית)"
+                  value={newLevelForm.label}
+                  onChange={(e) => setNewLevelForm({ ...newLevelForm, label: e.target.value })}
+                  className="h-10 rounded-[10px] border-border/60 focus:border-primary font-body text-sm"
+                />
+                <Input
+                  placeholder="מזהה (באנגלית)"
+                  value={newLevelForm.key}
+                  onChange={(e) => setNewLevelForm({ ...newLevelForm, key: e.target.value })}
+                  className="h-10 rounded-[10px] border-border/60 focus:border-primary font-body text-sm"
+                />
+              </div>
+              <Button
+                className="w-full h-9 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium text-sm"
+                onClick={handleAddLevel}
+                disabled={!newLevelForm.key || !newLevelForm.label}
+              >
+                <Plus className="h-4 w-4 ml-1" />
+                הוסף רמה
+              </Button>
             </div>
-            <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleAddLevel}>
-              הוסף רמה
-            </Button>
           </div>
         </DialogContent>
       </Dialog>
