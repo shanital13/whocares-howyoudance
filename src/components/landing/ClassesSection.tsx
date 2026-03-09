@@ -36,7 +36,7 @@ const ClassesSection = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Title */}
-        <h2 className="text-center mb-16 text-foreground">השיעורים הקרובים</h2>
+        <h2 className="font-nehama text-4xl md:text-5xl text-center mb-16 text-foreground">השיעורים הקרובים</h2>
 
         {/* Poster-style Cards Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
