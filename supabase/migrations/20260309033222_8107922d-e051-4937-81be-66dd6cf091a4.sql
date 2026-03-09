@@ -1,0 +1,1 @@
+ALTER TABLE public.dance_classes ADD COLUMN arrival_instructions text NOT NULL DEFAULT '';
