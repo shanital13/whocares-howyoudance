@@ -42,7 +42,7 @@ const HeroSection = () => {
         <button
           onClick={scrollToHowItWorks}
           className="mt-16 flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors mx-auto group animate-fade-in opacity-0"
-          style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
+          style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
         >
           <span className="text-sm font-body">איך זה עובד</span>
           <ChevronDown className="h-6 w-6 animate-bounce" />
