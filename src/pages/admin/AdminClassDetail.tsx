@@ -76,12 +76,38 @@ const AdminClassDetail = () => {
   attendanceData.forEach((a) => { attendanceMap[a.user_id] = a.attended; });
 
   const toggleAttendance = async (userId: string) => {
-    const newVal = !attendanceMap[userId];
+    const wasAttended = !!attendanceMap[userId];
+    const newVal = !wasAttended;
+
     await upsertAttendance.mutateAsync({ user_id: userId, class_id: id!, attended: newVal });
-    const punchCard = punchCards.find((pc) => pc.user_id === userId && pc.is_active && pc.entries_remaining > 0);
-    if (newVal && punchCard) {
-      toast({ title: 'ניקוב כרטיסיה', description: `נשארו ${punchCard.entries_remaining - 1} כניסות` });
+
+    const registration = registrations.find((r) => r.user_id === userId);
+    const currentEntryType = entryTypeMap[userId] || registration?.entry_type || 'single';
+    const activePunchCard = punchCards.find((pc) => pc.user_id === userId && pc.is_active);
+
+    if (currentEntryType === 'punch_card' && activePunchCard) {
+      const diff = newVal ? -1 : 1;
+      const nextEntries = Math.max(activePunchCard.entries_remaining + diff, 0);
+
+      const { error: punchCardErr } = await supabase
+        .from('punch_cards')
+        .update({
+          entries_remaining: nextEntries,
+          is_active: nextEntries > 0,
+        })
+        .eq('id', activePunchCard.id);
+
+      if (punchCardErr) {
+        toast({ title: 'שגיאה', description: 'לא ניתן לעדכן ניקובים בכרטיסיה', variant: 'destructive' });
+      } else {
+        queryClient.invalidateQueries({ queryKey: ['punch_cards'] });
+        toast({
+          title: newVal ? 'ניקוב כרטיסיה' : 'הוחזר ניקוב',
+          description: `נשארו ${nextEntries} כניסות`,
+        });
+      }
     }
+
     showSaved();
   };
 
