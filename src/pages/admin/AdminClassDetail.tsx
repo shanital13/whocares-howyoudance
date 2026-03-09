@@ -24,7 +24,7 @@ import { useClasses, useRegistrations, useProfiles, usePunchCards, useAttendance
 import { LEVEL_LABELS, SINGLE_PRICE, PUNCH_CARD_PRICE } from '@/lib/types';
 import { useState, useCallback, useMemo } from 'react';
 import { toast } from '@/hooks/use-toast';
-import { Check, X, Save, Plus, UserPlus, Search } from 'lucide-react';
+import { Check, X, Save, Plus, UserPlus, Search, Trash2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 
