@@ -125,9 +125,9 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </div>
 
               {/* למי מתאים */}
-              <div className="mb-4 bg-peach rounded-2xl p-3 text-right">
-                <p className="font-body font-medium text-foreground text-sm mb-1">למי מתאים?</p>
-                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+              <div className="mb-3 bg-peach rounded-xl p-2.5 text-right">
+                <p className="font-body font-medium text-foreground text-xs mb-0.5">למי מתאים?</p>
+                <p className="font-body text-muted-foreground text-xs leading-relaxed">
                   {content.forWhom}
                 </p>
               </div>
