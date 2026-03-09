@@ -14,6 +14,7 @@ const ClassesSection = () => {
     id: c.id,
     name: c.name,
     level: c.level,
+    description: c.description,
     location: c.location,
     date: c.date,
     time: c.time,

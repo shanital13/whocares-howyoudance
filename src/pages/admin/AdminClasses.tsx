@@ -95,6 +95,7 @@ const AdminClasses = () => {
     await createClass.mutateAsync({
       name: `${cls.name} (עותק)`,
       level: cls.level,
+      description: cls.description || '',
       location: cls.location,
       date: cls.date,
       time: cls.time,
