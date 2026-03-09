@@ -192,7 +192,7 @@ const AdminClients = () => {
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            {attendedClasses.length > 0 ? (
+            {registeredClasses.length > 0 ? (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
@@ -200,10 +200,11 @@ const AdminClients = () => {
                       <TableHead className="text-right font-body">שם השיעור</TableHead>
                       <TableHead className="text-right font-body">תאריך</TableHead>
                       <TableHead className="text-right hidden sm:table-cell font-body">מיקום</TableHead>
+                      <TableHead className="text-right font-body">סוג כניסה</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {attendedClasses.map((item) => (
+                    {registeredClasses.map((item) => (
                       <TableRow key={item.id} className="hover:bg-[hsl(0,0%,97%)]">
                         <TableCell className="font-body font-medium">{item.class?.name || '—'}</TableCell>
                         <TableCell className="font-body">
@@ -214,6 +215,7 @@ const AdminClients = () => {
                           }) : '—'}
                         </TableCell>
                         <TableCell className="font-body text-muted-foreground hidden sm:table-cell">{item.class?.location || '—'}</TableCell>
+                        <TableCell className="font-body">{item.entry_type === 'punch_card' ? 'כרטיסיה' : 'חד-פעמי'}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
