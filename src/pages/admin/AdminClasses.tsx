@@ -176,7 +176,7 @@ const AdminClasses = () => {
               <div className="space-y-1 text-sm text-muted-foreground mt-3 font-body">
                 <div className="flex items-center gap-2">
                   <Clock className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
-                  <span>{new Date(cls.date).toLocaleDateString('he-IL')} | {cls.time}</span>
+                  <span>{new Date(cls.date).toLocaleDateString('he-IL')} | {cls.time.slice(0, 5)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
