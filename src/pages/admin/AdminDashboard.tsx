@@ -1,41 +1,43 @@
 import { useMemo } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockClasses, mockProfiles, mockPayments, mockPunchCards } from '@/lib/mock-data';
+import { useClasses, useProfiles, usePayments, usePunchCards } from '@/hooks/use-supabase-data';
 import { Calendar, Users, DollarSign, CreditCard } from 'lucide-react';
 
 const AdminDashboard = () => {
-  // Current month revenue
+  const { data: classes = [] } = useClasses();
+  const { data: profiles = [] } = useProfiles();
+  const { data: payments = [] } = usePayments();
+  const { data: punchCards = [] } = usePunchCards();
+
   const now = new Date();
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-  const monthlyRevenue = mockPayments
+  const monthlyRevenue = payments
     .filter((p) => new Date(p.created_at) >= monthStart)
     .reduce((sum, p) => sum + p.amount, 0);
 
-  // Classes in the next 7 days
   const nextWeekEnd = new Date(now);
   nextWeekEnd.setDate(nextWeekEnd.getDate() + 7);
   const upcomingClasses = useMemo(() =>
-    mockClasses.filter((cls) => {
+    classes.filter((cls) => {
       const d = new Date(cls.date);
       return d >= now && d <= nextWeekEnd;
     }),
-    []
+    [classes]
   );
 
-  const activePunchCards = mockPunchCards.filter((pc) => pc.is_active).length;
+  const activePunchCards = punchCards.filter((pc) => pc.is_active).length;
 
-  // Last 10 payments
   const recentPayments = useMemo(() =>
-    [...mockPayments]
+    [...payments]
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice(0, 10),
-    []
+    [payments]
   );
 
   const stats = [
     { label: 'שיעורים קרובים (שבוע)', value: upcomingClasses.length, icon: Calendar, color: 'text-primary' },
-    { label: 'לקוחות רשומות', value: mockProfiles.length, icon: Users, color: 'text-secondary' },
+    { label: 'לקוחות רשומות', value: profiles.length, icon: Users, color: 'text-secondary' },
     { label: 'הכנסות (חודש נוכחי)', value: `${monthlyRevenue.toLocaleString()} ₪`, icon: DollarSign, color: 'text-success' },
     { label: 'כרטיסיות פעילות', value: activePunchCards, icon: CreditCard, color: 'text-warning' },
   ];
@@ -90,11 +92,11 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardContent className="space-y-3">
             {recentPayments.map((payment) => {
-              const profile = mockProfiles.find((p) => p.id === payment.user_id);
+              const profile = profiles.find((p) => p.id === payment.user_id);
               return (
                 <div key={payment.id} className="flex justify-between items-center py-2.5 border-b border-border/50 last:border-0">
                   <div>
-                    <p className="font-body font-medium text-foreground">{profile?.full_name}</p>
+                    <p className="font-body font-medium text-foreground">{profile?.full_name || '—'}</p>
                     <p className="text-sm font-body text-muted-foreground">
                       {payment.payment_type === 'single' ? 'כניסה חד-פעמית' : 'כרטיסיה'}
                     </p>
@@ -108,6 +110,9 @@ const AdminDashboard = () => {
                 </div>
               );
             })}
+            {recentPayments.length === 0 && (
+              <p className="text-muted-foreground font-body text-sm text-center py-4">אין תשלומים עדיין</p>
+            )}
           </CardContent>
         </Card>
       </div>
