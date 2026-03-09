@@ -77,6 +77,12 @@ const AdminClassDetail = () => {
           {new Date(danceClass.date).toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })}
           {' '} | {danceClass.time} | {danceClass.location}
         </p>
+
+        {/* Auto-save indicator */}
+        <div className={`mt-2 flex items-center gap-1.5 text-xs font-body transition-opacity duration-300 ${saveIndicator ? 'opacity-100' : 'opacity-0'}`}>
+          <Save className="h-3.5 w-3.5 text-success" strokeWidth={2} />
+          <span className="text-success font-medium">נשמר אוטומטית</span>
+        </div>
       </div>
 
       {/* Mobile cards */}
