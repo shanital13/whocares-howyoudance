@@ -270,7 +270,9 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                 <Check className="h-10 w-10 text-success" strokeWidth={2.5} />
               </motion.div>
 
-              <h2 className="font-nehama text-4xl text-foreground mb-3">המקום שמור! 🎉</h2>
+              <h2 className="font-nehama text-4xl text-foreground mb-3">
+                {isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉'}
+              </h2>
               <p className="font-body text-muted-foreground text-base leading-relaxed mb-2">
                 {fullName.trim()}, נתראה בשיעור!
               </p>
