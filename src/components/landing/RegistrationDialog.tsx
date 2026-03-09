@@ -79,7 +79,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
     <Dialog open={!!danceClass} onOpenChange={handleClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="font-display text-2xl">{danceClass.name}</DialogTitle>
+          <DialogTitle className="font-display text-2xl text-right">{danceClass.name}</DialogTitle>
           <DialogDescription>
             {new Date(danceClass.date).toLocaleDateString('he-IL', {
               weekday: 'long',
