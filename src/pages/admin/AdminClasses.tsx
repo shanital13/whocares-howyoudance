@@ -73,7 +73,7 @@ const AdminClasses = () => {
 
   const openEdit = (cls: any) => {
     setEditingClassId(cls.id);
-    setForm({ name: cls.name, level: cls.level, description: cls.description || '', location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring, max_participants: cls.max_participants ?? '' });
+    setForm({ name: cls.name, level: cls.level, description: cls.description || '', location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring, max_participants: cls.max_participants ?? '', arrival_instructions: cls.arrival_instructions || '' });
     setDialogOpen(true);
   };
 
