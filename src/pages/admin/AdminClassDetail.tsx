@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/table';
 import { mockClasses, mockRegistrations, mockProfiles, mockPunchCards, mockAttendance } from '@/lib/mock-data';
 import { LEVEL_LABELS, SINGLE_PRICE, PUNCH_CARD_PRICE } from '@/lib/types';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
-import { Check, X } from 'lucide-react';
+import { Check, X, Save } from 'lucide-react';
 
 const AdminClassDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,6 +34,12 @@ const AdminClassDetail = () => {
     registrations.forEach((r) => { map[r.user_id] = r.entry_type; });
     return map;
   });
+  const [saveIndicator, setSaveIndicator] = useState(false);
+
+  const showSaved = useCallback(() => {
+    setSaveIndicator(true);
+    setTimeout(() => setSaveIndicator(false), 1500);
+  }, []);
 
   if (!danceClass) {
     return <AdminLayout><p className="text-muted-foreground font-body">שיעור לא נמצא</p></AdminLayout>;
@@ -46,16 +52,17 @@ const AdminClassDetail = () => {
     if (newVal && punchCard && punchCard.entries_remaining > 0) {
       toast({ title: 'ניקוב כרטיסיה', description: `נשארו ${punchCard.entries_remaining - 1} כניסות` });
     }
+    showSaved();
   };
 
   const markPayment = (userId: string, amount: string) => {
     setPaymentMap((prev) => ({ ...prev, [userId]: amount }));
-    toast({ title: 'תשלום סומן', description: `${amount} ₪` });
+    showSaved();
   };
 
   const changeEntryType = (userId: string, type: string) => {
     setEntryTypeMap((prev) => ({ ...prev, [userId]: type }));
-    toast({ title: 'סוג כניסה עודכן', description: type === 'punch_card' ? 'כרטיסיה' : 'חד-פעמי' });
+    showSaved();
   };
 
   return (
@@ -69,6 +76,12 @@ const AdminClassDetail = () => {
           {new Date(danceClass.date).toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })}
           {' '} | {danceClass.time} | {danceClass.location}
         </p>
+
+        {/* Auto-save indicator */}
+        <div className={`mt-2 flex items-center gap-1.5 text-xs font-body transition-opacity duration-300 ${saveIndicator ? 'opacity-100' : 'opacity-0'}`}>
+          <Save className="h-3.5 w-3.5 text-success" strokeWidth={2} />
+          <span className="text-success font-medium">נשמר אוטומטית</span>
+        </div>
       </div>
 
       {/* Mobile cards */}

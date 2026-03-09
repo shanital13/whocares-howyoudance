@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/table';
 import { mockClasses } from '@/lib/mock-data';
 import { DanceClass, LEVEL_LABELS, ClassLevel } from '@/lib/types';
-import { Plus, Edit, Trash2, Users, MapPin, Clock, Tag, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Users, MapPin, Clock, Tag, X, Copy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminClasses = () => {
@@ -66,6 +66,16 @@ const AdminClasses = () => {
   };
 
   const handleDelete = (id: string) => setClasses((prev) => prev.filter((c) => c.id !== id));
+
+  const handleDuplicate = (cls: DanceClass) => {
+    const newClass: DanceClass = {
+      ...cls,
+      id: Date.now().toString(),
+      name: `${cls.name} (עותק)`,
+      created_at: new Date().toISOString(),
+    };
+    setClasses((prev) => [...prev, newClass]);
+  };
 
   const handleAddLevel = () => {
     if (newLevelForm.key && newLevelForm.label) {
@@ -148,6 +158,9 @@ const AdminClasses = () => {
                 <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => openEdit(cls)}>
                   <Edit className="h-4 w-4" strokeWidth={1.8} />
                 </Button>
+                <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => handleDuplicate(cls)} title="שכפל שיעור">
+                  <Copy className="h-4 w-4" strokeWidth={1.8} />
+                </Button>
                 <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => handleDelete(cls.id)}>
                   <Trash2 className="h-4 w-4 text-destructive" strokeWidth={1.8} />
                 </Button>
@@ -190,6 +203,9 @@ const AdminClasses = () => {
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => openEdit(cls)} className="h-8 w-8">
                         <Edit className="h-4 w-4" strokeWidth={1.8} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => handleDuplicate(cls)} className="h-8 w-8" title="שכפל שיעור">
+                        <Copy className="h-4 w-4" strokeWidth={1.8} />
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => handleDelete(cls.id)} className="h-8 w-8">
                         <Trash2 className="h-4 w-4 text-destructive" strokeWidth={1.8} />
