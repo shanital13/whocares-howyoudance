@@ -11,7 +11,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: '78vh' }}>
+    <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: '75vh' }}>
       {/* Background image */}
       <div className="absolute inset-0">
         <img
@@ -19,30 +19,32 @@ const HeroSection = () => {
           alt="למי אכפת איך את רוקדת?"
           className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-background/90" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto py-20">
-        {/* Main Headline */}
-        <h1 className="text-white font-display font-bold mb-16 drop-shadow-2xl animate-fade-in opacity-0 leading-tight" 
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto py-24">
+        {/* Main Headline - Playful, Large, Expressive */}
+        <h1 className="text-white font-display font-bold drop-shadow-2xl animate-fade-in opacity-0 leading-[1.1]" 
             style={{ 
-              fontSize: 'clamp(40px, 8vw, 64px)',
-              animationDelay: '0.1s', 
-              animationFillMode: 'forwards' 
+              fontSize: 'clamp(48px, 10vw, 72px)',
+              animationDelay: '0.2s', 
+              animationFillMode: 'forwards',
+              letterSpacing: '-0.02em'
             }}>
           למי אכפת<br />
           איך את רוקדת?
         </h1>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator - playful and inviting */}
         <button
           onClick={scrollToHowItWorks}
-          className="mt-8 flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors mx-auto group animate-fade-in opacity-0"
-          style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
+          className="mt-20 flex flex-col items-center gap-3 text-white/90 hover:text-white transition-all mx-auto group animate-fade-in opacity-0 hover:scale-110"
+          style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+          aria-label="גלול למטה"
         >
-          <span className="text-sm font-body tracking-wide">איך זה עובד</span>
-          <ChevronDown className="h-6 w-6 animate-bounce" />
+          <span className="text-base font-body tracking-wide font-medium">איך זה עובד</span>
+          <ChevronDown className="h-7 w-7 animate-float" strokeWidth={2.5} />
         </button>
       </div>
     </section>
