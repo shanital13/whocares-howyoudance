@@ -1,9 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +9,7 @@ import { DanceClass, SINGLE_PRICE, PUNCH_CARD_PRICE, PUNCH_CARD_ENTRIES } from '
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
 
 interface Props {
   danceClass: DanceClass | null;
