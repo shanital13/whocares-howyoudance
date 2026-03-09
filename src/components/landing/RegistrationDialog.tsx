@@ -88,12 +88,13 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
     if (!validate() || !danceClass) return;
     setSubmitting(true);
     try {
-      // Check if profile exists by email
-      const { data: existing } = await supabase
+      // Check if profile exists by email (use limit 1 to avoid maybeSingle error on duplicates)
+      const { data: existingRows } = await supabase
         .from('profiles')
         .select('id')
-        .eq('email', email.trim())
-        .maybeSingle();
+        .eq('email', email.trim().toLowerCase())
+        .limit(1);
+      const existing = existingRows?.[0] ?? null;
 
       let userId: string;
 
@@ -124,7 +125,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
         const { error: profileErr } = await supabase.from('profiles').insert({
           id: userId,
           full_name: fullName.trim(),
-          email: email.trim(),
+          email: email.trim().toLowerCase(),
           phone: phone.trim() || null,
         });
         if (profileErr) throw profileErr;
