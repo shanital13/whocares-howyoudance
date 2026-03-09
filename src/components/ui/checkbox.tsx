@@ -1,26 +1,98 @@
-import * as React from "react";
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { Check } from "lucide-react";
+"use client"
 
-import { cn } from "@/lib/utils";
+import * as React from "react"
+import { Check, Minus } from "lucide-react"
+import {
+  Checkbox as AriaCheckbox,
+  CheckboxGroup as AriaCheckboxGroup,
+  CheckboxGroupProps as AriaCheckboxGroupProps,
+  ValidationResult as AriaValidationResult,
+  composeRenderProps,
+  Text,
+  type CheckboxProps as AriaCheckboxProps,
+} from "react-aria-components"
 
-const Checkbox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <CheckboxPrimitive.Root
-    ref={ref}
-    className={cn(
-      "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-      className,
+import { cn } from "@/lib/utils"
+
+import { FieldError, Label, labelVariants } from "@/components/ui/field"
+
+const CheckboxGroup = AriaCheckboxGroup
+
+const Checkbox = ({ className, children, ...props }: AriaCheckboxProps) => (
+  <AriaCheckbox
+    className={composeRenderProps(className, (className) =>
+      cn(
+        "group/checkbox flex items-center gap-x-2",
+        /* Disabled */
+        "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70",
+        labelVariants,
+        className
+      )
     )}
     {...props}
   >
-    <CheckboxPrimitive.Indicator className={cn("flex items-center justify-center text-current")}>
-      <Check className="h-4 w-4" />
-    </CheckboxPrimitive.Indicator>
-  </CheckboxPrimitive.Root>
-));
-Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+    {composeRenderProps(children, (children, renderProps) => (
+      <>
+        <div
+          className={cn(
+            "flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border border-primary text-primary-foreground ring-offset-background transition-colors",
+            /* Focus Visible */
+            "group-data-[focus-visible]:outline-none group-data-[focus-visible]:ring-2 group-data-[focus-visible]:ring-ring group-data-[focus-visible]:ring-offset-2",
+            /* Selected */
+            "group-data-[selected]:bg-primary group-data-[selected]:text-primary-foreground",
+            /* Disabled */
+            "group-data-[disabled]:cursor-not-allowed group-data-[disabled]:opacity-50"
+          )}
+        >
+          {renderProps.isIndeterminate ? (
+            <Minus className="h-3 w-3" />
+          ) : renderProps.isSelected ? (
+            <Check className="h-3 w-3" />
+          ) : null}
+        </div>
 
-export { Checkbox };
+        {children}
+      </>
+    ))}
+  </AriaCheckbox>
+)
+
+interface JollyCheckboxGroupProps extends AriaCheckboxGroupProps {
+  label?: string
+  description?: string
+  errorMessage?: string | ((validation: AriaValidationResult) => string)
+}
+
+function JollyCheckboxGroup({
+  label,
+  description,
+  errorMessage,
+  className,
+  children,
+  ...props
+}: JollyCheckboxGroupProps) {
+  return (
+    <AriaCheckboxGroup
+      className={composeRenderProps(className, (className) =>
+        cn("group flex flex-col gap-2", className)
+      )}
+      {...props}
+    >
+      {composeRenderProps(children, (children) => (
+        <>
+          <Label>{label}</Label>
+          {children}
+          {description && (
+            <Text className="text-sm text-muted-foreground" slot="description">
+              {description}
+            </Text>
+          )}
+          <FieldError>{errorMessage}</FieldError>
+        </>
+      ))}
+    </AriaCheckboxGroup>
+  )
+}
+
+export { Checkbox, CheckboxGroup, JollyCheckboxGroup }
+export type { JollyCheckboxGroupProps }
