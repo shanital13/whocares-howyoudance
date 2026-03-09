@@ -1,6 +1,6 @@
 import { MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { type DanceClass } from '@/lib/types';
+import { type DanceClass, LEVEL_LABELS } from '@/lib/types';
 import { motion } from 'framer-motion';
 
 interface EventCardProps {
