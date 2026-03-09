@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
   danceClass: DanceClass | null;
+  isWaitlist?: boolean;
   onClose: () => void;
 }
 
