@@ -8,6 +8,8 @@ import { DanceClass, SINGLE_PRICE, PUNCH_CARD_PRICE, PUNCH_CARD_ENTRIES } from '
 import { useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
   danceClass: DanceClass | null;
@@ -57,6 +59,8 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleClose = () => {
     setEntryType(null);
@@ -65,6 +69,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
     setEmail('');
     setErrors({});
     setSubmitted(false);
+    setSubmitting(false);
     onClose();
   };
 
@@ -78,9 +83,54 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    if (validate()) {
+  const handleSubmit = async () => {
+    if (!validate() || !danceClass) return;
+    setSubmitting(true);
+    try {
+      // Check if profile exists by email
+      const { data: existing } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('email', email.trim())
+        .maybeSingle();
+
+      let userId: string;
+
+      if (existing) {
+        userId = existing.id;
+        // Update name/phone if needed
+        await supabase.from('profiles').update({
+          full_name: fullName.trim(),
+          phone: phone.trim() || null,
+        }).eq('id', userId);
+      } else {
+        // Create new profile
+        userId = crypto.randomUUID();
+        const { error: profileErr } = await supabase.from('profiles').insert({
+          id: userId,
+          full_name: fullName.trim(),
+          email: email.trim(),
+          phone: phone.trim() || null,
+        });
+        if (profileErr) throw profileErr;
+      }
+
+      // Create registration
+      const { error: regErr } = await supabase.from('registrations').insert({
+        user_id: userId,
+        class_id: danceClass.id,
+        entry_type: entryType!,
+      });
+      if (regErr) throw regErr;
+
+      queryClient.invalidateQueries({ queryKey: ['registrations'] });
+      queryClient.invalidateQueries({ queryKey: ['profiles'] });
       setSubmitted(true);
+    } catch (err: any) {
+      console.error('Registration error:', err);
+      setErrors({ submit: 'שגיאה בהרשמה, נסי שוב' });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -235,13 +285,16 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                 {errors.entryType && <p className="text-[11px] text-destructive text-right mt-1">{errors.entryType}</p>}
               </div>
 
+              {errors.submit && <p className="text-[11px] text-destructive text-right mb-2">{errors.submit}</p>}
+
               {/* Submit button */}
               <button
                 onClick={handleSubmit}
-                className="w-full py-2.5 rounded-full font-nehama text-base text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
+                disabled={submitting}
+                className="w-full py-2.5 rounded-full font-nehama text-base text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100 disabled:opacity-60 disabled:pointer-events-none"
                 style={{ background: isWaitlist ? 'hsl(var(--foreground))' : 'hsl(var(--primary))' }}
               >
-                {isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
+                {submitting ? 'שומרת...' : isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
               </button>
             </motion.div>
           ) : (
