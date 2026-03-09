@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         display: ["Poppins", "sans-serif"],
         body: ["Rubik", "sans-serif"],
+        nehama: ["Playpen Sans Hebrew", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",
