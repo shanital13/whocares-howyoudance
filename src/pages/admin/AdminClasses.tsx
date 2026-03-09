@@ -87,13 +87,13 @@ const AdminClasses = () => {
   return (
     <AdminLayout>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="font-display text-2xl md:text-3xl">ניהול שיעורים</h1>
+        <h1 className="font-nehama text-[28px] md:text-[32px] text-foreground">ניהול שיעורים</h1>
         <div className="flex gap-2">
-          <Button onClick={() => setLevelDialogOpen(true)} variant="outline" size="sm">
-            <Tag className="h-4 w-4 ml-1" />
+          <Button onClick={() => setLevelDialogOpen(true)} variant="outline" size="sm" className="rounded-[10px] border-border/60 font-body">
+            <Tag className="h-4 w-4 ml-1" strokeWidth={1.8} />
             רמות
           </Button>
-          <Button onClick={openNew} className="rounded-full" size="sm">
+          <Button onClick={openNew} size="sm" className="rounded-[10px] bg-primary hover:bg-primary/90 font-body">
             <Plus className="h-4 w-4 ml-1" />
             שיעור חדש
           </Button>
@@ -103,7 +103,7 @@ const AdminClasses = () => {
       {Object.keys(customLevels).length > 0 && (
         <div className="mb-4 flex flex-wrap gap-2">
           {Object.entries(customLevels).map(([key, label]) => (
-            <Badge key={key} variant="secondary" className="gap-2">
+            <Badge key={key} variant="secondary" className="gap-2 font-body">
               {label}
               <button onClick={() => handleDeleteLevel(key)} className="hover:text-destructive">
                 <X className="h-3 w-3" />
@@ -116,40 +116,40 @@ const AdminClasses = () => {
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
         {classes.map((cls) => (
-          <Card key={cls.id}>
+          <Card key={cls.id} className="rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <p className="font-semibold">{cls.name}</p>
-                  <Badge variant="outline" className="mt-1 text-xs">{LEVEL_LABELS[cls.level]}</Badge>
+                  <p className="font-body font-semibold text-foreground">{cls.name}</p>
+                  <Badge variant="outline" className="mt-1 text-xs font-body">{LEVEL_LABELS[cls.level]}</Badge>
                 </div>
                 {cls.is_recurring
-                  ? <Badge variant="secondary">שבועי</Badge>
-                  : <Badge variant="outline">חד-פעמי</Badge>
+                  ? <Badge variant="secondary" className="font-body">שבועי</Badge>
+                  : <Badge variant="outline" className="font-body">חד-פעמי</Badge>
                 }
               </div>
-              <div className="space-y-1 text-sm text-muted-foreground mt-3">
+              <div className="space-y-1 text-sm text-muted-foreground mt-3 font-body">
                 <div className="flex items-center gap-2">
-                  <Clock className="h-3.5 w-3.5 shrink-0" />
+                  <Clock className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                   <span>{new Date(cls.date).toLocaleDateString('he-IL')} | {cls.time}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-3.5 w-3.5 shrink-0" />
+                  <MapPin className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                   <span className="truncate">{cls.location}</span>
                 </div>
               </div>
-              <div className="flex gap-2 mt-3 pt-3 border-t">
-                <Button variant="outline" size="sm" className="flex-1" asChild>
+              <div className="flex gap-2 mt-3 pt-3 border-t border-border/50">
+                <Button variant="outline" size="sm" className="flex-1 rounded-[10px] font-body" asChild>
                   <Link to={`/admin/class/${cls.id}`}>
-                    <Users className="h-4 w-4 ml-1" />
+                    <Users className="h-4 w-4 ml-1" strokeWidth={1.8} />
                     משתתפות
                   </Link>
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => openEdit(cls)}>
-                  <Edit className="h-4 w-4" />
+                <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => openEdit(cls)}>
+                  <Edit className="h-4 w-4" strokeWidth={1.8} />
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => handleDelete(cls.id)}>
-                  <Trash2 className="h-4 w-4 text-destructive" />
+                <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => handleDelete(cls.id)}>
+                  <Trash2 className="h-4 w-4 text-destructive" strokeWidth={1.8} />
                 </Button>
               </div>
             </CardContent>
@@ -158,41 +158,41 @@ const AdminClasses = () => {
       </div>
 
       {/* Desktop table */}
-      <Card className="hidden md:block">
+      <Card className="hidden md:block rounded-xl border-border/60 shadow-[0_6px_16px_rgba(0,0,0,0.05)]">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>שם השיעור</TableHead>
-                <TableHead>רמה</TableHead>
-                <TableHead>מיקום</TableHead>
-                <TableHead>תאריך</TableHead>
-                <TableHead>שעה</TableHead>
-                <TableHead>סוג</TableHead>
-                <TableHead>פעולות</TableHead>
+              <TableRow className="bg-[hsl(0,0%,95%)] hover:bg-[hsl(0,0%,95%)]">
+                <TableHead className="font-body">שם השיעור</TableHead>
+                <TableHead className="font-body">רמה</TableHead>
+                <TableHead className="font-body">מיקום</TableHead>
+                <TableHead className="font-body">תאריך</TableHead>
+                <TableHead className="font-body">שעה</TableHead>
+                <TableHead className="font-body">סוג</TableHead>
+                <TableHead className="font-body">פעולות</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {classes.map((cls) => (
-                <TableRow key={cls.id}>
-                  <TableCell className="font-medium">{cls.name}</TableCell>
-                  <TableCell><Badge variant="outline">{LEVEL_LABELS[cls.level]}</Badge></TableCell>
-                  <TableCell>{cls.location}</TableCell>
-                  <TableCell>{new Date(cls.date).toLocaleDateString('he-IL')}</TableCell>
-                  <TableCell>{cls.time}</TableCell>
+                <TableRow key={cls.id} className="hover:bg-[hsl(0,0%,97%)] transition-colors">
+                  <TableCell className="font-body font-medium">{cls.name}</TableCell>
+                  <TableCell><Badge variant="outline" className="font-body">{LEVEL_LABELS[cls.level]}</Badge></TableCell>
+                  <TableCell className="font-body">{cls.location}</TableCell>
+                  <TableCell className="font-body">{new Date(cls.date).toLocaleDateString('he-IL')}</TableCell>
+                  <TableCell className="font-body">{cls.time}</TableCell>
                   <TableCell>
-                    {cls.is_recurring ? <Badge variant="secondary">שבועי</Badge> : <Badge variant="outline">חד-פעמי</Badge>}
+                    {cls.is_recurring ? <Badge variant="secondary" className="font-body">שבועי</Badge> : <Badge variant="outline" className="font-body">חד-פעמי</Badge>}
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" asChild title="רשימת משתתפות">
-                        <Link to={`/admin/class/${cls.id}`}><Users className="h-4 w-4" /></Link>
+                      <Button variant="ghost" size="icon" asChild title="רשימת משתתפות" className="h-8 w-8">
+                        <Link to={`/admin/class/${cls.id}`}><Users className="h-4 w-4" strokeWidth={1.8} /></Link>
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => openEdit(cls)}>
-                        <Edit className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" onClick={() => openEdit(cls)} className="h-8 w-8">
+                        <Edit className="h-4 w-4" strokeWidth={1.8} />
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => handleDelete(cls.id)}>
-                        <Trash2 className="h-4 w-4 text-destructive" />
+                      <Button variant="ghost" size="icon" onClick={() => handleDelete(cls.id)} className="h-8 w-8">
+                        <Trash2 className="h-4 w-4 text-destructive" strokeWidth={1.8} />
                       </Button>
                     </div>
                   </TableCell>
@@ -204,40 +204,40 @@ const AdminClasses = () => {
       </Card>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="w-[95vw] max-w-lg">
+        <DialogContent className="w-[95vw] max-w-lg rounded-xl">
           <DialogHeader>
-            <DialogTitle className="font-display text-xl">
+            <DialogTitle className="font-nehama text-[22px]">
               {editingClass ? 'עריכת שיעור' : 'שיעור חדש'}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label>שם השיעור</Label>
-              <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+              <Label className="font-body text-sm">שם השיעור</Label>
+              <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
             </div>
             <div>
-              <Label>רמה</Label>
+              <Label className="font-body text-sm">רמה</Label>
               <Select value={form.level} onValueChange={(v) => setForm({ ...form, level: v as ClassLevel })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="h-11 rounded-[10px] border-border/60 font-body"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {Object.entries(allLevels).map(([key, label]) => (
-                    <SelectItem key={key} value={key}>{label}</SelectItem>
+                    <SelectItem key={key} value={key} className="font-body">{label}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <Label>מיקום</Label>
-              <Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} />
+              <Label className="font-body text-sm">מיקום</Label>
+              <Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>תאריך</Label>
-                <Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
+                <Label className="font-body text-sm">תאריך</Label>
+                <Input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
               </div>
               <div>
-                <Label>שעה</Label>
-                <Input type="time" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} />
+                <Label className="font-body text-sm">שעה</Label>
+                <Input type="time" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -246,11 +246,11 @@ const AdminClasses = () => {
                 id="recurring"
                 checked={form.is_recurring}
                 onChange={(e) => setForm({ ...form, is_recurring: e.target.checked })}
-                className="rounded"
+                className="rounded accent-primary"
               />
-              <Label htmlFor="recurring">שיעור שבועי קבוע</Label>
+              <Label htmlFor="recurring" className="font-body text-sm">שיעור שבועי קבוע</Label>
             </div>
-            <Button className="w-full" onClick={handleSave}>
+            <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleSave}>
               {editingClass ? 'שמור שינויים' : 'צור שיעור'}
             </Button>
           </div>
@@ -258,28 +258,30 @@ const AdminClasses = () => {
       </Dialog>
 
       <Dialog open={levelDialogOpen} onOpenChange={setLevelDialogOpen}>
-        <DialogContent className="w-[95vw] max-w-md">
+        <DialogContent className="w-[95vw] max-w-md rounded-xl">
           <DialogHeader>
-            <DialogTitle className="font-display text-xl">הוספת רמה חדשה</DialogTitle>
+            <DialogTitle className="font-nehama text-[22px]">הוספת רמה חדשה</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label>שם הרמה (בעברית)</Label>
+              <Label className="font-body text-sm">שם הרמה (בעברית)</Label>
               <Input
                 placeholder="למשל: בוגרות מתקדמות"
                 value={newLevelForm.label}
                 onChange={(e) => setNewLevelForm({ ...newLevelForm, label: e.target.value })}
+                className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
               />
             </div>
             <div>
-              <Label>מזהה (באנגלית)</Label>
+              <Label className="font-body text-sm">מזהה (באנגלית)</Label>
               <Input
                 placeholder="למשל: expert"
                 value={newLevelForm.key}
                 onChange={(e) => setNewLevelForm({ ...newLevelForm, key: e.target.value })}
+                className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
               />
             </div>
-            <Button className="w-full" onClick={handleAddLevel}>
+            <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleAddLevel}>
               הוסף רמה
             </Button>
           </div>
