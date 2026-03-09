@@ -125,6 +125,26 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
 
       queryClient.invalidateQueries({ queryKey: ['registrations'] });
       queryClient.invalidateQueries({ queryKey: ['profiles'] });
+
+      // Send webhook with registration details
+      try {
+        await fetch('https://hook.eu2.make.com/miyvfiv1ru7thsy7lix5ty11xpxb5an7', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name: fullName.trim(),
+            phone: phone.trim(),
+            class_name: danceClass.name,
+            class_level: danceClass.level,
+            class_date: danceClass.date,
+            class_time: danceClass.time,
+            entry_type: entryType,
+          }),
+        });
+      } catch (webhookErr) {
+        console.warn('Webhook failed (non-blocking):', webhookErr);
+      }
+
       setSubmitted(true);
     } catch (err: any) {
       console.error('Registration error:', err);
