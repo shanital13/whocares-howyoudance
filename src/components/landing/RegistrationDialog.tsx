@@ -102,7 +102,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.35 }}
-              className="relative p-7"
+              className="relative p-5"
             >
               {/* Close button */}
               <button
