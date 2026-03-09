@@ -113,7 +113,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister }: Event
         {/* Badge sticker */}
         {badge && (
           <div className="absolute top-4 left-4 z-20">
-            <div className="bg-background text-foreground px-3 py-1 rounded-full text-xs font-bold shadow-md rotate-[-8deg]">
+            <div className="bg-background text-foreground px-4 py-1.5 rounded-full text-sm font-bold shadow-md rotate-[-8deg]">
               {badge}
             </div>
           </div>
