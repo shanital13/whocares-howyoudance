@@ -10,12 +10,12 @@ const steps = [
   {
     icon: MapPin,
     title: 'מגיעות',
-    description: 'בלי ניסיון. פשוט באות.',
+    description: 'לא צריך ניסיון.',
   },
   {
     icon: Music,
     title: 'רוקדות',
-    description: 'שעה של מוזיקה, תנועה ושחרור.',
+    description: 'מוזיקה, תנועה ושחרור.',
   },
 ];
 
