@@ -33,7 +33,7 @@ const HeroSection = () => {
         <Button
           onClick={scrollToClasses}
           className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-7 py-6 h-auto rounded-full shadow-xl hover:shadow-2xl transition-all hover:scale-105 animate-fade-in opacity-0"
-          style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+          style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
         >
           בואי לרקוד
         </Button>
