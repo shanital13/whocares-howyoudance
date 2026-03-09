@@ -72,7 +72,7 @@ const HowItWorksSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                  whileHover={{ scale: 1.08, y: -8 }}
+                  whileHover={{ scale: 1.1, y: -8 }}
                   className={`flex flex-col items-center text-center ${verticalOffset}`}
                 >
                   <div 

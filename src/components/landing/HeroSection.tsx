@@ -12,7 +12,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: '75vh' }}>
+    <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: '78vh' }}>
       {/* Background image */}
       <div className="absolute inset-0">
         <img
