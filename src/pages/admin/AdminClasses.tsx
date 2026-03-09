@@ -106,6 +106,7 @@ const AdminClasses = () => {
       is_recurring: cls.is_recurring,
       recurring_day: cls.recurring_day,
       max_participants: cls.max_participants,
+      arrival_instructions: cls.arrival_instructions || '',
     });
   };
 
