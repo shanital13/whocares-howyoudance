@@ -132,7 +132,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </div>
 
               {/* Pricing */}
-              <div className="mb-5 text-right space-y-1">
+              <div className="mb-4 text-right space-y-1">
                 <div className="flex justify-between items-center">
                   <span className="font-body font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
                   <span className="font-body text-sm text-foreground">כניסה חד פעמית</span>
