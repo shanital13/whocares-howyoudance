@@ -89,7 +89,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
 
   return (
     <Dialog open={!!danceClass} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
+      <DialogContent className="max-w-sm p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background max-h-[90vh] overflow-y-auto">
         {/* Decorative top blob */}
         <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary/8 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-secondary/8 blur-3xl pointer-events-none" />
@@ -102,7 +102,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.35 }}
-              className="relative p-7"
+              className="relative p-5"
             >
               {/* Close button */}
               <button
@@ -113,9 +113,9 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </button>
 
               {/* Title */}
-              <div className="mb-5 text-right">
-                <div className="text-3xl mb-2">💃</div>
-                <h2 className="font-nehama text-3xl text-foreground leading-tight mb-1">
+              <div className="mb-4 text-right">
+                <div className="text-2xl mb-1">💃</div>
+                <h2 className="font-nehama text-2xl text-foreground leading-tight mb-1">
                   {content.title}
                 </h2>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">
@@ -124,7 +124,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </div>
 
               {/* למי מתאים */}
-              <div className="mb-5 bg-peach rounded-2xl p-4 text-right">
+              <div className="mb-4 bg-peach rounded-2xl p-3 text-right">
                 <p className="font-body font-medium text-foreground text-sm mb-1">למי מתאים?</p>
                 <p className="font-body text-muted-foreground text-sm leading-relaxed">
                   {content.forWhom}
@@ -132,7 +132,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </div>
 
               {/* Pricing */}
-              <div className="mb-5 text-right space-y-1">
+              <div className="mb-4 text-right space-y-1">
                 <div className="flex justify-between items-center">
                   <span className="font-body font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
                   <span className="font-body text-sm text-foreground">כניסה חד פעמית</span>
@@ -147,7 +147,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </div>
 
               {/* Form */}
-              <div className="space-y-3 mb-5">
+              <div className="space-y-2.5 mb-4">
                 <div>
                   <Label className="text-right block text-sm font-medium mb-1">
                     שם מלא <span className="text-primary">*</span>
@@ -198,7 +198,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </div>
 
               {/* Entry type selector */}
-              <div className="mb-5">
+              <div className="mb-4">
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => setEntryType('single')}
@@ -237,7 +237,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               {/* Submit button */}
               <button
                 onClick={handleSubmit}
-                className="w-full py-4 rounded-full font-nehama text-xl text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
+                className="w-full py-3 rounded-full font-nehama text-lg text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
                 style={{ background: 'hsl(var(--primary))' }}
               >
                 שומרת מקום ✨
