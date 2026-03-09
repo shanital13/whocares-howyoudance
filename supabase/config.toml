@@ -1,1 +1,4 @@
 project_id = "isghpsxcyfakccbubqyk"
+
+[functions.class-reminder-webhook]
+verify_jwt = false
