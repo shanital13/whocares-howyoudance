@@ -45,11 +45,6 @@ const AdminClassDetail = () => {
     return <AdminLayout><p className="text-muted-foreground font-body">שיעור לא נמצא</p></AdminLayout>;
   }
 
-  const showSaved = useCallback(() => {
-    setSaveIndicator(true);
-    setTimeout(() => setSaveIndicator(false), 1500);
-  }, []);
-
   const toggleAttendance = (userId: string) => {
     const newVal = !attendanceMap[userId];
     setAttendanceMap((prev) => ({ ...prev, [userId]: newVal }));
