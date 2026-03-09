@@ -285,13 +285,16 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                 {errors.entryType && <p className="text-[11px] text-destructive text-right mt-1">{errors.entryType}</p>}
               </div>
 
+              {errors.submit && <p className="text-[11px] text-destructive text-right mb-2">{errors.submit}</p>}
+
               {/* Submit button */}
               <button
                 onClick={handleSubmit}
-                className="w-full py-2.5 rounded-full font-nehama text-base text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
+                disabled={submitting}
+                className="w-full py-2.5 rounded-full font-nehama text-base text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100 disabled:opacity-60 disabled:pointer-events-none"
                 style={{ background: isWaitlist ? 'hsl(var(--foreground))' : 'hsl(var(--primary))' }}
               >
-                {isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
+                {submitting ? 'שומרת...' : isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
               </button>
             </motion.div>
           ) : (
