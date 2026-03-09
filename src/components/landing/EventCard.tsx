@@ -37,8 +37,6 @@ const cardStyles = [
   },
 ];
 
-// Badge options
-const badges = ['חדש', 'כמעט מלא', null, 'אחרונים'];
 
 const EventCard = ({ danceClass, variant, onRegister }: EventCardProps) => {
   const style = cardStyles[variant % cardStyles.length];
