@@ -59,6 +59,8 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleClose = () => {
     setEntryType(null);
@@ -67,6 +69,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
     setEmail('');
     setErrors({});
     setSubmitted(false);
+    setSubmitting(false);
     onClose();
   };
 
@@ -80,9 +83,54 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    if (validate()) {
+  const handleSubmit = async () => {
+    if (!validate() || !danceClass) return;
+    setSubmitting(true);
+    try {
+      // Check if profile exists by email
+      const { data: existing } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('email', email.trim())
+        .maybeSingle();
+
+      let userId: string;
+
+      if (existing) {
+        userId = existing.id;
+        // Update name/phone if needed
+        await supabase.from('profiles').update({
+          full_name: fullName.trim(),
+          phone: phone.trim() || null,
+        }).eq('id', userId);
+      } else {
+        // Create new profile
+        userId = crypto.randomUUID();
+        const { error: profileErr } = await supabase.from('profiles').insert({
+          id: userId,
+          full_name: fullName.trim(),
+          email: email.trim(),
+          phone: phone.trim() || null,
+        });
+        if (profileErr) throw profileErr;
+      }
+
+      // Create registration
+      const { error: regErr } = await supabase.from('registrations').insert({
+        user_id: userId,
+        class_id: danceClass.id,
+        entry_type: entryType!,
+      });
+      if (regErr) throw regErr;
+
+      queryClient.invalidateQueries({ queryKey: ['registrations'] });
+      queryClient.invalidateQueries({ queryKey: ['profiles'] });
       setSubmitted(true);
+    } catch (err: any) {
+      console.error('Registration error:', err);
+      setErrors({ submit: 'שגיאה בהרשמה, נסי שוב' });
+    } finally {
+      setSubmitting(false);
     }
   };
 
