@@ -1,16 +1,42 @@
+import { useMemo } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { mockClasses, mockProfiles, mockPayments, mockPunchCards } from '@/lib/mock-data';
 import { Calendar, Users, DollarSign, CreditCard } from 'lucide-react';
 
 const AdminDashboard = () => {
-  const totalRevenue = mockPayments.reduce((sum, p) => sum + p.amount, 0);
+  // Current month revenue
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthlyRevenue = mockPayments
+    .filter((p) => new Date(p.created_at) >= monthStart)
+    .reduce((sum, p) => sum + p.amount, 0);
+
+  // Classes in the next 7 days
+  const nextWeekEnd = new Date(now);
+  nextWeekEnd.setDate(nextWeekEnd.getDate() + 7);
+  const upcomingClasses = useMemo(() =>
+    mockClasses.filter((cls) => {
+      const d = new Date(cls.date);
+      return d >= now && d <= nextWeekEnd;
+    }),
+    []
+  );
+
   const activePunchCards = mockPunchCards.filter((pc) => pc.is_active).length;
 
+  // Last 10 payments
+  const recentPayments = useMemo(() =>
+    [...mockPayments]
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .slice(0, 10),
+    []
+  );
+
   const stats = [
-    { label: 'שיעורים קרובים', value: mockClasses.length, icon: Calendar, color: 'text-primary' },
+    { label: 'שיעורים קרובים (שבוע)', value: upcomingClasses.length, icon: Calendar, color: 'text-primary' },
     { label: 'לקוחות רשומות', value: mockProfiles.length, icon: Users, color: 'text-secondary' },
-    { label: 'הכנסות (₪)', value: totalRevenue.toLocaleString(), icon: DollarSign, color: 'text-success' },
+    { label: 'הכנסות (חודש נוכחי)', value: `${monthlyRevenue.toLocaleString()} ₪`, icon: DollarSign, color: 'text-success' },
     { label: 'כרטיסיות פעילות', value: activePunchCards, icon: CreditCard, color: 'text-warning' },
   ];
 
@@ -38,14 +64,19 @@ const AdminDashboard = () => {
             <CardTitle className="font-nehama text-[22px]">שיעורים קרובים</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {mockClasses.slice(0, 3).map((cls) => (
+            {upcomingClasses.length === 0 && (
+              <p className="text-muted-foreground font-body text-sm text-center py-4">אין שיעורים בשבוע הקרוב</p>
+            )}
+            {upcomingClasses.map((cls) => (
               <div key={cls.id} className="flex justify-between items-center py-2.5 border-b border-border/50 last:border-0">
                 <div>
                   <p className="font-body font-medium text-foreground">{cls.name}</p>
                   <p className="text-sm font-body text-muted-foreground">{cls.location}</p>
                 </div>
                 <div className="text-left">
-                  <p className="text-sm font-body text-foreground">{new Date(cls.date).toLocaleDateString('he-IL')}</p>
+                  <p className="text-sm font-body text-foreground">
+                    {new Date(cls.date).toLocaleDateString('he-IL', { weekday: 'short', day: 'numeric', month: 'short' })}
+                  </p>
                   <p className="text-sm font-body text-muted-foreground">{cls.time}</p>
                 </div>
               </div>
@@ -58,7 +89,7 @@ const AdminDashboard = () => {
             <CardTitle className="font-nehama text-[22px]">תשלומים אחרונים</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {mockPayments.slice(0, 5).map((payment) => {
+            {recentPayments.map((payment) => {
               const profile = mockProfiles.find((p) => p.id === payment.user_id);
               return (
                 <div key={payment.id} className="flex justify-between items-center py-2.5 border-b border-border/50 last:border-0">
@@ -68,7 +99,12 @@ const AdminDashboard = () => {
                       {payment.payment_type === 'single' ? 'כניסה חד-פעמית' : 'כרטיסיה'}
                     </p>
                   </div>
-                  <p className="font-body font-bold text-success">{payment.amount} ₪</p>
+                  <div className="text-left">
+                    <p className="font-body font-bold text-success">{payment.amount} ₪</p>
+                    <p className="text-xs font-body text-muted-foreground">
+                      {new Date(payment.created_at).toLocaleDateString('he-IL', { day: 'numeric', month: 'short' })}
+                    </p>
+                  </div>
                 </div>
               );
             })}
