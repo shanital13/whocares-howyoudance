@@ -103,6 +103,20 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
           full_name: fullName.trim(),
           phone: phone.trim() || null,
         }).eq('id', userId);
+
+        // Check if already registered for this class
+        const { data: existingReg } = await supabase
+          .from('registrations')
+          .select('id')
+          .eq('user_id', userId)
+          .eq('class_id', danceClass.id)
+          .maybeSingle();
+
+        if (existingReg) {
+          setErrors({ submit: 'כבר נרשמת לשיעור הזה! 💃' });
+          setSubmitting(false);
+          return;
+        }
       } else {
         // Create new profile
         userId = crypto.randomUUID();
