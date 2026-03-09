@@ -148,9 +148,9 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </div>
 
               {/* Form */}
-              <div className="space-y-2.5 mb-4">
+              <div className="space-y-2 mb-3">
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">
+                  <Label className="text-right block text-xs font-medium mb-0.5">
                     שם מלא <span className="text-primary">*</span>
                   </Label>
                   <Input
@@ -160,12 +160,12 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                     dir="rtl"
                     required
                     maxLength={100}
-                    className={`rounded-xl text-right border-border/60 focus:border-primary ${errors.fullName ? 'border-destructive' : ''}`}
+                    className={`h-9 text-sm rounded-xl text-right border-border/60 focus:border-primary ${errors.fullName ? 'border-destructive' : ''}`}
                   />
-                  {errors.fullName && <p className="text-xs text-destructive text-right mt-1">{errors.fullName}</p>}
+                  {errors.fullName && <p className="text-[11px] text-destructive text-right mt-0.5">{errors.fullName}</p>}
                 </div>
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">
+                  <Label className="text-right block text-xs font-medium mb-0.5">
                     טלפון <span className="text-primary">*</span>
                   </Label>
                   <Input
@@ -176,12 +176,12 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                     dir="ltr"
                     required
                     maxLength={15}
-                    className={`rounded-xl border-border/60 focus:border-primary ${errors.phone ? 'border-destructive' : ''}`}
+                    className={`h-9 text-sm rounded-xl border-border/60 focus:border-primary ${errors.phone ? 'border-destructive' : ''}`}
                   />
-                  {errors.phone && <p className="text-xs text-destructive text-right mt-1">{errors.phone}</p>}
+                  {errors.phone && <p className="text-[11px] text-destructive text-right mt-0.5">{errors.phone}</p>}
                 </div>
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">
+                  <Label className="text-right block text-xs font-medium mb-0.5">
                     מייל <span className="text-primary">*</span>
                   </Label>
                   <Input
@@ -192,9 +192,9 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                     dir="ltr"
                     required
                     maxLength={255}
-                    className={`rounded-xl border-border/60 focus:border-primary ${errors.email ? 'border-destructive' : ''}`}
+                    className={`h-9 text-sm rounded-xl border-border/60 focus:border-primary ${errors.email ? 'border-destructive' : ''}`}
                   />
-                  {errors.email && <p className="text-xs text-destructive text-right mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-[11px] text-destructive text-right mt-0.5">{errors.email}</p>}
                 </div>
               </div>
 
