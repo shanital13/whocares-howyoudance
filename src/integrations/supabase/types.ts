@@ -207,6 +207,13 @@ export type Database = {
             referencedRelation: "dance_classes"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "registrations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_roles: {
