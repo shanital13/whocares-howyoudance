@@ -1,4 +1,4 @@
-import teacherPhoto from '@/assets/teacher-photo.jpg';
+import teacherVideo from '@/assets/teacher-video.mp4';
 import { motion } from 'framer-motion';
 
 const WhoAmISection = () => {
@@ -32,9 +32,9 @@ const WhoAmISection = () => {
           מי אני?
         </motion.h2>
 
-        {/* Layout: image + text */}
+        {/* Layout: video + text */}
         <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
-          {/* Image */}
+          {/* Video */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -42,11 +42,14 @@ const WhoAmISection = () => {
             transition={{ duration: 0.6 }}
             className="relative w-64 h-80 md:w-80 md:h-[420px] flex-shrink-0"
           >
-            {/* Background blob behind image */}
+            {/* Background blob behind video */}
             <div className="absolute -inset-4 bg-peach rounded-[2rem] rotate-3" />
-            <img
-              src={teacherPhoto}
-              alt="יוגב — מורה למחול מודרני"
+            <video
+              src={teacherVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
               className="relative w-full h-full object-cover rounded-[1.5rem] shadow-lg"
             />
             {/* Decorative dots */}
