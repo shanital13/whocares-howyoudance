@@ -2,233 +2,238 @@ import {
   Dialog,
   DialogContent,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DanceClass, SINGLE_PRICE, PUNCH_CARD_PRICE, PUNCH_CARD_ENTRIES } from '@/lib/types';
 import { useState } from 'react';
-import { Check } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
-import { motion } from 'framer-motion';
+import { Check, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
   danceClass: DanceClass | null;
   onClose: () => void;
 }
 
-type Step = 'details' | 'entry_type' | 'confirmation';
-
 const RegistrationDialog = ({ danceClass, onClose }: Props) => {
-  const [step, setStep] = useState<Step>('details');
   const [entryType, setEntryType] = useState<'single' | 'punch_card' | null>(null);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
 
   const handleClose = () => {
-    setStep('details');
     setEntryType(null);
     setFullName('');
     setPhone('');
     setEmail('');
     setErrors({});
+    setSubmitted(false);
     onClose();
   };
 
-  const validateDetails = () => {
+  const validate = () => {
     const newErrors: Record<string, string> = {};
-    const trimmedName = fullName.trim();
-    const trimmedPhone = phone.trim();
-    const trimmedEmail = email.trim();
-
-    if (!trimmedName || trimmedName.length < 2) {
-      newErrors.fullName = 'נא להזין שם מלא';
-    }
-    if (!trimmedPhone || !/^0\d{8,9}$/.test(trimmedPhone)) {
-      newErrors.phone = 'נא להזין מספר טלפון תקין (למשל 0501234567)';
-    }
-    if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      newErrors.email = 'נא להזין כתובת אימייל תקינה';
-    }
-
+    if (!fullName.trim() || fullName.trim().length < 2) newErrors.fullName = 'נא להזין שם מלא';
+    if (!phone.trim() || !/^\+?[\d\s\-]{7,15}$/.test(phone.trim())) newErrors.phone = 'נא להזין מספר טלפון תקין';
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) newErrors.email = 'נא להזין כתובת מייל תקינה';
+    if (!entryType) newErrors.entryType = 'נא לבחור סוג כניסה';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmitDetails = () => {
-    if (validateDetails()) {
-      setStep('entry_type');
+  const handleSubmit = () => {
+    if (validate()) {
+      setSubmitted(true);
     }
-  };
-
-  const handleSelectEntry = (type: 'single' | 'punch_card') => {
-    setEntryType(type);
-    setStep('confirmation');
-    toast({
-      title: 'נרשמת בהצלחה! 🎉',
-      description: `${fullName.trim()}, נתראה בשיעור!`,
-    });
   };
 
   if (!danceClass) return null;
 
   return (
     <Dialog open={!!danceClass} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md sm:max-w-lg overflow-hidden p-0">
-        <div className="relative w-full" style={{ minHeight: '500px', perspective: '1000px' }}>
-          <motion.div
-            className="w-full"
-            initial={false}
-            animate={{ rotateY: step === 'details' ? 0 : 180 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            {/* FRONT: פרטים אישיים */}
-            <div
-              className="w-full p-6"
-              style={{
-                backfaceVisibility: 'hidden',
-                position: step === 'details' ? 'relative' : 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-              }}
+      <DialogContent className="max-w-md p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
+        {/* Decorative top blob */}
+        <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary/8 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-secondary/8 blur-3xl pointer-events-none" />
+
+        <AnimatePresence mode="wait">
+          {!submitted ? (
+            <motion.div
+              key="form"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35 }}
+              className="relative p-7"
             >
-              <div className="mb-6 text-center">
-                <div className="mb-4 text-5xl">💃</div>
-                <h2 className="font-display text-2xl text-foreground text-right mb-2">{danceClass.name}</h2>
-                <p className="text-muted-foreground text-sm text-right">
-                  {new Date(danceClass.date).toLocaleDateString('he-IL', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long',
-                  })}{' '}
-                  | {danceClass.time}
+              {/* Close button */}
+              <button
+                onClick={handleClose}
+                className="absolute top-4 left-4 w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors z-10"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              {/* Title */}
+              <div className="mb-5 text-right">
+                <div className="text-3xl mb-2">💃</div>
+                <h2 className="font-nehama text-3xl text-foreground leading-tight mb-1">
+                  מתחילות ונהנות
+                </h2>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                  שיעורי מחול מודרני לשחרור ביקורת עצמית ומלא פאן.
                 </p>
-                <p className="text-muted-foreground text-sm text-right">{danceClass.location}</p>
               </div>
 
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="fullName" className="text-right block">שם מלא</Label>
+              {/* למי מתאים */}
+              <div className="mb-5 bg-peach rounded-2xl p-4 text-right">
+                <p className="font-body font-medium text-foreground text-sm mb-1">למי מתאים?</p>
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                  קצב לימוד נעים, חזרות מרובות, כוראיגרפיות אינטואיטיביות לגוף, דגש על ביטחון והנאה.
+                </p>
+              </div>
+
+              {/* Pricing */}
+              <div className="mb-5 text-right space-y-1">
+                <div className="flex justify-between items-center">
+                  <span className="font-body font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
+                  <span className="font-body text-sm text-foreground">כניסה חד פעמית</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-body font-semibold text-foreground text-sm">₿ {PUNCH_CARD_PRICE}</span>
+                  <span className="font-body text-sm text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
+                </div>
+                <p className="font-body text-xs text-muted-foreground pt-1">
+                  התשלום במזומן בבאט בהגעה לשיעור
+                </p>
+              </div>
+
+              {/* Form */}
+              <div className="space-y-3 mb-5">
+                <div>
+                  <Label className="text-right block text-sm font-medium mb-1">שם מלא</Label>
                   <Input
-                    id="fullName"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="השם המלא שלך"
-                    maxLength={100}
+                    placeholder="השם שלך"
                     dir="rtl"
-                    className="text-right"
+                    className="rounded-xl text-right border-border/60 focus:border-primary"
                   />
-                  {errors.fullName && <p className="text-sm text-destructive text-right">{errors.fullName}</p>}
+                  {errors.fullName && <p className="text-xs text-destructive text-right mt-1">{errors.fullName}</p>}
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-right block">טלפון</Label>
+                <div>
+                  <Label className="text-right block text-sm font-medium mb-1">טלפון</Label>
                   <Input
-                    id="phone"
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="0501234567"
-                    maxLength={11}
                     dir="ltr"
+                    className="rounded-xl border-border/60 focus:border-primary"
                   />
-                  {errors.phone && <p className="text-sm text-destructive text-right">{errors.phone}</p>}
+                  {errors.phone && <p className="text-xs text-destructive text-right mt-1">{errors.phone}</p>}
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-right block">אימייל</Label>
+                <div>
+                  <Label className="text-right block text-sm font-medium mb-1">מייל</Label>
                   <Input
-                    id="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="example@email.com"
-                    maxLength={255}
                     dir="ltr"
+                    className="rounded-xl border-border/60 focus:border-primary"
                   />
-                  {errors.email && <p className="text-sm text-destructive text-right">{errors.email}</p>}
+                  {errors.email && <p className="text-xs text-destructive text-right mt-1">{errors.email}</p>}
                 </div>
-                <Button className="w-full rounded-xl py-5 text-lg" onClick={handleSubmitDetails}>
-                  המשך
-                </Button>
               </div>
-            </div>
 
-            {/* BACK: בחירת סוג כניסה + אישור */}
-            <div
-              className="w-full p-6"
-              style={{
-                backfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg)',
-                position: step !== 'details' ? 'relative' : 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-              }}
-            >
-              {step === 'entry_type' && (
-                <>
-                  <div className="mb-6 text-center">
-                    <div className="mb-4 text-5xl">🎫</div>
-                    <h2 className="font-display text-2xl text-foreground mb-2">איך את מגיעה?</h2>
-                    <p className="text-muted-foreground text-sm">בחרי את סוג הכניסה המתאימה לך</p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <Button
-                      variant="outline"
-                      className="w-full h-auto py-4 flex flex-col items-center gap-1 rounded-xl border-2 hover:border-primary transition-all"
-                      onClick={() => handleSelectEntry('single')}
-                    >
-                      <span className="font-bold text-lg">כניסה חד-פעמית</span>
-                      <span className="text-primary font-display text-xl">{SINGLE_PRICE} ฿</span>
-                    </Button>
-                    <Button
-                      className="w-full h-auto py-4 flex flex-col items-center gap-1 rounded-xl"
-                      onClick={() => handleSelectEntry('punch_card')}
-                    >
-                      <span className="font-bold text-lg">אני בכרטיסיה 🎫</span>
-                      <span className="font-display text-xl">{PUNCH_CARD_ENTRIES} כניסות | {PUNCH_CARD_PRICE} ฿</span>
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      className="w-full"
-                      onClick={() => setStep('details')}
-                    >
-                      חזרה
-                    </Button>
-                  </div>
-                </>
-              )}
-
-              {step === 'confirmation' && (
-                <div className="text-center py-6">
-                  <div className="w-16 h-16 rounded-full bg-success/20 flex items-center justify-center mx-auto mb-6 animate-bounce">
-                    <Check className="h-8 w-8 text-success" />
-                  </div>
-                  {entryType === 'single' ? (
-                    <>
-                      <p className="font-display text-2xl text-foreground mb-3">כניסה חד-פעמית</p>
-                      <p className="text-muted-foreground">יש לשלם <span className="font-bold text-foreground text-lg">{SINGLE_PRICE} ฿</span> במזומן בשיעור</p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="font-display text-2xl text-foreground mb-3">כרטיסיה — {PUNCH_CARD_ENTRIES} כניסות 🎫</p>
-                      <p className="text-muted-foreground mb-2">
-                        אם יש לך כרטיסיה פעילה — מעולה, אין צורך בתשלום!
-                      </p>
-                      <p className="text-muted-foreground">
-                        אם את מתחילה כרטיסיה חדשה — יש לשלם <span className="font-bold text-foreground text-lg">{PUNCH_CARD_PRICE} ฿</span> במזומן בשיעור
-                      </p>
-                    </>
-                  )}
-                  <p className="text-sm text-muted-foreground mt-6 font-medium">נתראה בשיעור! 💃</p>
+              {/* Entry type selector */}
+              <div className="mb-5">
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setEntryType('single')}
+                    className={`relative rounded-2xl border-2 py-3 px-4 text-center transition-all duration-200 font-body text-sm font-medium
+                      ${entryType === 'single'
+                        ? 'border-primary bg-primary/10 text-primary'
+                        : 'border-border/50 bg-background text-foreground hover:border-primary/50'
+                      }`}
+                  >
+                    {entryType === 'single' && (
+                      <span className="absolute top-1.5 left-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      </span>
+                    )}
+                    כניסה חד פעמית
+                  </button>
+                  <button
+                    onClick={() => setEntryType('punch_card')}
+                    className={`relative rounded-2xl border-2 py-3 px-4 text-center transition-all duration-200 font-body text-sm font-medium
+                      ${entryType === 'punch_card'
+                        ? 'border-primary bg-primary/10 text-primary'
+                        : 'border-border/50 bg-background text-foreground hover:border-primary/50'
+                      }`}
+                  >
+                    {entryType === 'punch_card' && (
+                      <span className="absolute top-1.5 left-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      </span>
+                    )}
+                    אני בכרטיסיה! 🎫
+                  </button>
                 </div>
-              )}
-            </div>
-          </motion.div>
-        </div>
+                {errors.entryType && <p className="text-xs text-destructive text-right mt-2">{errors.entryType}</p>}
+              </div>
+
+              {/* Submit button */}
+              <button
+                onClick={handleSubmit}
+                className="w-full py-4 rounded-full font-nehama text-xl text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
+                style={{ background: 'hsl(var(--primary))' }}
+              >
+                שומרת מקום ✨
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, type: 'spring' }}
+              className="relative p-10 text-center"
+            >
+              {/* Close button */}
+              <button
+                onClick={handleClose}
+                className="absolute top-4 left-4 w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.15, type: 'spring', stiffness: 200 }}
+                className="w-20 h-20 rounded-full bg-success/15 flex items-center justify-center mx-auto mb-6"
+              >
+                <Check className="h-10 w-10 text-success" strokeWidth={2.5} />
+              </motion.div>
+
+              <h2 className="font-nehama text-4xl text-foreground mb-3">המקום שמור! 🎉</h2>
+              <p className="font-body text-muted-foreground text-base leading-relaxed mb-2">
+                {fullName.trim()}, נתראה בשיעור!
+              </p>
+              <p className="font-body text-sm text-muted-foreground">
+                {entryType === 'single'
+                  ? `לשלם ${SINGLE_PRICE} ₿ במזומן בהגעה`
+                  : `${PUNCH_CARD_ENTRIES} כניסות — ${PUNCH_CARD_PRICE} ₿ במזומן`
+                }
+              </p>
+              <p className="font-body text-3xl mt-6">💃</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </DialogContent>
     </Dialog>
   );
