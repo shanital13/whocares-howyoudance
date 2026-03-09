@@ -25,11 +25,7 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto py-20">
-        <h1 className="text-white mb-6 drop-shadow-lg animate-fade-in opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-          למי אכפת איך את רוקדת
-        </h1>
-        
-        <p className="text-2xl text-white/95 mb-12 font-body leading-relaxed drop-shadow-md animate-fade-in opacity-0 max-w-xl mx-auto" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
+        <p className="text-2xl text-white/95 mb-12 font-body leading-relaxed drop-shadow-md animate-fade-in opacity-0 max-w-xl mx-auto" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
           בואי פשוט לזוז.<br />
           בלי ניסיון. בלי שיפוט.
         </p>
