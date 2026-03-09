@@ -125,7 +125,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
         const { error: profileErr } = await supabase.from('profiles').insert({
           id: userId,
           full_name: fullName.trim(),
-          email: email.trim(),
+          email: email.trim().toLowerCase(),
           phone: phone.trim() || null,
         });
         if (profileErr) throw profileErr;
