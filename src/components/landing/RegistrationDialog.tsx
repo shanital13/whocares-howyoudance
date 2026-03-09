@@ -198,7 +198,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </div>
 
               {/* Entry type selector */}
-              <div className="mb-5">
+              <div className="mb-4">
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => setEntryType('single')}
