@@ -34,12 +34,16 @@ const AdminClassDetail = () => {
     registrations.forEach((r) => { map[r.user_id] = r.entry_type; });
     return map;
   });
+  const [saveIndicator, setSaveIndicator] = useState(false);
+
+  const showSaved = useCallback(() => {
+    setSaveIndicator(true);
+    setTimeout(() => setSaveIndicator(false), 1500);
+  }, []);
 
   if (!danceClass) {
     return <AdminLayout><p className="text-muted-foreground font-body">שיעור לא נמצא</p></AdminLayout>;
   }
-
-  const [saveIndicator, setSaveIndicator] = useState(false);
 
   const showSaved = useCallback(() => {
     setSaveIndicator(true);
