@@ -305,6 +305,17 @@ const AdminClasses = () => {
               />
               <Label htmlFor="recurring" className="font-body text-sm">שיעור שבועי קבוע</Label>
             </div>
+            <div>
+              <Label className="font-body text-sm">מקסימום משתתפות</Label>
+              <Input
+                type="number"
+                min={1}
+                value={form.max_participants}
+                onChange={(e) => setForm({ ...form, max_participants: e.target.value })}
+                placeholder="ללא הגבלה"
+                className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
+              />
+            </div>
             <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleSave}>
               {editingClassId ? 'שמור שינויים' : 'צור שיעור'}
             </Button>
