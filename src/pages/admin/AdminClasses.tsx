@@ -61,12 +61,17 @@ const AdminClasses = () => {
   };
 
   const handleSave = async () => {
-    if (editingClassId) {
-      await updateClass.mutateAsync({ id: editingClassId, ...form, recurring_day: null, max_participants: null });
-    } else {
-      await createClass.mutateAsync({ ...form, recurring_day: null, max_participants: null });
+    try {
+      if (editingClassId) {
+        await updateClass.mutateAsync({ id: editingClassId, ...form, recurring_day: null, max_participants: null });
+      } else {
+        await createClass.mutateAsync({ ...form, recurring_day: null, max_participants: null });
+      }
+      setDialogOpen(false);
+    } catch (err: any) {
+      console.error('Save error:', err);
+      alert('שגיאה בשמירה: ' + (err?.message || 'Unknown error'));
     }
-    setDialogOpen(false);
   };
 
   const handleDelete = (id: string) => deleteClass.mutate(id);
