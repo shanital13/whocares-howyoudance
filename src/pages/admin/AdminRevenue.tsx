@@ -162,10 +162,10 @@ const AdminRevenue = () => {
           <Table className="hidden md:table">
             <TableHeader>
               <TableRow className="bg-[hsl(0,0%,95%)] hover:bg-[hsl(0,0%,95%)]">
-                <TableHead className="font-body">תאריך</TableHead>
-                <TableHead className="font-body">לקוחה</TableHead>
-                <TableHead className="font-body">סוג</TableHead>
-                <TableHead className="font-body">סכום</TableHead>
+                <TableHead className="font-body text-right">תאריך</TableHead>
+                <TableHead className="font-body text-right">לקוחה</TableHead>
+                <TableHead className="font-body text-right">סוג</TableHead>
+                <TableHead className="font-body text-right">סכום</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
