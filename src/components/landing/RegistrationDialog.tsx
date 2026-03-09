@@ -239,9 +239,9 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               <button
                 onClick={handleSubmit}
                 className="w-full py-3 rounded-full font-nehama text-lg text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
-                style={{ background: 'hsl(var(--primary))' }}
+                style={{ background: isWaitlist ? 'hsl(var(--foreground))' : 'hsl(var(--primary))' }}
               >
-                שומרת מקום ✨
+                {isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
               </button>
             </motion.div>
           ) : (
