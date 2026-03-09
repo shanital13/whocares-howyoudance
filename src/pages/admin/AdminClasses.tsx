@@ -78,10 +78,12 @@ const AdminClasses = () => {
 
   const handleSave = async () => {
     try {
+      const maxP = form.max_participants === '' ? null : Number(form.max_participants);
+      const payload = { name: form.name, level: form.level, description: form.description, location: form.location, date: form.date, time: form.time, is_recurring: form.is_recurring, recurring_day: null, max_participants: maxP };
       if (editingClassId) {
-        await updateClass.mutateAsync({ id: editingClassId, ...form, recurring_day: null, max_participants: null });
+        await updateClass.mutateAsync({ id: editingClassId, ...payload });
       } else {
-        await createClass.mutateAsync({ ...form, recurring_day: null, max_participants: null });
+        await createClass.mutateAsync(payload);
       }
       setDialogOpen(false);
     } catch (err: any) {
