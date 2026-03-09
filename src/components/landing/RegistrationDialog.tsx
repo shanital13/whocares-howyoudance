@@ -201,34 +201,34 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
 
               {/* Title */}
               <div className="mb-3 text-right">
-                <div className="text-xl mb-0.5">💃</div>
-                <h2 className="font-nehama text-xl text-foreground leading-tight mb-0.5">
+                <div className="text-2xl mb-1">💃</div>
+                <h2 className="font-nehama text-2xl text-foreground leading-tight mb-1">
                   {content.title}
                 </h2>
-                <p className="font-body text-xs text-muted-foreground leading-relaxed">
+                <p className="font-body text-sm text-muted-foreground leading-relaxed">
                   {content.description}
                 </p>
               </div>
 
               {/* למי מתאים */}
-              <div className="mb-3 bg-peach rounded-xl p-2.5 text-right">
-                <p className="font-body font-medium text-foreground text-xs mb-0.5">למי מתאים?</p>
-                <p className="font-body text-muted-foreground text-xs leading-relaxed">
+              <div className="mb-3 bg-peach rounded-xl p-3 text-right">
+                <p className="font-body font-medium text-foreground text-sm mb-1">למי מתאים?</p>
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">
                   {content.forWhom}
                 </p>
               </div>
 
               {/* Pricing */}
-              <div className="mb-3 text-right space-y-0.5">
+              <div className="mb-3 text-right space-y-1">
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-xs">₿ {SINGLE_PRICE}</span>
-                  <span className="font-body text-xs text-foreground">כניסה חד פעמית</span>
+                  <span className="font-body font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
+                  <span className="font-body text-sm text-foreground">כניסה חד פעמית</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-xs">₿ {PUNCH_CARD_PRICE}</span>
-                  <span className="font-body text-xs text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
+                  <span className="font-body font-semibold text-foreground text-sm">₿ {PUNCH_CARD_PRICE}</span>
+                  <span className="font-body text-sm text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
                 </div>
-                <p className="font-body text-[11px] text-muted-foreground pt-0.5">
+                <p className="font-body text-xs text-muted-foreground pt-1">
                   התשלום במזומן בבאט בהגעה לשיעור
                 </p>
               </div>
