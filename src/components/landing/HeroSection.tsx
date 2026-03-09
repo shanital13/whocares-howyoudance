@@ -15,8 +15,6 @@ const HeroSection = () => {
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto mt-[30vh]">
-        {/* Dark mask behind text */}
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-3xl -z-10" />
         <p className="text-xl md:text-2xl text-primary-foreground/90 mb-4 font-light leading-relaxed drop-shadow-lg animate-fade-in opacity-0" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
           מסע של התפתחות, שחרור בושה וחסמים דרך תנועה
         </p>
