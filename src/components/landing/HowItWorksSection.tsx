@@ -10,12 +10,12 @@ const steps = [
   {
     icon: MapPin,
     title: 'מגיעות',
-    description: 'בלי ניסיון. פשוט באות.',
+    description: 'לא צריך ניסיון.',
   },
   {
     icon: Music,
     title: 'רוקדות',
-    description: 'שעה של מוזיקה, תנועה ושחרור.',
+    description: 'מוזיקה, תנועה ושחרור.',
   },
 ];
 
@@ -72,13 +72,13 @@ const HowItWorksSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                  whileHover={{ scale: 1.08, y: -8 }}
+                  whileHover={{ scale: 1.1, y: -8 }}
                   className={`flex flex-col items-center text-center ${verticalOffset}`}
                 >
                   <div 
-                    className="w-48 h-48 rounded-full bg-peach flex flex-col items-center justify-center p-8 shadow-lg hover:shadow-xl transition-shadow relative"
+                    className="w-48 h-48 rounded-full bg-peach flex flex-col items-center justify-center p-8 shadow-lg hover:shadow-2xl transition-all relative"
                     style={{
-                      boxShadow: '0 10px 40px rgba(255, 92, 122, 0.15)',
+                      boxShadow: '0 12px 30px rgba(0, 0, 0, 0.08)',
                     }}
                   >
                     {/* Icon */}
