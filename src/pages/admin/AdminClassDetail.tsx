@@ -340,7 +340,7 @@ const AdminClassDetail = () => {
               })}
               {registrations.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-muted-foreground py-8 font-body">
+                  <TableCell colSpan={6} className="text-center text-muted-foreground py-8 font-body">
                     אין נרשמות לשיעור זה עדיין
                   </TableCell>
                 </TableRow>
