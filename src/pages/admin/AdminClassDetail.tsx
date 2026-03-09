@@ -112,8 +112,24 @@ const AdminClassDetail = () => {
   };
 
   const markPayment = async (userId: string, amount: string) => {
-    const amountNum = parseInt(amount);
+    if (amount === 'existing_card') {
+      setEntryTypeMap((prev) => ({ ...prev, [userId]: 'punch_card' }));
+      toast({ title: 'כרטיסיה קיימת', description: 'הלקוחה תסומן ככרטיסיה קיימת ללא חיוב נוסף' });
+      showSaved();
+      return;
+    }
+
+    const amountNum = parseInt(amount, 10);
     const isPunchCard = amountNum === PUNCH_CARD_PRICE;
+    const existingActiveCard = punchCards.find((pc) => pc.user_id === userId && pc.is_active && pc.entries_remaining > 0);
+
+    if (isPunchCard && existingActiveCard) {
+      setEntryTypeMap((prev) => ({ ...prev, [userId]: 'punch_card' }));
+      toast({ title: 'כרטיסיה כבר קיימת', description: 'אי אפשר לחייב כרטיסיה נוספת לפני שהקיימת מסתיימת' });
+      showSaved();
+      return;
+    }
+
     await createPayment.mutateAsync({
       user_id: userId,
       amount: amountNum,
@@ -121,23 +137,16 @@ const AdminClassDetail = () => {
       class_id: id,
     });
 
-    // If punch card payment, create a punch_cards record
     if (isPunchCard) {
-      // Deactivate any existing active punch cards for this user
-      await supabase
-        .from('punch_cards')
-        .update({ is_active: false })
-        .eq('user_id', userId)
-        .eq('is_active', true);
-
-      // Create new punch card with 4 entries
       await supabase.from('punch_cards').insert({
         user_id: userId,
         entries_remaining: 4,
         is_active: true,
       });
+      setEntryTypeMap((prev) => ({ ...prev, [userId]: 'punch_card' }));
       queryClient.invalidateQueries({ queryKey: ['punch_cards'] });
     }
+
     showSaved();
   };
 
