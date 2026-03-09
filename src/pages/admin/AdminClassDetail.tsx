@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/table';
 import { mockClasses, mockRegistrations, mockProfiles, mockPunchCards, mockAttendance } from '@/lib/mock-data';
 import { LEVEL_LABELS, SINGLE_PRICE, PUNCH_CARD_PRICE } from '@/lib/types';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
-import { Check, X } from 'lucide-react';
+import { Check, X, Save } from 'lucide-react';
 
 const AdminClassDetail = () => {
   const { id } = useParams<{ id: string }>();
