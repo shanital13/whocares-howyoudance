@@ -266,6 +266,7 @@ const AdminClassDetail = () => {
                 <TableHead className="text-center font-body">השתתפה</TableHead>
                 <TableHead className="text-right font-body">תשלום</TableHead>
                 <TableHead className="text-center font-body">פעולות</TableHead>
+              </TableRow>
             </TableHeader>
             <TableBody>
               {registrations.map((reg) => {
