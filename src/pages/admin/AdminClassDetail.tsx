@@ -369,17 +369,14 @@ const AdminClassDetail = () => {
                       </button>
                     </TableCell>
                     <TableCell className="align-middle">
-                      {hasPunchCard && currentEntryType === 'punch_card' ? (
-                        <span className="text-sm text-success font-body font-medium">כרטיסיה פעילה ✓</span>
-                      ) : (
-                        <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
-                          <SelectTrigger className="w-40 h-9 rounded-[10px] border-border/60 font-body"><SelectValue placeholder="סמן תשלום" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value={SINGLE_PRICE.toString()} className="font-body">{SINGLE_PRICE} ₪ (חד-פעמי)</SelectItem>
-                            <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪ (כרטיסיה)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      )}
+                      <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
+                        <SelectTrigger className="w-44 h-9 rounded-[10px] border-border/60 font-body"><SelectValue placeholder="סמן תשלום" /></SelectTrigger>
+                        <SelectContent>
+                          {hasPunchCard && <SelectItem value="existing_card" className="font-body">כרטיסיה קיימת ({punchCard.entries_remaining} כניסות)</SelectItem>}
+                          <SelectItem value={SINGLE_PRICE.toString()} className="font-body">{SINGLE_PRICE} ₪ (חד-פעמי)</SelectItem>
+                          {!hasPunchCard && <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪ (כרטיסיה)</SelectItem>}
+                        </SelectContent>
+                      </Select>
                     </TableCell>
                     <TableCell className="align-middle text-center">
                       <Button
