@@ -4,6 +4,7 @@ export interface DanceClass {
   id: string;
   name: string;
   level: ClassLevel;
+  description: string;
   location: string;
   date: string; // ISO date
   time: string; // HH:mm

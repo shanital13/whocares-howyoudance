@@ -43,6 +43,7 @@ const AdminClasses = () => {
   const [form, setForm] = useState({
     name: '',
     level: 'all' as ClassLevel,
+    description: '',
     location: '',
     date: '',
     time: '',
@@ -64,13 +65,13 @@ const AdminClasses = () => {
 
   const openNew = () => {
     setEditingClassId(null);
-    setForm({ name: '', level: 'all', location: '', date: '', time: '', is_recurring: false });
+    setForm({ name: '', level: 'all', description: '', location: '', date: '', time: '', is_recurring: false });
     setDialogOpen(true);
   };
 
   const openEdit = (cls: any) => {
     setEditingClassId(cls.id);
-    setForm({ name: cls.name, level: cls.level, location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring });
+    setForm({ name: cls.name, level: cls.level, description: cls.description || '', location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring });
     setDialogOpen(true);
   };
 
@@ -94,6 +95,7 @@ const AdminClasses = () => {
     await createClass.mutateAsync({
       name: `${cls.name} (עותק)`,
       level: cls.level,
+      description: cls.description || '',
       location: cls.location,
       date: cls.date,
       time: cls.time,
@@ -260,6 +262,10 @@ const AdminClasses = () => {
             <div>
               <Label className="font-body text-sm">שם השיעור</Label>
               <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
+            </div>
+            <div>
+              <Label className="font-body text-sm">טקסט לשיעור</Label>
+              <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="הטקסט שיופיע בכרטיס השיעור בעמוד הבית" className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
             </div>
             <div>
               <Label className="font-body text-sm">רמה</Label>

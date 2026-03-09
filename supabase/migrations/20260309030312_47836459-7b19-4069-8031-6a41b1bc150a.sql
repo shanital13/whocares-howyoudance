@@ -1,0 +1,1 @@
+ALTER TABLE public.dance_classes ADD COLUMN description text NOT NULL DEFAULT '';
