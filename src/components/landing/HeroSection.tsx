@@ -19,7 +19,6 @@ const HeroSection = () => {
             className="w-full h-full object-cover object-center"
           />
         </picture>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-background/90" />
       </div>
 
       {/* Content */}
