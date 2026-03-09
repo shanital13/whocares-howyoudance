@@ -256,6 +256,35 @@ const AdminClasses = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={levelDialogOpen} onOpenChange={setLevelDialogOpen}>
+        <DialogContent className="w-[95vw] max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-display text-xl">הוספת רמה חדשה</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label>שם הרמה (בעברית)</Label>
+              <Input
+                placeholder="למשל: בוגרות מתקדמות"
+                value={newLevelForm.label}
+                onChange={(e) => setNewLevelForm({ ...newLevelForm, label: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label>מזהה (באנגלית)</Label>
+              <Input
+                placeholder="למשל: expert"
+                value={newLevelForm.key}
+                onChange={(e) => setNewLevelForm({ ...newLevelForm, key: e.target.value })}
+              />
+            </div>
+            <Button className="w-full" onClick={handleAddLevel}>
+              הוסף רמה
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </AdminLayout>
   );
 };
