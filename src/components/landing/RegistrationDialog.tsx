@@ -199,40 +199,40 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </div>
 
               {/* Entry type selector */}
-              <div className="mb-4">
-                <div className="grid grid-cols-2 gap-3">
+              <div className="mb-3">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setEntryType('single')}
-                    className={`relative rounded-2xl border-2 py-3 px-4 text-center transition-all duration-200 font-body text-sm font-medium
+                    className={`relative rounded-xl border-2 py-2 px-3 text-center transition-all duration-200 font-body text-xs font-medium
                       ${entryType === 'single'
                         ? 'border-primary bg-primary/10 text-primary'
                         : 'border-border/50 bg-background text-foreground hover:border-primary/50'
                       }`}
                   >
                     {entryType === 'single' && (
-                      <span className="absolute top-1.5 left-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
-                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      <span className="absolute top-1 left-1.5 w-3.5 h-3.5 bg-primary rounded-full flex items-center justify-center">
+                        <Check className="h-2 w-2 text-white" strokeWidth={3} />
                       </span>
                     )}
                     כניסה חד פעמית
                   </button>
                   <button
                     onClick={() => setEntryType('punch_card')}
-                    className={`relative rounded-2xl border-2 py-3 px-4 text-center transition-all duration-200 font-body text-sm font-medium
+                    className={`relative rounded-xl border-2 py-2 px-3 text-center transition-all duration-200 font-body text-xs font-medium
                       ${entryType === 'punch_card'
                         ? 'border-primary bg-primary/10 text-primary'
                         : 'border-border/50 bg-background text-foreground hover:border-primary/50'
                       }`}
                   >
                     {entryType === 'punch_card' && (
-                      <span className="absolute top-1.5 left-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
-                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      <span className="absolute top-1 left-1.5 w-3.5 h-3.5 bg-primary rounded-full flex items-center justify-center">
+                        <Check className="h-2 w-2 text-white" strokeWidth={3} />
                       </span>
                     )}
                     אני בכרטיסיה! 🎫
                   </button>
                 </div>
-                {errors.entryType && <p className="text-xs text-destructive text-right mt-2">{errors.entryType}</p>}
+                {errors.entryType && <p className="text-[11px] text-destructive text-right mt-1">{errors.entryType}</p>}
               </div>
 
               {/* Submit button */}
