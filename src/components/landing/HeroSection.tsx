@@ -1,6 +1,5 @@
 import heroImage from '@/assets/hero-image.jpeg';
 import { ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
   const scrollToHowItWorks = () => {
