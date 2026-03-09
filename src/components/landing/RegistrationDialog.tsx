@@ -14,6 +14,41 @@ interface Props {
   onClose: () => void;
 }
 
+interface LevelContent {
+  title: string;
+  description: string;
+  forWhom: string;
+}
+
+const levelContent: Record<string, LevelContent> = {
+  beginner: {
+    title: 'מתחילות ונהנות',
+    description: 'שיעורי מחול מודרני לשחרור ביקורת עצמית ומלא פאן.',
+    forWhom: 'קצב לימוד נעים, חזרות מרובות, כוראיגרפיות אינטואיטיביות לגוף, דגש על ביטחון והנאה.',
+  },
+  advanced: {
+    title: 'מתקדמות או לא להיות',
+    description: 'שיעורי מחול מודרני לשחרור ביקורת עצמית תנועה ומלא פאן.',
+    forWhom: 'קומבנציות מורכבות יותר, קצב לימוד מהיר, פחות חזרות ועצירות, עבודה על רצפים ארוכים ודינמיים.',
+  },
+  intermediate: {
+    title: 'מתחילות ונהנות',
+    description: 'שיעורי מחול מודרני לשחרור ביקורת עצמית ומלא פאן.',
+    forWhom: 'קצב לימוד בינוני. כוראגרפיות עם קצת יותר אתגר ושילובים מאתגרים, פחות חזרות, עבודה על רצפים ארוכים יותר וזרימה בין חלקים.',
+  },
+  all: {
+    title: 'לכולן',
+    description: 'שיעורי מחול מודרני לשחרור ביקורת עצמית ומלא פאן.',
+    forWhom: 'מתאים לכל רמה — בואי כמו שאת ונרקוד ביחד.',
+  },
+};
+
+const defaultContent: LevelContent = {
+  title: 'שיעור מחול',
+  description: 'שיעורי מחול מודרני לשחרור ביקורת עצמית ומלא פאן.',
+  forWhom: 'מתאים לכל מי שרוצה לרקוד ולהנות.',
+};
+
 const RegistrationDialog = ({ danceClass, onClose }: Props) => {
   const [entryType, setEntryType] = useState<'single' | 'punch_card' | null>(null);
   const [fullName, setFullName] = useState('');
@@ -50,6 +85,8 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
 
   if (!danceClass) return null;
 
+  const content = levelContent[danceClass.level] ?? defaultContent;
+
   return (
     <Dialog open={!!danceClass} onOpenChange={handleClose}>
       <DialogContent className="max-w-md p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
@@ -79,10 +116,10 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               <div className="mb-5 text-right">
                 <div className="text-3xl mb-2">💃</div>
                 <h2 className="font-nehama text-3xl text-foreground leading-tight mb-1">
-                  מתחילות ונהנות
+                  {content.title}
                 </h2>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                  שיעורי מחול מודרני לשחרור ביקורת עצמית ומלא פאן.
+                  {content.description}
                 </p>
               </div>
 
@@ -90,7 +127,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               <div className="mb-5 bg-peach rounded-2xl p-4 text-right">
                 <p className="font-body font-medium text-foreground text-sm mb-1">למי מתאים?</p>
                 <p className="font-body text-muted-foreground text-sm leading-relaxed">
-                  קצב לימוד נעים, חזרות מרובות, כוראיגרפיות אינטואיטיביות לגוף, דגש על ביטחון והנאה.
+                  {content.forWhom}
                 </p>
               </div>
 
