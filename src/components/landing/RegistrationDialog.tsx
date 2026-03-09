@@ -135,9 +135,11 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
             full_name: fullName.trim(),
             phone: phone.trim(),
             class_name: danceClass.name,
-            class_level: danceClass.level,
+            class_level: LEVEL_LABELS[danceClass.level] || danceClass.level,
+            class_location: danceClass.location,
             class_date: danceClass.date,
             class_time: danceClass.time,
+            arrival_instructions: danceClass.arrival_instructions || '',
             entry_type: entryType,
           }),
         });
