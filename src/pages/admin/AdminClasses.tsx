@@ -22,13 +22,16 @@ import {
 } from '@/components/ui/table';
 import { mockClasses } from '@/lib/mock-data';
 import { DanceClass, LEVEL_LABELS, ClassLevel } from '@/lib/types';
-import { Plus, Edit, Trash2, Users, MapPin, Clock } from 'lucide-react';
+import { Plus, Edit, Trash2, Users, MapPin, Clock, Tag, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminClasses = () => {
   const [classes, setClasses] = useState<DanceClass[]>(mockClasses);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingClass, setEditingClass] = useState<DanceClass | null>(null);
+  const [customLevels, setCustomLevels] = useState<Record<string, string>>({});
+  const [levelDialogOpen, setLevelDialogOpen] = useState(false);
+  const [newLevelForm, setNewLevelForm] = useState({ key: '', label: '' });
 
   const [form, setForm] = useState({
     name: '',
@@ -38,6 +41,8 @@ const AdminClasses = () => {
     time: '',
     is_recurring: false,
   });
+
+  const allLevels = { ...LEVEL_LABELS, ...customLevels };
 
   const openNew = () => {
     setEditingClass(null);
