@@ -45,10 +45,10 @@ const ClassesSection = () => {
             >
               {/* Gradient top bar */}
               <div className="h-1.5" style={{ background: 'var(--gradient-primary)' }} />
-              <CardContent className="p-7">
-                <div className="flex justify-between items-start mb-5">
+              <CardContent className="p-4 md:p-7">
+                <div className="flex justify-between items-start mb-3 md:mb-5">
                   <div>
-                    <h3 className="font-display text-2xl text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="font-display text-xl md:text-2xl text-foreground group-hover:text-primary transition-colors">
                       {cls.name}
                     </h3>
                     {cls.is_recurring && (
@@ -58,34 +58,34 @@ const ClassesSection = () => {
                       </span>
                     )}
                   </div>
-                  <Badge variant="outline" className={`${levelColors[cls.level]} border font-medium`}>
+                  <Badge variant="outline" className={`${levelColors[cls.level]} border font-medium text-xs md:text-sm`}>
                     {LEVEL_LABELS[cls.level]}
                   </Badge>
                 </div>
 
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Calendar className="h-4 w-4 text-primary" />
+                <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
+                  <div className="flex items-center gap-2 md:gap-3 text-muted-foreground text-sm md:text-base">
+                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <Calendar className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
                     </div>
                     <span>{formatDate(cls.date)}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Clock className="h-4 w-4 text-primary" />
+                  <div className="flex items-center gap-2 md:gap-3 text-muted-foreground text-sm md:text-base">
+                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <Clock className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
                     </div>
                     <span>{cls.time}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <MapPin className="h-4 w-4 text-primary" />
+                  <div className="flex items-center gap-2 md:gap-3 text-muted-foreground text-sm md:text-base">
+                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
                     </div>
                     <span>{cls.location}</span>
                   </div>
                 </div>
 
                 <Button
-                  className="w-full rounded-full font-bold text-base py-5 shadow-md hover:shadow-lg transition-all"
+                  className="w-full rounded-full font-bold text-sm md:text-base py-3 md:py-5 shadow-md hover:shadow-lg transition-all"
                   onClick={() => setSelectedClass(cls)}
                 >
                   אני מגיעה! 💃
