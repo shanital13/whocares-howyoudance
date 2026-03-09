@@ -317,6 +317,10 @@ const AdminClasses = () => {
                 className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
               />
             </div>
+            <div>
+              <Label className="font-body text-sm">הנחיה להגעה</Label>
+              <Input value={form.arrival_instructions} onChange={(e) => setForm({ ...form, arrival_instructions: e.target.value })} placeholder="למשל: הכניסה מהחצר האחורית" className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
+            </div>
             <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleSave}>
               {editingClassId ? 'שמור שינויים' : 'צור שיעור'}
             </Button>

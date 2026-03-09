@@ -4,7 +4,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { DanceClass, SINGLE_PRICE, PUNCH_CARD_PRICE, PUNCH_CARD_ENTRIES } from '@/lib/types';
+import { DanceClass, SINGLE_PRICE, PUNCH_CARD_PRICE, PUNCH_CARD_ENTRIES, LEVEL_LABELS } from '@/lib/types';
 import { useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
