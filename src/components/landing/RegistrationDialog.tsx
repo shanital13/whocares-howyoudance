@@ -133,16 +133,16 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </div>
 
               {/* Pricing */}
-              <div className="mb-4 text-right space-y-1">
+              <div className="mb-3 text-right space-y-0.5">
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
-                  <span className="font-body text-sm text-foreground">כניסה חד פעמית</span>
+                  <span className="font-body font-semibold text-foreground text-xs">₿ {SINGLE_PRICE}</span>
+                  <span className="font-body text-xs text-foreground">כניסה חד פעמית</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-sm">₿ {PUNCH_CARD_PRICE}</span>
-                  <span className="font-body text-sm text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
+                  <span className="font-body font-semibold text-foreground text-xs">₿ {PUNCH_CARD_PRICE}</span>
+                  <span className="font-body text-xs text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
                 </div>
-                <p className="font-body text-xs text-muted-foreground pt-1">
+                <p className="font-body text-[11px] text-muted-foreground pt-0.5">
                   התשלום במזומן בבאט בהגעה לשיעור
                 </p>
               </div>
