@@ -26,9 +26,8 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto py-24">
-        {/* Scroll indicator - playful and inviting */}
+      {/* Content - overlays the image */}
+      <div className="md:absolute md:inset-0 relative z-10 flex items-center justify-center text-center px-6 max-w-5xl mx-auto py-24">
         <button
           onClick={scrollToHowItWorks}
           className="flex flex-col items-center gap-3 text-white/90 hover:text-white transition-all mx-auto group animate-fade-in opacity-0 hover:scale-110"
