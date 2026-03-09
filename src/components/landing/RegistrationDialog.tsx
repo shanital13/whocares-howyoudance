@@ -113,9 +113,9 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </button>
 
               {/* Title */}
-              <div className="mb-5 text-right">
-                <div className="text-3xl mb-2">💃</div>
-                <h2 className="font-nehama text-3xl text-foreground leading-tight mb-1">
+              <div className="mb-4 text-right">
+                <div className="text-2xl mb-1">💃</div>
+                <h2 className="font-nehama text-2xl text-foreground leading-tight mb-1">
                   {content.title}
                 </h2>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">
