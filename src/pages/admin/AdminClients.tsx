@@ -25,7 +25,7 @@ const AdminClients = () => {
   const { data: profiles = [], isLoading } = useProfiles();
   const { data: punchCards = [] } = usePunchCards();
   const { data: payments = [] } = usePayments();
-  const { data: attendanceData = [] } = useAttendance();
+  const { data: allRegistrations = [] } = useRegistrations();
   const { data: classes = [] } = useClasses();
 
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
@@ -41,10 +41,10 @@ const AdminClients = () => {
   });
 
   const selectedClient = profiles.find((p) => p.id === selectedClientId);
-  const clientAttendance = attendanceData.filter((a) => a.user_id === selectedClientId && a.attended);
-  const attendedClasses = clientAttendance.map((a) => {
-    const danceClass = classes.find((c) => c.id === a.class_id);
-    return { ...a, class: danceClass };
+  const clientRegistrations = allRegistrations.filter((r) => r.user_id === selectedClientId);
+  const registeredClasses = clientRegistrations.map((r) => {
+    const danceClass = classes.find((c) => c.id === r.class_id);
+    return { ...r, class: danceClass };
   });
 
   if (isLoading) {
