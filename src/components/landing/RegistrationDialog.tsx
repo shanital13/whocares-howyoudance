@@ -114,12 +114,12 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </button>
 
               {/* Title */}
-              <div className="mb-4 text-right">
-                <div className="text-2xl mb-1">💃</div>
-                <h2 className="font-nehama text-2xl text-foreground leading-tight mb-1">
+              <div className="mb-3 text-right">
+                <div className="text-xl mb-0.5">💃</div>
+                <h2 className="font-nehama text-xl text-foreground leading-tight mb-0.5">
                   {content.title}
                 </h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                <p className="font-body text-xs text-muted-foreground leading-relaxed">
                   {content.description}
                 </p>
               </div>
