@@ -11,6 +11,7 @@ export interface DanceClass {
   is_recurring: boolean;
   recurring_day?: number; // 0-6 (Sunday-Saturday)
   max_participants?: number;
+  arrival_instructions?: string;
   created_at: string;
 }
 

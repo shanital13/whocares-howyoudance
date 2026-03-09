@@ -49,6 +49,7 @@ const AdminClasses = () => {
     time: '',
     is_recurring: false,
     max_participants: '' as string | number,
+    arrival_instructions: '',
   });
 
   // Merge defaults (minus hidden) with custom overrides
@@ -66,20 +67,20 @@ const AdminClasses = () => {
 
   const openNew = () => {
     setEditingClassId(null);
-    setForm({ name: '', level: 'all', description: '', location: '', date: '', time: '', is_recurring: false, max_participants: '' });
+    setForm({ name: '', level: 'all', description: '', location: '', date: '', time: '', is_recurring: false, max_participants: '', arrival_instructions: '' });
     setDialogOpen(true);
   };
 
   const openEdit = (cls: any) => {
     setEditingClassId(cls.id);
-    setForm({ name: cls.name, level: cls.level, description: cls.description || '', location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring, max_participants: cls.max_participants ?? '' });
+    setForm({ name: cls.name, level: cls.level, description: cls.description || '', location: cls.location, date: cls.date, time: cls.time, is_recurring: cls.is_recurring, max_participants: cls.max_participants ?? '', arrival_instructions: cls.arrival_instructions || '' });
     setDialogOpen(true);
   };
 
   const handleSave = async () => {
     try {
       const maxP = form.max_participants === '' ? null : Number(form.max_participants);
-      const payload = { name: form.name, level: form.level, description: form.description, location: form.location, date: form.date, time: form.time, is_recurring: form.is_recurring, recurring_day: null, max_participants: maxP };
+      const payload = { name: form.name, level: form.level, description: form.description, location: form.location, date: form.date, time: form.time, is_recurring: form.is_recurring, recurring_day: null, max_participants: maxP, arrival_instructions: form.arrival_instructions };
       if (editingClassId) {
         await updateClass.mutateAsync({ id: editingClassId, ...payload });
       } else {
@@ -105,6 +106,7 @@ const AdminClasses = () => {
       is_recurring: cls.is_recurring,
       recurring_day: cls.recurring_day,
       max_participants: cls.max_participants,
+      arrival_instructions: cls.arrival_instructions || '',
     });
   };
 
@@ -315,6 +317,10 @@ const AdminClasses = () => {
                 placeholder="ללא הגבלה"
                 className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body"
               />
+            </div>
+            <div>
+              <Label className="font-body text-sm">הנחיה להגעה</Label>
+              <Input value={form.arrival_instructions} onChange={(e) => setForm({ ...form, arrival_instructions: e.target.value })} placeholder="למשל: הכניסה מהחצר האחורית" className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
             </div>
             <Button className="w-full h-10 rounded-[10px] bg-primary hover:bg-primary/90 font-body font-medium" onClick={handleSave}>
               {editingClassId ? 'שמור שינויים' : 'צור שיעור'}

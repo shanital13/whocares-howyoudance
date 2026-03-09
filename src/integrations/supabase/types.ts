@@ -51,6 +51,7 @@ export type Database = {
       }
       dance_classes: {
         Row: {
+          arrival_instructions: string
           created_at: string
           date: string
           description: string
@@ -64,6 +65,7 @@ export type Database = {
           time: string
         }
         Insert: {
+          arrival_instructions?: string
           created_at?: string
           date: string
           description?: string
@@ -77,6 +79,7 @@ export type Database = {
           time: string
         }
         Update: {
+          arrival_instructions?: string
           created_at?: string
           date?: string
           description?: string

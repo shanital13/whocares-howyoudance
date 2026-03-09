@@ -21,6 +21,7 @@ const ClassesSection = () => {
     is_recurring: c.is_recurring,
     recurring_day: c.recurring_day ?? undefined,
     max_participants: c.max_participants ?? undefined,
+    arrival_instructions: (c as any).arrival_instructions ?? '',
     created_at: c.created_at,
   }));
 
