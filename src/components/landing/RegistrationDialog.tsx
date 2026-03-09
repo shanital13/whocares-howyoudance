@@ -274,7 +274,10 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                 {isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉'}
               </h2>
               <p className="font-body text-muted-foreground text-base leading-relaxed mb-2">
-                {fullName.trim()}, נתראה בשיעור!
+                {isWaitlist
+                  ? `${fullName.trim()}, נעדכן אותך ברגע שיתפנה מקום 💛`
+                  : `${fullName.trim()}, נתראה בשיעור!`
+                }
               </p>
               <p className="font-body text-sm text-muted-foreground">
                 {entryType === 'single'
