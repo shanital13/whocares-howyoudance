@@ -42,7 +42,7 @@ const badges = ['חדש', 'כמעט מלא', null, 'אחרונים'];
 
 const EventCard = ({ danceClass, variant, onRegister }: EventCardProps) => {
   const style = cardStyles[variant % cardStyles.length];
-  const badge = badges[variant % badges.length];
+  const badge = LEVEL_LABELS[danceClass.level] ?? danceClass.level;
   
   const formatDay = (date: string) => {
     return new Date(date).toLocaleDateString('he-IL', {
