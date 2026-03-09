@@ -10,6 +10,7 @@ import { Check, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Props {
   danceClass: DanceClass | null;
@@ -176,10 +177,10 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
 
   return (
     <Dialog open={!!danceClass} onOpenChange={handleClose}>
-      <DialogContent className="max-w-sm p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
+      <DialogContent className="w-[95vw] max-w-sm p-0 overflow-y-auto max-h-[90vh] border-0 shadow-2xl rounded-3xl bg-background">
         {/* Decorative top blob */}
-        <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary/8 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-secondary/8 blur-3xl pointer-events-none" />
+        <div className="fixed top-0 right-0 w-40 h-40 rounded-full bg-primary/8 blur-3xl pointer-events-none" />
+        <div className="fixed bottom-0 left-0 w-32 h-32 rounded-full bg-secondary/8 blur-3xl pointer-events-none" />
 
         <AnimatePresence mode="wait">
           {!submitted ? (
@@ -342,7 +343,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4, type: 'spring' }}
-              className="relative p-10 text-center"
+              className="relative p-6 md:p-10 text-center"
             >
               {/* Close button */}
               <button
