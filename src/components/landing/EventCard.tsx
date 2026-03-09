@@ -1,6 +1,6 @@
 import { MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { type DanceClass } from '@/lib/types';
+import { type DanceClass, LEVEL_LABELS } from '@/lib/types';
 import { motion } from 'framer-motion';
 
 interface EventCardProps {
@@ -37,12 +37,10 @@ const cardStyles = [
   },
 ];
 
-// Badge options
-const badges = ['חדש', 'כמעט מלא', null, 'אחרונים'];
 
 const EventCard = ({ danceClass, variant, onRegister }: EventCardProps) => {
   const style = cardStyles[variant % cardStyles.length];
-  const badge = badges[variant % badges.length];
+  const badge = LEVEL_LABELS[danceClass.level] ?? danceClass.level;
   
   const formatDay = (date: string) => {
     return new Date(date).toLocaleDateString('he-IL', {
