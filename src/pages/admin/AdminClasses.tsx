@@ -158,6 +158,9 @@ const AdminClasses = () => {
                 <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => openEdit(cls)}>
                   <Edit className="h-4 w-4" strokeWidth={1.8} />
                 </Button>
+                <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => handleDuplicate(cls)} title="שכפל שיעור">
+                  <Copy className="h-4 w-4" strokeWidth={1.8} />
+                </Button>
                 <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => handleDelete(cls.id)}>
                   <Trash2 className="h-4 w-4 text-destructive" strokeWidth={1.8} />
                 </Button>
