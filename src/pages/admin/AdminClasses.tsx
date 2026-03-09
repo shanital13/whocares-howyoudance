@@ -314,52 +314,82 @@ const AdminClasses = () => {
               <Label className="font-body text-sm font-medium text-muted-foreground">רמות קיימות</Label>
               {Object.entries(allLevels).map(([key, label]) => (
                   <div key={key} className="flex items-center justify-between py-2 px-3 rounded-[10px] border border-border/60 bg-background">
-                    <div className="flex items-center gap-2">
-                      <span className="font-body text-sm font-medium">{label}</span>
-                      <span className="text-xs text-muted-foreground font-body">({key})</span>
-                    </div>
-                    <div className="flex gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7"
-                        onClick={() => {
-                          const newLabel = prompt('שם חדש לרמה:', label);
-                          if (newLabel) {
-                            if (key in LEVEL_LABELS) {
-                              // Override default level with custom label
-                              setCustomLevels((prev) => ({ ...prev, [key]: newLabel }));
-                            } else {
-                              setCustomLevels((prev) => ({ ...prev, [key]: newLabel }));
+                    {editingLevelKey === key ? (
+                      <div className="flex items-center gap-2 flex-1">
+                        <Input
+                          value={editingLevelLabel}
+                          onChange={(e) => setEditingLevelLabel(e.target.value)}
+                          className="h-8 rounded-[10px] border-border/60 focus:border-primary font-body text-sm flex-1"
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              setCustomLevels((prev) => ({ ...prev, [key]: editingLevelLabel }));
+                              setEditingLevelKey(null);
+                            } else if (e.key === 'Escape') {
+                              setEditingLevelKey(null);
                             }
-                          }
-                        }}
-                      >
-                        <Edit className="h-3.5 w-3.5" strokeWidth={1.8} />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-destructive"
-                        onClick={() => {
-                          if (key in LEVEL_LABELS) {
-                            // "Delete" a default level by hiding it
-                            setCustomLevels((prev) => {
-                              const updated = { ...prev };
-                              delete updated[key];
-                              return updated;
-                            });
-                            // We can't truly delete defaults from LEVEL_LABELS constant,
-                            // but we can track hidden levels
-                            setHiddenLevels((prev) => [...prev, key]);
-                          } else {
-                            handleDeleteLevel(key);
-                          }
-                        }}
-                      >
-                        <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
-                      </Button>
-                    </div>
+                          }}
+                        />
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-primary"
+                          onClick={() => {
+                            setCustomLevels((prev) => ({ ...prev, [key]: editingLevelLabel }));
+                            setEditingLevelKey(null);
+                          }}
+                        >
+                          <Plus className="h-3.5 w-3.5 rotate-45" strokeWidth={1.8} />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7"
+                          onClick={() => setEditingLevelKey(null)}
+                        >
+                          <X className="h-3.5 w-3.5" strokeWidth={1.8} />
+                        </Button>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <span className="font-body text-sm font-medium">{label}</span>
+                          <span className="text-xs text-muted-foreground font-body">({key})</span>
+                        </div>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7"
+                            onClick={() => {
+                              setEditingLevelKey(key);
+                              setEditingLevelLabel(label);
+                            }}
+                          >
+                            <Edit className="h-3.5 w-3.5" strokeWidth={1.8} />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-destructive"
+                            onClick={() => {
+                              if (key in LEVEL_LABELS) {
+                                setCustomLevels((prev) => {
+                                  const updated = { ...prev };
+                                  delete updated[key];
+                                  return updated;
+                                });
+                                setHiddenLevels((prev) => [...prev, key]);
+                              } else {
+                                handleDeleteLevel(key);
+                              }
+                            }}
+                          >
+                            <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
+                          </Button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ))}
             </div>
