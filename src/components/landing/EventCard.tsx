@@ -113,7 +113,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister }: Event
         {/* Badge sticker */}
         {badge && (
           <div className="absolute top-4 left-4 z-20">
-            <div className="bg-background text-foreground px-3 py-1 rounded-full text-xs font-bold shadow-md rotate-[-8deg]">
+            <div className="bg-background text-foreground px-4 py-1.5 rounded-full text-sm font-bold shadow-md rotate-[-8deg]">
               {badge}
             </div>
           </div>
@@ -158,15 +158,15 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister }: Event
         </div>
 
         {/* Event details */}
-        <div className="relative z-10 space-y-2 mb-6">
-          <div className="flex items-center gap-2 text-foreground/80">
-            <MapPin className="h-4 w-4" strokeWidth={2.5} />
-            <span className="text-sm font-medium">{shortLocation}</span>
+        <div className="relative z-10 space-y-2.5 mb-6">
+          <div className="flex items-center gap-2.5 text-foreground/80">
+            <MapPin className="h-5 w-5" strokeWidth={2.5} />
+            <span className="text-base font-medium">{shortLocation}</span>
           </div>
-          <div className="flex items-center gap-2 text-foreground/80">
-            <Clock className="h-4 w-4" strokeWidth={2.5} />
-            <span className="text-sm font-medium">
-              {formatDay(danceClass.date)} {danceClass.time}
+          <div className="flex items-center gap-2.5 text-foreground/80">
+            <Clock className="h-5 w-5" strokeWidth={2.5} />
+            <span className="text-base font-medium">
+              {formatDay(danceClass.date)} {danceClass.time.slice(0, 5)}
             </span>
           </div>
         </div>

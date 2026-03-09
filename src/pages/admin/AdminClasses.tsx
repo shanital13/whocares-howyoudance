@@ -176,7 +176,7 @@ const AdminClasses = () => {
               <div className="space-y-1 text-sm text-muted-foreground mt-3 font-body">
                 <div className="flex items-center gap-2">
                   <Clock className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
-                  <span>{new Date(cls.date).toLocaleDateString('he-IL')} | {cls.time}</span>
+                  <span>{new Date(cls.date).toLocaleDateString('he-IL')} | {cls.time.slice(0, 5)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
@@ -227,7 +227,7 @@ const AdminClasses = () => {
                   <TableCell><Badge variant="outline" className="font-body">{allLevels[cls.level] || cls.level}</Badge></TableCell>
                   <TableCell className="font-body">{cls.location}</TableCell>
                   <TableCell className="font-body">{new Date(cls.date).toLocaleDateString('he-IL')}</TableCell>
-                  <TableCell className="font-body">{cls.time}</TableCell>
+                  <TableCell className="font-body">{cls.time.slice(0, 5)}</TableCell>
                   <TableCell>
                     {cls.is_recurring ? <Badge variant="secondary" className="font-body">שבועי</Badge> : <Badge variant="outline" className="font-body">חד-פעמי</Badge>}
                   </TableCell>
