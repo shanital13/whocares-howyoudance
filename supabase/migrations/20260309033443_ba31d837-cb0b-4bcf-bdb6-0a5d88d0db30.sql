@@ -1,0 +1,1 @@
+CREATE POLICY "Anon can delete registrations" ON public.registrations FOR DELETE TO anon USING (true);

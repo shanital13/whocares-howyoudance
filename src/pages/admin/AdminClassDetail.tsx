@@ -24,7 +24,7 @@ import { useClasses, useRegistrations, useProfiles, usePunchCards, useAttendance
 import { LEVEL_LABELS, SINGLE_PRICE, PUNCH_CARD_PRICE } from '@/lib/types';
 import { useState, useCallback, useMemo } from 'react';
 import { toast } from '@/hooks/use-toast';
-import { Check, X, Save, Plus, UserPlus, Search } from 'lucide-react';
+import { Check, X, Save, Plus, UserPlus, Search, Trash2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -99,6 +99,18 @@ const AdminClassDetail = () => {
   const changeEntryType = (userId: string, type: string) => {
     setEntryTypeMap((prev) => ({ ...prev, [userId]: type }));
     showSaved();
+  };
+
+  const handleDeleteRegistration = async (regId: string, name: string) => {
+    if (!confirm(`למחוק את ${name} מהשיעור?`)) return;
+    try {
+      const { error } = await supabase.from('registrations').delete().eq('id', regId);
+      if (error) throw error;
+      queryClient.invalidateQueries({ queryKey: ['registrations'] });
+      toast({ title: 'נמחקה', description: `${name} הוסרה מהשיעור` });
+    } catch (err: any) {
+      toast({ title: 'שגיאה', description: err?.message || 'לא ניתן למחוק', variant: 'destructive' });
+    }
   };
 
   const handleAddExisting = async (userId: string) => {
@@ -185,16 +197,24 @@ const AdminClassDetail = () => {
                     <p className="font-body font-semibold text-foreground">{profile?.full_name || '—'}</p>
                     <p className="text-xs font-body text-muted-foreground">{profile?.phone || '—'}</p>
                   </div>
-                  <button
-                    onClick={() => toggleAttendance(reg.user_id)}
-                    className={`flex items-center justify-center w-8 h-8 rounded-[10px] border-2 transition-colors ${
-                      attended
-                        ? 'bg-primary border-primary text-primary-foreground'
-                        : 'bg-background border-border hover:border-muted-foreground/50'
-                    }`}
-                  >
-                    {attended ? <Check className="h-4 w-4" /> : <X className="h-4 w-4 text-muted-foreground/30" />}
-                  </button>
+                   <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => toggleAttendance(reg.user_id)}
+                        className={`flex items-center justify-center w-8 h-8 rounded-[10px] border-2 transition-colors ${
+                          attended
+                            ? 'bg-primary border-primary text-primary-foreground'
+                            : 'bg-background border-border hover:border-muted-foreground/50'
+                        }`}
+                      >
+                        {attended ? <Check className="h-4 w-4" /> : <X className="h-4 w-4 text-muted-foreground/30" />}
+                      </button>
+                      <button
+                        onClick={() => handleDeleteRegistration(reg.id, profile?.full_name || '—')}
+                        className="flex items-center justify-center w-8 h-8 rounded-[10px] border-2 border-border hover:border-destructive hover:bg-destructive/10 transition-colors"
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </button>
+                    </div>
                 </div>
                 <div className="flex gap-2">
                   <Select value={currentEntryType} onValueChange={(v) => changeEntryType(reg.user_id, v)}>
@@ -245,6 +265,7 @@ const AdminClassDetail = () => {
                 <TableHead className="text-right font-body">כרטיסיה פעילה</TableHead>
                 <TableHead className="text-center font-body">השתתפה</TableHead>
                 <TableHead className="text-right font-body">תשלום</TableHead>
+                <TableHead className="text-center font-body">פעולות</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -304,12 +325,22 @@ const AdminClassDetail = () => {
                         </Select>
                       )}
                     </TableCell>
+                    <TableCell className="align-middle text-center">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => handleDeleteRegistration(reg.id, profile?.full_name || '—')}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" strokeWidth={1.8} />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
               {registrations.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-muted-foreground py-8 font-body">
+                  <TableCell colSpan={6} className="text-center text-muted-foreground py-8 font-body">
                     אין נרשמות לשיעור זה עדיין
                   </TableCell>
                 </TableRow>
