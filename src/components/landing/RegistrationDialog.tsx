@@ -112,37 +112,49 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               {/* Form */}
               <div className="space-y-3 mb-5">
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">שם מלא</Label>
+                  <Label className="text-right block text-sm font-medium mb-1">
+                    שם מלא <span className="text-primary">*</span>
+                  </Label>
                   <Input
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="השם שלך"
                     dir="rtl"
-                    className="rounded-xl text-right border-border/60 focus:border-primary"
+                    required
+                    maxLength={100}
+                    className={`rounded-xl text-right border-border/60 focus:border-primary ${errors.fullName ? 'border-destructive' : ''}`}
                   />
                   {errors.fullName && <p className="text-xs text-destructive text-right mt-1">{errors.fullName}</p>}
                 </div>
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">טלפון</Label>
+                  <Label className="text-right block text-sm font-medium mb-1">
+                    טלפון <span className="text-primary">*</span>
+                  </Label>
                   <Input
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="0501234567"
                     dir="ltr"
-                    className="rounded-xl border-border/60 focus:border-primary"
+                    required
+                    maxLength={15}
+                    className={`rounded-xl border-border/60 focus:border-primary ${errors.phone ? 'border-destructive' : ''}`}
                   />
                   {errors.phone && <p className="text-xs text-destructive text-right mt-1">{errors.phone}</p>}
                 </div>
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">מייל</Label>
+                  <Label className="text-right block text-sm font-medium mb-1">
+                    מייל <span className="text-primary">*</span>
+                  </Label>
                   <Input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="example@email.com"
                     dir="ltr"
-                    className="rounded-xl border-border/60 focus:border-primary"
+                    required
+                    maxLength={255}
+                    className={`rounded-xl border-border/60 focus:border-primary ${errors.email ? 'border-destructive' : ''}`}
                   />
                   {errors.email && <p className="text-xs text-destructive text-right mt-1">{errors.email}</p>}
                 </div>
