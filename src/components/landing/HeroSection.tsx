@@ -8,17 +8,22 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative flex items-center justify-center overflow-hidden min-h-[75vh] md:h-[1080px]">
-      {/* Background image */}
-      <div className="absolute inset-0">
-        <picture>
-          <source media="(max-width: 767px)" srcSet={heroMobileImage} />
-          <img
-            src={heroImage}
-            alt="נשים רוקדות בחופשיות"
-            className="w-full h-full object-cover object-center"
-          />
-        </picture>
+    <section className="relative flex items-center justify-center overflow-hidden min-h-[75vh]">
+      {/* Background image - on desktop, drives the section height naturally */}
+      <div className="hidden md:block w-full">
+        <img
+          src={heroImage}
+          alt="נשים רוקדות בחופשיות"
+          className="w-full h-auto block"
+        />
+      </div>
+      {/* Mobile background */}
+      <div className="md:hidden absolute inset-0">
+        <img
+          src={heroMobileImage}
+          alt="נשים רוקדות בחופשיות"
+          className="w-full h-full object-cover object-center"
+        />
       </div>
 
       {/* Content */}
