@@ -50,7 +50,7 @@ const defaultContent: LevelContent = {
   forWhom: 'מתאים לכל מי שרוצה לרקוד ולהנות.',
 };
 
-const RegistrationDialog = ({ danceClass, onClose }: Props) => {
+const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) => {
   const [entryType, setEntryType] = useState<'single' | 'punch_card' | null>(null);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
