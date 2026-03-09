@@ -8,7 +8,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: '75vh' }}>
+    <section className="relative flex items-center justify-center overflow-hidden min-h-[75vh] md:h-[1080px]">
       {/* Background image */}
       <div className="absolute inset-0">
         <picture>
