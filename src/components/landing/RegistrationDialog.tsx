@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogContent,
 } from '@/components/ui/dialog';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DanceClass, SINGLE_PRICE, PUNCH_CARD_PRICE, PUNCH_CARD_ENTRIES } from '@/lib/types';
