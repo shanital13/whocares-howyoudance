@@ -151,7 +151,7 @@ const EventCard = ({ danceClass, variant, onRegister }: EventCardProps) => {
               text-3xl 
               md:text-4xl 
               leading-tight 
-              mb-6
+              mb-3
               tracking-tight
             "
             style={{ lineHeight: '1.1' }}
@@ -160,6 +160,11 @@ const EventCard = ({ danceClass, variant, onRegister }: EventCardProps) => {
               <span key={i} className="block">{word}</span>
             ))}
           </h3>
+          {danceClass.description && (
+            <p className="text-foreground/70 text-sm font-body leading-relaxed mb-3">
+              {danceClass.description}
+            </p>
+          )}
         </div>
 
         {/* MIDDLE - Event details */}

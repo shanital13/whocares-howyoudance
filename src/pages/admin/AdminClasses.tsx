@@ -264,6 +264,9 @@ const AdminClasses = () => {
               <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
             </div>
             <div>
+              <Label className="font-body text-sm">טקסט לשיעור</Label>
+              <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="הטקסט שיופיע בכרטיס השיעור בעמוד הבית" className="h-11 rounded-[10px] border-border/60 focus:border-primary font-body" />
+            <div>
               <Label className="font-body text-sm">רמה</Label>
               <Select value={form.level} onValueChange={(v) => setForm({ ...form, level: v as ClassLevel })}>
                 <SelectTrigger className="h-11 rounded-[10px] border-border/60 font-body"><SelectValue /></SelectTrigger>
