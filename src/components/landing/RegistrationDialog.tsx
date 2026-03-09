@@ -103,7 +103,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.35 }}
-              className="relative p-5"
+              className="relative p-4"
             >
               {/* Close button */}
               <button
