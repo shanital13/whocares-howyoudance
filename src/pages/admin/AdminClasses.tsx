@@ -49,6 +49,7 @@ const AdminClasses = () => {
     time: '',
     is_recurring: false,
     max_participants: '' as string | number,
+    arrival_instructions: '',
   });
 
   // Merge defaults (minus hidden) with custom overrides
