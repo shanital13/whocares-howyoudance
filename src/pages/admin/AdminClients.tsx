@@ -145,8 +145,8 @@ const AdminClients = () => {
                 const totalPaid = payments
                   .filter((p) => p.user_id === profile.id)
                   .reduce((sum, p) => sum + p.amount, 0);
-                const attendanceCount = attendanceData.filter(
-                  (a) => a.user_id === profile.id && a.attended
+                const registrationCount = allRegistrations.filter(
+                  (r) => r.user_id === profile.id
                 ).length;
 
                 return (
