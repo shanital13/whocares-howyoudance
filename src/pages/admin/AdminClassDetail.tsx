@@ -280,21 +280,23 @@ const AdminClassDetail = () => {
                       <SelectItem value="single" className="font-body">חד-פעמי</SelectItem>
                     </SelectContent>
                   </Select>
-                  {hasPunchCard ? (
-                    <Badge className="bg-success text-success-foreground shrink-0 font-body">
-                      {punchCard.entries_remaining} כניסות
-                    </Badge>
-                  ) : (
+                  <div className="flex-1 space-y-1">
+                    {hasPunchCard && (
+                      <Badge className="bg-success text-success-foreground shrink-0 font-body w-full justify-center">
+                        כרטיסיה קיימת ({punchCard.entries_remaining} כניסות)
+                      </Badge>
+                    )}
                     <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
-                      <SelectTrigger className="flex-1 h-9 text-xs rounded-[10px] border-border/60 font-body">
+                      <SelectTrigger className="flex-1 h-9 text-xs rounded-[10px] border-border/60 font-body w-full">
                         <SelectValue placeholder="תשלום" />
                       </SelectTrigger>
                       <SelectContent>
+                        {hasPunchCard && <SelectItem value="existing_card" className="font-body">כרטיסיה קיימת</SelectItem>}
                         <SelectItem value={SINGLE_PRICE.toString()} className="font-body">{SINGLE_PRICE} ₪</SelectItem>
-                        <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪</SelectItem>
+                        {!hasPunchCard && <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪</SelectItem>}
                       </SelectContent>
                     </Select>
-                  )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
