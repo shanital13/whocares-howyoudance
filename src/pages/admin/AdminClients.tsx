@@ -95,7 +95,7 @@ const AdminClients = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedClientId(profile.id)}
-                    className="text-primary font-body"
+                    className="text-primary hover:text-primary-foreground hover:bg-primary font-body"
                   >
                     {attendanceCount} שיעורים
                     <ChevronLeft className="h-4 w-4 mr-1" strokeWidth={1.8} />
@@ -160,7 +160,7 @@ const AdminClients = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => setSelectedClientId(profile.id)}
-                        className="text-primary hover:text-primary/80 font-body"
+                        className="text-primary hover:text-primary-foreground hover:bg-primary font-body"
                       >
                         {attendanceCount} שיעורים
                         <ChevronLeft className="h-4 w-4 mr-1" strokeWidth={1.8} />
