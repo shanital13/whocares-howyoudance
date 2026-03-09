@@ -260,12 +260,12 @@ const AdminClassDetail = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-[hsl(0,0%,95%)] hover:bg-[hsl(0,0%,95%)]">
-                <TableHead className="text-right font-body">שם</TableHead>
-                <TableHead className="text-right font-body">סוג כניסה</TableHead>
-                <TableHead className="text-right font-body">כרטיסיה פעילה</TableHead>
-                <TableHead className="text-center font-body">השתתפה</TableHead>
-                <TableHead className="text-right font-body">תשלום</TableHead>
-                <TableHead className="text-center font-body">פעולות</TableHead>
+                <TableHead className="text-right font-body w-[22%]">שם</TableHead>
+                <TableHead className="text-right font-body w-[16%]">סוג כניסה</TableHead>
+                <TableHead className="text-right font-body w-[16%]">כרטיסיה פעילה</TableHead>
+                <TableHead className="text-center font-body w-[10%]">השתתפה</TableHead>
+                <TableHead className="text-right font-body w-[22%]">תשלום</TableHead>
+                <TableHead className="text-center font-body w-[8%]">פעולות</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
