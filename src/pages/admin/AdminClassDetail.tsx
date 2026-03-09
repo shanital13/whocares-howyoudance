@@ -76,18 +76,60 @@ const AdminClassDetail = () => {
   attendanceData.forEach((a) => { attendanceMap[a.user_id] = a.attended; });
 
   const toggleAttendance = async (userId: string) => {
-    const newVal = !attendanceMap[userId];
+    const wasAttended = !!attendanceMap[userId];
+    const newVal = !wasAttended;
+
     await upsertAttendance.mutateAsync({ user_id: userId, class_id: id!, attended: newVal });
-    const punchCard = punchCards.find((pc) => pc.user_id === userId && pc.is_active && pc.entries_remaining > 0);
-    if (newVal && punchCard) {
-      toast({ title: 'ניקוב כרטיסיה', description: `נשארו ${punchCard.entries_remaining - 1} כניסות` });
+
+    const registration = registrations.find((r) => r.user_id === userId);
+    const currentEntryType = entryTypeMap[userId] || registration?.entry_type || 'single';
+    const activePunchCard = punchCards.find((pc) => pc.user_id === userId && pc.is_active);
+
+    if (currentEntryType === 'punch_card' && activePunchCard) {
+      const diff = newVal ? -1 : 1;
+      const nextEntries = Math.max(activePunchCard.entries_remaining + diff, 0);
+
+      const { error: punchCardErr } = await supabase
+        .from('punch_cards')
+        .update({
+          entries_remaining: nextEntries,
+          is_active: nextEntries > 0,
+        })
+        .eq('id', activePunchCard.id);
+
+      if (punchCardErr) {
+        toast({ title: 'שגיאה', description: 'לא ניתן לעדכן ניקובים בכרטיסיה', variant: 'destructive' });
+      } else {
+        queryClient.invalidateQueries({ queryKey: ['punch_cards'] });
+        toast({
+          title: newVal ? 'ניקוב כרטיסיה' : 'הוחזר ניקוב',
+          description: `נשארו ${nextEntries} כניסות`,
+        });
+      }
     }
+
     showSaved();
   };
 
   const markPayment = async (userId: string, amount: string) => {
-    const amountNum = parseInt(amount);
+    if (amount === 'existing_card') {
+      setEntryTypeMap((prev) => ({ ...prev, [userId]: 'punch_card' }));
+      toast({ title: 'כרטיסיה קיימת', description: 'הלקוחה תסומן ככרטיסיה קיימת ללא חיוב נוסף' });
+      showSaved();
+      return;
+    }
+
+    const amountNum = parseInt(amount, 10);
     const isPunchCard = amountNum === PUNCH_CARD_PRICE;
+    const existingActiveCard = punchCards.find((pc) => pc.user_id === userId && pc.is_active && pc.entries_remaining > 0);
+
+    if (isPunchCard && existingActiveCard) {
+      setEntryTypeMap((prev) => ({ ...prev, [userId]: 'punch_card' }));
+      toast({ title: 'כרטיסיה כבר קיימת', description: 'אי אפשר לחייב כרטיסיה נוספת לפני שהקיימת מסתיימת' });
+      showSaved();
+      return;
+    }
+
     await createPayment.mutateAsync({
       user_id: userId,
       amount: amountNum,
@@ -95,23 +137,16 @@ const AdminClassDetail = () => {
       class_id: id,
     });
 
-    // If punch card payment, create a punch_cards record
     if (isPunchCard) {
-      // Deactivate any existing active punch cards for this user
-      await supabase
-        .from('punch_cards')
-        .update({ is_active: false })
-        .eq('user_id', userId)
-        .eq('is_active', true);
-
-      // Create new punch card with 4 entries
       await supabase.from('punch_cards').insert({
         user_id: userId,
         entries_remaining: 4,
         is_active: true,
       });
+      setEntryTypeMap((prev) => ({ ...prev, [userId]: 'punch_card' }));
       queryClient.invalidateQueries({ queryKey: ['punch_cards'] });
     }
+
     showSaved();
   };
 
@@ -245,21 +280,23 @@ const AdminClassDetail = () => {
                       <SelectItem value="single" className="font-body">חד-פעמי</SelectItem>
                     </SelectContent>
                   </Select>
-                  {hasPunchCard ? (
-                    <Badge className="bg-success text-success-foreground shrink-0 font-body">
-                      {punchCard.entries_remaining} כניסות
-                    </Badge>
-                  ) : (
+                  <div className="flex-1 space-y-1">
+                    {hasPunchCard && (
+                      <Badge className="bg-success text-success-foreground shrink-0 font-body w-full justify-center">
+                        כרטיסיה קיימת ({punchCard.entries_remaining} כניסות)
+                      </Badge>
+                    )}
                     <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
-                      <SelectTrigger className="flex-1 h-9 text-xs rounded-[10px] border-border/60 font-body">
+                      <SelectTrigger className="flex-1 h-9 text-xs rounded-[10px] border-border/60 font-body w-full">
                         <SelectValue placeholder="תשלום" />
                       </SelectTrigger>
                       <SelectContent>
+                        {hasPunchCard && <SelectItem value="existing_card" className="font-body">כרטיסיה קיימת</SelectItem>}
                         <SelectItem value={SINGLE_PRICE.toString()} className="font-body">{SINGLE_PRICE} ₪</SelectItem>
-                        <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪</SelectItem>
+                        {!hasPunchCard && <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪</SelectItem>}
                       </SelectContent>
                     </Select>
-                  )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -332,17 +369,14 @@ const AdminClassDetail = () => {
                       </button>
                     </TableCell>
                     <TableCell className="align-middle">
-                      {hasPunchCard && currentEntryType === 'punch_card' ? (
-                        <span className="text-sm text-success font-body font-medium">כרטיסיה פעילה ✓</span>
-                      ) : (
-                        <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
-                          <SelectTrigger className="w-40 h-9 rounded-[10px] border-border/60 font-body"><SelectValue placeholder="סמן תשלום" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value={SINGLE_PRICE.toString()} className="font-body">{SINGLE_PRICE} ₪ (חד-פעמי)</SelectItem>
-                            <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪ (כרטיסיה)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      )}
+                      <Select onValueChange={(v) => markPayment(reg.user_id, v)}>
+                        <SelectTrigger className="w-44 h-9 rounded-[10px] border-border/60 font-body"><SelectValue placeholder="סמן תשלום" /></SelectTrigger>
+                        <SelectContent>
+                          {hasPunchCard && <SelectItem value="existing_card" className="font-body">כרטיסיה קיימת ({punchCard.entries_remaining} כניסות)</SelectItem>}
+                          <SelectItem value={SINGLE_PRICE.toString()} className="font-body">{SINGLE_PRICE} ₪ (חד-פעמי)</SelectItem>
+                          {!hasPunchCard && <SelectItem value={PUNCH_CARD_PRICE.toString()} className="font-body">{PUNCH_CARD_PRICE} ₪ (כרטיסיה)</SelectItem>}
+                        </SelectContent>
+                      </Select>
                     </TableCell>
                     <TableCell className="align-middle text-center">
                       <Button
