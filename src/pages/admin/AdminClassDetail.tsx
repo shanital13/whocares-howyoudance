@@ -101,6 +101,18 @@ const AdminClassDetail = () => {
     showSaved();
   };
 
+  const handleDeleteRegistration = async (regId: string, name: string) => {
+    if (!confirm(`למחוק את ${name} מהשיעור?`)) return;
+    try {
+      const { error } = await supabase.from('registrations').delete().eq('id', regId);
+      if (error) throw error;
+      queryClient.invalidateQueries({ queryKey: ['registrations'] });
+      toast({ title: 'נמחקה', description: `${name} הוסרה מהשיעור` });
+    } catch (err: any) {
+      toast({ title: 'שגיאה', description: err?.message || 'לא ניתן למחוק', variant: 'destructive' });
+    }
+  };
+
   const handleAddExisting = async (userId: string) => {
     try {
       await createRegistration.mutateAsync({ user_id: userId, class_id: id!, entry_type: 'single' });
