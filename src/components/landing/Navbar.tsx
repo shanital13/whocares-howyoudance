@@ -25,16 +25,16 @@ const Navbar = () => {
           <a href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block story-link">
             <span>צרי קשר</span>
           </a>
+          {user && isAdmin && (
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/admin">
+                <Settings className="h-4 w-4 ml-1" />
+                ניהול
+              </Link>
+            </Button>
+          )}
           {user ? (
             <div className="flex items-center gap-2">
-              {isAdmin && (
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/admin">
-                    <Settings className="h-4 w-4 ml-1" />
-                    ניהול
-                  </Link>
-                </Button>
-              )}
               <span className="text-sm text-muted-foreground hidden sm:block">{user.full_name}</span>
               <Button variant="ghost" size="icon" onClick={signOut}>
                 <LogOut className="h-4 w-4" />

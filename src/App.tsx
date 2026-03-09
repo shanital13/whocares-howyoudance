@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import AdminGuard from "./components/admin/AdminGuard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminClasses from "./pages/admin/AdminClasses";
 import AdminClassDetail from "./pages/admin/AdminClassDetail";
@@ -23,11 +24,11 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/classes" element={<AdminClasses />} />
-            <Route path="/admin/class/:id" element={<AdminClassDetail />} />
-            <Route path="/admin/clients" element={<AdminClients />} />
-            <Route path="/admin/revenue" element={<AdminRevenue />} />
+            <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
+            <Route path="/admin/classes" element={<AdminGuard><AdminClasses /></AdminGuard>} />
+            <Route path="/admin/class/:id" element={<AdminGuard><AdminClassDetail /></AdminGuard>} />
+            <Route path="/admin/clients" element={<AdminGuard><AdminClients /></AdminGuard>} />
+            <Route path="/admin/revenue" element={<AdminGuard><AdminRevenue /></AdminGuard>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
