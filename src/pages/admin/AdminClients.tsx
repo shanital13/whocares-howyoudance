@@ -172,7 +172,7 @@ const AdminClients = () => {
                         onClick={() => setSelectedClientId(profile.id)}
                         className="text-primary hover:text-primary-foreground hover:bg-primary font-body"
                       >
-                        {attendanceCount} שיעורים
+                        {registrationCount} שיעורים
                         <ChevronLeft className="h-4 w-4 mr-1" strokeWidth={1.8} />
                       </Button>
                     </TableCell>
