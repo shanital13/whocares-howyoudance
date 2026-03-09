@@ -67,6 +67,23 @@ const AdminClasses = () => {
 
   const handleDelete = (id: string) => setClasses((prev) => prev.filter((c) => c.id !== id));
 
+  const handleAddLevel = () => {
+    if (newLevelForm.key && newLevelForm.label) {
+      const key = newLevelForm.key.toLowerCase().replace(/\s+/g, '_');
+      setCustomLevels((prev) => ({ ...prev, [key]: newLevelForm.label }));
+      setNewLevelForm({ key: '', label: '' });
+      setLevelDialogOpen(false);
+    }
+  };
+
+  const handleDeleteLevel = (key: string) => {
+    setCustomLevels((prev) => {
+      const updated = { ...prev };
+      delete updated[key];
+      return updated;
+    });
+  };
+
   return (
     <AdminLayout>
       <div className="flex items-center justify-between mb-6">
