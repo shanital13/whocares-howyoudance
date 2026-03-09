@@ -147,7 +147,7 @@ const RegistrationDialog = ({ danceClass, onClose }: Props) => {
               </div>
 
               {/* Form */}
-              <div className="space-y-3 mb-5">
+              <div className="space-y-2.5 mb-4">
                 <div>
                   <Label className="text-right block text-sm font-medium mb-1">
                     שם מלא <span className="text-primary">*</span>
