@@ -39,6 +39,13 @@ const AdminClassDetail = () => {
     return <AdminLayout><p className="text-muted-foreground font-body">שיעור לא נמצא</p></AdminLayout>;
   }
 
+  const [saveIndicator, setSaveIndicator] = useState(false);
+
+  const showSaved = useCallback(() => {
+    setSaveIndicator(true);
+    setTimeout(() => setSaveIndicator(false), 1500);
+  }, []);
+
   const toggleAttendance = (userId: string) => {
     const newVal = !attendanceMap[userId];
     setAttendanceMap((prev) => ({ ...prev, [userId]: newVal }));
@@ -46,16 +53,17 @@ const AdminClassDetail = () => {
     if (newVal && punchCard && punchCard.entries_remaining > 0) {
       toast({ title: 'ניקוב כרטיסיה', description: `נשארו ${punchCard.entries_remaining - 1} כניסות` });
     }
+    showSaved();
   };
 
   const markPayment = (userId: string, amount: string) => {
     setPaymentMap((prev) => ({ ...prev, [userId]: amount }));
-    toast({ title: 'תשלום סומן', description: `${amount} ₪` });
+    showSaved();
   };
 
   const changeEntryType = (userId: string, type: string) => {
     setEntryTypeMap((prev) => ({ ...prev, [userId]: type }));
-    toast({ title: 'סוג כניסה עודכן', description: type === 'punch_card' ? 'כרטיסיה' : 'חד-פעמי' });
+    showSaved();
   };
 
   return (
