@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Secular One", "sans-serif"],
-        body: ["Heebo", "sans-serif"],
+        display: ["Poppins", "sans-serif"],
+        body: ["Rubik", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
