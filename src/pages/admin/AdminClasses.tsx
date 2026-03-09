@@ -220,7 +220,7 @@ const AdminClasses = () => {
               <Select value={form.level} onValueChange={(v) => setForm({ ...form, level: v as ClassLevel })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {Object.entries(LEVEL_LABELS).map(([key, label]) => (
+                  {Object.entries(allLevels).map(([key, label]) => (
                     <SelectItem key={key} value={key}>{label}</SelectItem>
                   ))}
                 </SelectContent>
