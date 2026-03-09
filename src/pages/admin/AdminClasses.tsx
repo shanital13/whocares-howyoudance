@@ -43,6 +43,7 @@ const AdminClasses = () => {
   const [form, setForm] = useState({
     name: '',
     level: 'all' as ClassLevel,
+    description: '',
     location: '',
     date: '',
     time: '',
