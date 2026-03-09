@@ -80,7 +80,7 @@ const AdminClasses = () => {
   const handleSave = async () => {
     try {
       const maxP = form.max_participants === '' ? null : Number(form.max_participants);
-      const payload = { name: form.name, level: form.level, description: form.description, location: form.location, date: form.date, time: form.time, is_recurring: form.is_recurring, recurring_day: null, max_participants: maxP };
+      const payload = { name: form.name, level: form.level, description: form.description, location: form.location, date: form.date, time: form.time, is_recurring: form.is_recurring, recurring_day: null, max_participants: maxP, arrival_instructions: form.arrival_instructions };
       if (editingClassId) {
         await updateClass.mutateAsync({ id: editingClassId, ...payload });
       } else {
