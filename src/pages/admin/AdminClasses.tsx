@@ -227,7 +227,7 @@ const AdminClasses = () => {
                   <TableCell><Badge variant="outline" className="font-body">{allLevels[cls.level] || cls.level}</Badge></TableCell>
                   <TableCell className="font-body">{cls.location}</TableCell>
                   <TableCell className="font-body">{new Date(cls.date).toLocaleDateString('he-IL')}</TableCell>
-                  <TableCell className="font-body">{cls.time}</TableCell>
+                  <TableCell className="font-body">{cls.time.slice(0, 5)}</TableCell>
                   <TableCell>
                     {cls.is_recurring ? <Badge variant="secondary" className="font-body">שבועי</Badge> : <Badge variant="outline" className="font-body">חד-פעמי</Badge>}
                   </TableCell>
