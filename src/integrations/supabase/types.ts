@@ -14,16 +14,231 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      attendance: {
+        Row: {
+          attended: boolean
+          class_id: string
+          created_at: string
+          id: string
+          marked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          attended?: boolean
+          class_id: string
+          created_at?: string
+          id?: string
+          marked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          attended?: boolean
+          class_id?: string
+          created_at?: string
+          id?: string
+          marked_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "dance_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dance_classes: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          is_recurring: boolean
+          level: string
+          location: string
+          max_participants: number | null
+          name: string
+          recurring_day: number | null
+          time: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          is_recurring?: boolean
+          level?: string
+          location?: string
+          max_participants?: number | null
+          name: string
+          recurring_day?: number | null
+          time: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          is_recurring?: boolean
+          level?: string
+          location?: string
+          max_participants?: number | null
+          name?: string
+          recurring_day?: number | null
+          time?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          class_id: string | null
+          created_at: string
+          id: string
+          payment_type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          class_id?: string | null
+          created_at?: string
+          id?: string
+          payment_type?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          class_id?: string | null
+          created_at?: string
+          id?: string
+          payment_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "dance_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id: string
+          phone?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      punch_cards: {
+        Row: {
+          created_at: string
+          entries_remaining: number
+          id: string
+          is_active: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entries_remaining?: number
+          id?: string
+          is_active?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entries_remaining?: number
+          id?: string
+          is_active?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      registrations: {
+        Row: {
+          class_id: string
+          created_at: string
+          entry_type: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          entry_type?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          entry_type?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "registrations_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "dance_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +365,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
