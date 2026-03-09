@@ -90,7 +90,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
 
   return (
     <Dialog open={!!danceClass} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
+      <DialogContent className="max-w-sm p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
         {/* Decorative top blob */}
         <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary/8 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-secondary/8 blur-3xl pointer-events-none" />
@@ -103,7 +103,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.35 }}
-              className="relative p-5"
+              className="relative p-4"
             >
               {/* Close button */}
               <button
@@ -114,43 +114,43 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </button>
 
               {/* Title */}
-              <div className="mb-4 text-right">
-                <div className="text-2xl mb-1">💃</div>
-                <h2 className="font-nehama text-2xl text-foreground leading-tight mb-1">
+              <div className="mb-3 text-right">
+                <div className="text-xl mb-0.5">💃</div>
+                <h2 className="font-nehama text-xl text-foreground leading-tight mb-0.5">
                   {content.title}
                 </h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                <p className="font-body text-xs text-muted-foreground leading-relaxed">
                   {content.description}
                 </p>
               </div>
 
               {/* למי מתאים */}
-              <div className="mb-4 bg-peach rounded-2xl p-3 text-right">
-                <p className="font-body font-medium text-foreground text-sm mb-1">למי מתאים?</p>
-                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+              <div className="mb-3 bg-peach rounded-xl p-2.5 text-right">
+                <p className="font-body font-medium text-foreground text-xs mb-0.5">למי מתאים?</p>
+                <p className="font-body text-muted-foreground text-xs leading-relaxed">
                   {content.forWhom}
                 </p>
               </div>
 
               {/* Pricing */}
-              <div className="mb-4 text-right space-y-1">
+              <div className="mb-3 text-right space-y-0.5">
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
-                  <span className="font-body text-sm text-foreground">כניסה חד פעמית</span>
+                  <span className="font-body font-semibold text-foreground text-xs">₿ {SINGLE_PRICE}</span>
+                  <span className="font-body text-xs text-foreground">כניסה חד פעמית</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-sm">₿ {PUNCH_CARD_PRICE}</span>
-                  <span className="font-body text-sm text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
+                  <span className="font-body font-semibold text-foreground text-xs">₿ {PUNCH_CARD_PRICE}</span>
+                  <span className="font-body text-xs text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
                 </div>
-                <p className="font-body text-xs text-muted-foreground pt-1">
+                <p className="font-body text-[11px] text-muted-foreground pt-0.5">
                   התשלום במזומן בבאט בהגעה לשיעור
                 </p>
               </div>
 
               {/* Form */}
-              <div className="space-y-2.5 mb-4">
+              <div className="space-y-2 mb-3">
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">
+                  <Label className="text-right block text-xs font-medium mb-0.5">
                     שם מלא <span className="text-primary">*</span>
                   </Label>
                   <Input
@@ -160,12 +160,12 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                     dir="rtl"
                     required
                     maxLength={100}
-                    className={`rounded-xl text-right border-border/60 focus:border-primary ${errors.fullName ? 'border-destructive' : ''}`}
+                    className={`h-9 text-sm rounded-xl text-right border-border/60 focus:border-primary ${errors.fullName ? 'border-destructive' : ''}`}
                   />
-                  {errors.fullName && <p className="text-xs text-destructive text-right mt-1">{errors.fullName}</p>}
+                  {errors.fullName && <p className="text-[11px] text-destructive text-right mt-0.5">{errors.fullName}</p>}
                 </div>
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">
+                  <Label className="text-right block text-xs font-medium mb-0.5">
                     טלפון <span className="text-primary">*</span>
                   </Label>
                   <Input
@@ -176,12 +176,12 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                     dir="ltr"
                     required
                     maxLength={15}
-                    className={`rounded-xl border-border/60 focus:border-primary ${errors.phone ? 'border-destructive' : ''}`}
+                    className={`h-9 text-sm rounded-xl border-border/60 focus:border-primary ${errors.phone ? 'border-destructive' : ''}`}
                   />
-                  {errors.phone && <p className="text-xs text-destructive text-right mt-1">{errors.phone}</p>}
+                  {errors.phone && <p className="text-[11px] text-destructive text-right mt-0.5">{errors.phone}</p>}
                 </div>
                 <div>
-                  <Label className="text-right block text-sm font-medium mb-1">
+                  <Label className="text-right block text-xs font-medium mb-0.5">
                     מייל <span className="text-primary">*</span>
                   </Label>
                   <Input
@@ -192,53 +192,53 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                     dir="ltr"
                     required
                     maxLength={255}
-                    className={`rounded-xl border-border/60 focus:border-primary ${errors.email ? 'border-destructive' : ''}`}
+                    className={`h-9 text-sm rounded-xl border-border/60 focus:border-primary ${errors.email ? 'border-destructive' : ''}`}
                   />
-                  {errors.email && <p className="text-xs text-destructive text-right mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-[11px] text-destructive text-right mt-0.5">{errors.email}</p>}
                 </div>
               </div>
 
               {/* Entry type selector */}
-              <div className="mb-4">
-                <div className="grid grid-cols-2 gap-3">
+              <div className="mb-3">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setEntryType('single')}
-                    className={`relative rounded-2xl border-2 py-3 px-4 text-center transition-all duration-200 font-body text-sm font-medium
+                    className={`relative rounded-xl border-2 py-2 px-3 text-center transition-all duration-200 font-body text-xs font-medium
                       ${entryType === 'single'
                         ? 'border-primary bg-primary/10 text-primary'
                         : 'border-border/50 bg-background text-foreground hover:border-primary/50'
                       }`}
                   >
                     {entryType === 'single' && (
-                      <span className="absolute top-1.5 left-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
-                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      <span className="absolute top-1 left-1.5 w-3.5 h-3.5 bg-primary rounded-full flex items-center justify-center">
+                        <Check className="h-2 w-2 text-white" strokeWidth={3} />
                       </span>
                     )}
                     כניסה חד פעמית
                   </button>
                   <button
                     onClick={() => setEntryType('punch_card')}
-                    className={`relative rounded-2xl border-2 py-3 px-4 text-center transition-all duration-200 font-body text-sm font-medium
+                    className={`relative rounded-xl border-2 py-2 px-3 text-center transition-all duration-200 font-body text-xs font-medium
                       ${entryType === 'punch_card'
                         ? 'border-primary bg-primary/10 text-primary'
                         : 'border-border/50 bg-background text-foreground hover:border-primary/50'
                       }`}
                   >
                     {entryType === 'punch_card' && (
-                      <span className="absolute top-1.5 left-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
-                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      <span className="absolute top-1 left-1.5 w-3.5 h-3.5 bg-primary rounded-full flex items-center justify-center">
+                        <Check className="h-2 w-2 text-white" strokeWidth={3} />
                       </span>
                     )}
                     אני בכרטיסיה! 🎫
                   </button>
                 </div>
-                {errors.entryType && <p className="text-xs text-destructive text-right mt-2">{errors.entryType}</p>}
+                {errors.entryType && <p className="text-[11px] text-destructive text-right mt-1">{errors.entryType}</p>}
               </div>
 
               {/* Submit button */}
               <button
                 onClick={handleSubmit}
-                className="w-full py-3 rounded-full font-nehama text-lg text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
+                className="w-full py-2.5 rounded-full font-nehama text-base text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100"
                 style={{ background: isWaitlist ? 'hsl(var(--foreground))' : 'hsl(var(--primary))' }}
               >
                 {isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
