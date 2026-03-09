@@ -90,7 +90,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
 
   return (
     <Dialog open={!!danceClass} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
+      <DialogContent className="max-w-sm p-0 overflow-hidden border-0 shadow-2xl rounded-3xl bg-background">
         {/* Decorative top blob */}
         <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary/8 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-secondary/8 blur-3xl pointer-events-none" />
