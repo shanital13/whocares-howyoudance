@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/table';
 import { mockClasses } from '@/lib/mock-data';
 import { DanceClass, LEVEL_LABELS, ClassLevel } from '@/lib/types';
-import { Plus, Edit, Trash2, Users, MapPin, Clock, Tag, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Users, MapPin, Clock, Tag, X, Copy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminClasses = () => {
