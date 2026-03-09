@@ -4,15 +4,18 @@ import GallerySection from '@/components/landing/GallerySection';
 import ClassesSection from '@/components/landing/ClassesSection';
 import ContactSection from '@/components/landing/ContactSection';
 import Footer from '@/components/landing/Footer';
+import { BackgroundGlow } from '@/components/ui/background-glow';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <ClassesSection />
-      <AboutSection />
-      <GallerySection />
-      <ContactSection />
+      <BackgroundGlow>
+        <ClassesSection />
+        <AboutSection />
+        <GallerySection />
+        <ContactSection />
+      </BackgroundGlow>
       <Footer />
     </div>
   );
