@@ -1,7 +1,18 @@
 import teacherVideo from '@/assets/teacher-video.mp4';
 import { motion } from 'framer-motion';
+import { useSiteContent } from '@/hooks/use-site-content';
+
+const DEFAULTS = {
+  who_am_i_intro: 'אני יוגב.',
+  who_am_i_paragraph_1: 'רקדן ומורה למחול מודרני, ואני מאמין שריקוד צריך להיות מקום שבו אפשר להשתחרר — לא מקום שבו שופטים אותך.',
+  who_am_i_paragraph_2: 'השיעורים שלי נועדו במיוחד למתחילות, עם קצב לימוד נעים, הרבה חזרות וכוראיגרפיות שמקשיבות לגוף.',
+  who_am_i_highlight: 'המטרה היא פשוטה: שתצאי מהשיעור עם חיוך ועם קצת יותר חופש בתנועה.',
+};
 
 const WhoAmISection = () => {
+  const { data: content } = useSiteContent();
+  const t = (key: keyof typeof DEFAULTS) => content?.[key] || DEFAULTS[key];
+
   const scrollToClasses = () => {
     document.getElementById('classes')?.scrollIntoView({ behavior: 'smooth' });
   };
