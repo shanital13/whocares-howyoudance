@@ -36,13 +36,21 @@ const ClassesSection = () => {
 
   const displayedClasses = useMemo(() => {
     const now = new Date();
-    const nextWeekEnd = new Date(now);
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const nextWeekEnd = new Date(today);
     nextWeekEnd.setDate(nextWeekEnd.getDate() + 7);
 
+    // Get start of current week (Sunday)
+    const weekStart = new Date(today);
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+
     return classes.filter((cls) => {
-      if (!cls.is_recurring) return true;
       const classDate = new Date(cls.date);
-      return classDate >= now && classDate <= nextWeekEnd;
+      if (cls.is_recurring) {
+        return classDate >= weekStart && classDate <= nextWeekEnd;
+      }
+      // Non-recurring: show if in current week or future
+      return classDate >= weekStart;
     });
   }, [classes]);
 
