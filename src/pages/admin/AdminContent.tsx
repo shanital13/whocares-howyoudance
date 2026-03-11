@@ -9,6 +9,7 @@ import { toast } from '@/hooks/use-toast';
 import { Save, Loader2 } from 'lucide-react';
 
 const FIELDS = [
+  { key: 'who_am_i_title', label: 'כותרת הסקשן (למשל "מי אני?")', rows: 1 },
   { key: 'who_am_i_intro', label: 'כותרת משנה (למשל "אני יוגב.")', rows: 1 },
   { key: 'who_am_i_paragraph_1', label: 'פסקה ראשונה', rows: 3 },
   { key: 'who_am_i_paragraph_2', label: 'פסקה שנייה', rows: 3 },
