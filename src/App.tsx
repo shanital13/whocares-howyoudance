@@ -30,6 +30,7 @@ const App = () => (
             <Route path="/admin/class/:id" element={<AdminClassDetail />} />
             <Route path="/admin/clients" element={<AdminClients />} />
             <Route path="/admin/revenue" element={<AdminRevenue />} />
+            <Route path="/admin/content" element={<AdminContent />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

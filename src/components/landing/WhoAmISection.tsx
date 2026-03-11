@@ -80,18 +80,14 @@ const WhoAmISection = () => {
             className="flex-1 text-center md:text-right"
           >
             <p className="font-body text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed">
-              אני יוגב.
+              {t('who_am_i_intro')}
             </p>
 
             <div className="space-y-4 font-body text-muted-foreground text-base md:text-lg leading-relaxed">
-              <p>
-                רקדן ומורה למחול מודרני, ואני מאמין שריקוד צריך להיות מקום שבו אפשר להשתחרר — לא מקום שבו שופטים אותך.
-              </p>
-              <p>
-                השיעורים שלי נועדו במיוחד למתחילות, עם קצב לימוד נעים, הרבה חזרות וכוראיגרפיות שמקשיבות לגוף.
-              </p>
+              <p>{t('who_am_i_paragraph_1')}</p>
+              <p>{t('who_am_i_paragraph_2')}</p>
               <p className="text-foreground font-medium">
-                המטרה היא פשוטה: שתצאי מהשיעור עם חיוך ועם קצת יותר חופש בתנועה.
+                {t('who_am_i_highlight')}
               </p>
             </div>
 

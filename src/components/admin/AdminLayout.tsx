@@ -20,6 +20,7 @@ const navItems = [
   { path: '/admin/classes', label: 'שיעורים', icon: Calendar },
   { path: '/admin/clients', label: 'לקוחות', icon: Users },
   { path: '/admin/revenue', label: 'הכנסות', icon: DollarSign },
+  { path: '/admin/content', label: 'עריכת תוכן', icon: FileText },
 ];
 
 const SidebarNav = ({ onNavigate }: { onNavigate?: () => void }) => {
