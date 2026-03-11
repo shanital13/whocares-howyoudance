@@ -8,6 +8,7 @@ interface EventCardProps {
   variant: number;
   registrationCount: number;
   onRegister: () => void;
+  isPast?: boolean;
 }
 
 // Poster-style card variants with different colors and rotations
