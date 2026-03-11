@@ -12,6 +12,7 @@ import AdminClasses from "./pages/admin/AdminClasses";
 import AdminClassDetail from "./pages/admin/AdminClassDetail";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminRevenue from "./pages/admin/AdminRevenue";
+import AdminContent from "./pages/admin/AdminContent";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/admin/class/:id" element={<AdminClassDetail />} />
             <Route path="/admin/clients" element={<AdminClients />} />
             <Route path="/admin/revenue" element={<AdminRevenue />} />
+            <Route path="/admin/content" element={<AdminContent />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
