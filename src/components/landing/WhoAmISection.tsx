@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useSiteContent } from '@/hooks/use-site-content';
 
 const DEFAULTS = {
+  who_am_i_title: 'מי אני?',
   who_am_i_intro: 'אני יוגב.',
   who_am_i_paragraph_1: 'רקדן ומורה למחול מודרני, ואני מאמין שריקוד צריך להיות מקום שבו אפשר להשתחרר — לא מקום שבו שופטים אותך.',
   who_am_i_paragraph_2: 'השיעורים שלי נועדו במיוחד למתחילות, עם קצב לימוד נעים, הרבה חזרות וכוראיגרפיות שמקשיבות לגוף.',
@@ -40,7 +41,7 @@ const WhoAmISection = () => {
           transition={{ duration: 0.5 }}
           className="font-nehama text-4xl md:text-5xl lg:text-6xl text-foreground text-center mb-14"
         >
-          מי אני?
+          {t('who_am_i_title')}
         </motion.h2>
 
         {/* Layout: video + text */}
