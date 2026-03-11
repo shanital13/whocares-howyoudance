@@ -14,6 +14,10 @@ const WhoAmISection = () => {
   const { data: content } = useSiteContent();
   const t = (key: keyof typeof DEFAULTS) => content?.[key] || DEFAULTS[key];
 
+  const mediaUrl = content?.who_am_i_media_url;
+  const isVideo = !mediaUrl || mediaUrl.includes('.mp4') || mediaUrl.includes('.webm') || mediaUrl.includes('.mov');
+  const mediaSrc = mediaUrl || teacherVideo;
+
   const scrollToClasses = () => {
     document.getElementById('classes')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -46,7 +50,7 @@ const WhoAmISection = () => {
 
         {/* Layout: video + text */}
         <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
-          {/* Video */}
+          {/* Video / Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -56,14 +60,22 @@ const WhoAmISection = () => {
           >
             {/* Background blob behind video */}
             <div className="absolute -inset-4 bg-peach rounded-[2rem] rotate-3" />
-            <video
-              src={teacherVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="relative w-full h-full object-cover rounded-[1.5rem] shadow-lg"
-            />
+            {isVideo ? (
+              <video
+                src={mediaSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="relative w-full h-full object-cover rounded-[1.5rem] shadow-lg"
+              />
+            ) : (
+              <img
+                src={mediaSrc}
+                alt="תמונת מורה"
+                className="relative w-full h-full object-cover rounded-[1.5rem] shadow-lg"
+              />
+            )}
             {/* Decorative dots */}
             <div className="absolute -bottom-3 -left-3 flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-primary/40" />
