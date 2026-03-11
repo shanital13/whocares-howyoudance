@@ -80,7 +80,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister, isPast 
     >
       <div 
         className={`
-          ${style.bg}
+          ${isPast ? 'bg-muted' : style.bg}
           rounded-[24px] 
           p-6 md:p-8
           relative
@@ -90,6 +90,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister, isPast 
           min-h-[320px]
           flex
           flex-col
+          ${isPast ? 'opacity-70 grayscale-[30%]' : ''}
         `}
         style={{
           boxShadow: '0 12px 30px rgba(0,0,0,0.08)'
