@@ -40,7 +40,7 @@ const cardStyles = [
 ];
 
 
-const EventCard = ({ danceClass, variant, registrationCount, onRegister }: EventCardProps) => {
+const EventCard = ({ danceClass, variant, registrationCount, onRegister, isPast = false }: EventCardProps) => {
   const style = cardStyles[variant % cardStyles.length];
   const badge = LEVEL_LABELS[danceClass.level] ?? danceClass.level;
   
