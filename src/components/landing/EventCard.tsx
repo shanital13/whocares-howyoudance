@@ -174,28 +174,34 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister, isPast 
         </div>
 
         {/* CTA Button */}
-        <Button
-          className={`
-            w-full 
-            ${isFull ? 'bg-muted text-foreground hover:bg-muted/80' : `${style.buttonBg} ${style.buttonText}`}
-            rounded-full 
-            font-bold
-            text-base
-            py-6
-            transition-all 
-            hover:scale-105
-            hover:opacity-90
-            shadow-lg
-            relative 
-            z-10
-          `}
-          onClick={(e) => {
-            e.stopPropagation();
-            onRegister();
-          }}
-        >
-          {isFull ? 'רשימת המתנה 📋' : 'באה לרקוד'}
-        </Button>
+        {isPast ? (
+          <div className="w-full text-center text-muted-foreground font-bold text-base py-3 relative z-10">
+            השיעור התקיים ✓
+          </div>
+        ) : (
+          <Button
+            className={`
+              w-full 
+              ${isFull ? 'bg-muted text-foreground hover:bg-muted/80' : `${style.buttonBg} ${style.buttonText}`}
+              rounded-full 
+              font-bold
+              text-base
+              py-6
+              transition-all 
+              hover:scale-105
+              hover:opacity-90
+              shadow-lg
+              relative 
+              z-10
+            `}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRegister();
+            }}
+          >
+            {isFull ? 'רשימת המתנה 📋' : 'באה לרקוד'}
+          </Button>
+        )}
       </div>
     </motion.div>
   );

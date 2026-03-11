@@ -76,15 +76,22 @@ const ClassesSection = () => {
 
         {displayedClasses.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {displayedClasses.map((cls, i) => (
-              <EventCard
-                key={cls.id}
-                danceClass={cls}
-                variant={i}
-                registrationCount={regCountByClass[cls.id] || 0}
-                onRegister={() => setSelectedClass(cls)}
-              />
-            ))}
+            {displayedClasses.map((cls, i) => {
+              const classDate = new Date(cls.date);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              const isPast = classDate < today;
+              return (
+                <EventCard
+                  key={cls.id}
+                  danceClass={cls}
+                  variant={i}
+                  registrationCount={regCountByClass[cls.id] || 0}
+                  onRegister={() => setSelectedClass(cls)}
+                  isPast={isPast}
+                />
+              );
+            })}
           </div>
         ) : (
           <p className="text-center text-muted-foreground font-body text-lg">
