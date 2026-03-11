@@ -12,6 +12,7 @@ import AdminClasses from "./pages/admin/AdminClasses";
 import AdminClassDetail from "./pages/admin/AdminClassDetail";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminRevenue from "./pages/admin/AdminRevenue";
+import AdminContent from "./pages/admin/AdminContent";
 
 const queryClient = new QueryClient();
 
