@@ -36,13 +36,21 @@ const ClassesSection = () => {
 
   const displayedClasses = useMemo(() => {
     const now = new Date();
-    const nextWeekEnd = new Date(now);
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const nextWeekEnd = new Date(today);
     nextWeekEnd.setDate(nextWeekEnd.getDate() + 7);
 
+    // Get start of current week (Sunday)
+    const weekStart = new Date(today);
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+
     return classes.filter((cls) => {
-      if (!cls.is_recurring) return true;
       const classDate = new Date(cls.date);
-      return classDate >= now && classDate <= nextWeekEnd;
+      if (cls.is_recurring) {
+        return classDate >= weekStart && classDate <= nextWeekEnd;
+      }
+      // Non-recurring: show if in current week or future
+      return classDate >= weekStart;
     });
   }, [classes]);
 
@@ -68,15 +76,22 @@ const ClassesSection = () => {
 
         {displayedClasses.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {displayedClasses.map((cls, i) => (
-              <EventCard
-                key={cls.id}
-                danceClass={cls}
-                variant={i}
-                registrationCount={regCountByClass[cls.id] || 0}
-                onRegister={() => setSelectedClass(cls)}
-              />
-            ))}
+            {displayedClasses.map((cls, i) => {
+              const classDate = new Date(cls.date);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              const isPast = classDate < today;
+              return (
+                <EventCard
+                  key={cls.id}
+                  danceClass={cls}
+                  variant={i}
+                  registrationCount={regCountByClass[cls.id] || 0}
+                  onRegister={() => setSelectedClass(cls)}
+                  isPast={isPast}
+                />
+              );
+            })}
           </div>
         ) : (
           <p className="text-center text-muted-foreground font-body text-lg">

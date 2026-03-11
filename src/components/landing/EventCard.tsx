@@ -8,6 +8,7 @@ interface EventCardProps {
   variant: number;
   registrationCount: number;
   onRegister: () => void;
+  isPast?: boolean;
 }
 
 // Poster-style card variants with different colors and rotations
@@ -39,7 +40,7 @@ const cardStyles = [
 ];
 
 
-const EventCard = ({ danceClass, variant, registrationCount, onRegister }: EventCardProps) => {
+const EventCard = ({ danceClass, variant, registrationCount, onRegister, isPast = false }: EventCardProps) => {
   const style = cardStyles[variant % cardStyles.length];
   const badge = LEVEL_LABELS[danceClass.level] ?? danceClass.level;
   
@@ -79,7 +80,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister }: Event
     >
       <div 
         className={`
-          ${style.bg}
+          ${isPast ? 'bg-muted' : style.bg}
           rounded-[24px] 
           p-6 md:p-8
           relative
@@ -89,6 +90,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister }: Event
           min-h-[320px]
           flex
           flex-col
+          ${isPast ? 'opacity-70 grayscale-[30%]' : ''}
         `}
         style={{
           boxShadow: '0 12px 30px rgba(0,0,0,0.08)'
@@ -172,28 +174,34 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister }: Event
         </div>
 
         {/* CTA Button */}
-        <Button
-          className={`
-            w-full 
-            ${isFull ? 'bg-muted text-foreground hover:bg-muted/80' : `${style.buttonBg} ${style.buttonText}`}
-            rounded-full 
-            font-bold
-            text-base
-            py-6
-            transition-all 
-            hover:scale-105
-            hover:opacity-90
-            shadow-lg
-            relative 
-            z-10
-          `}
-          onClick={(e) => {
-            e.stopPropagation();
-            onRegister();
-          }}
-        >
-          {isFull ? 'רשימת המתנה 📋' : 'באה לרקוד'}
-        </Button>
+        {isPast ? (
+          <div className="w-full text-center text-muted-foreground font-bold text-base py-3 relative z-10">
+            השיעור התקיים ✓
+          </div>
+        ) : (
+          <Button
+            className={`
+              w-full 
+              ${isFull ? 'bg-muted text-foreground hover:bg-muted/80' : `${style.buttonBg} ${style.buttonText}`}
+              rounded-full 
+              font-bold
+              text-base
+              py-6
+              transition-all 
+              hover:scale-105
+              hover:opacity-90
+              shadow-lg
+              relative 
+              z-10
+            `}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRegister();
+            }}
+          >
+            {isFull ? 'רשימת המתנה 📋' : 'באה לרקוד'}
+          </Button>
+        )}
       </div>
     </motion.div>
   );
