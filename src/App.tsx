@@ -25,12 +25,14 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/classes" element={<AdminClasses />} />
-            <Route path="/admin/class/:id" element={<AdminClassDetail />} />
-            <Route path="/admin/clients" element={<AdminClients />} />
-            <Route path="/admin/revenue" element={<AdminRevenue />} />
-            <Route path="/admin/content" element={<AdminContent />} />
+            <Route element={<AdminGuard><Outlet /></AdminGuard>}>
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/classes" element={<AdminClasses />} />
+              <Route path="/admin/class/:id" element={<AdminClassDetail />} />
+              <Route path="/admin/clients" element={<AdminClients />} />
+              <Route path="/admin/revenue" element={<AdminRevenue />} />
+              <Route path="/admin/content" element={<AdminContent />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
