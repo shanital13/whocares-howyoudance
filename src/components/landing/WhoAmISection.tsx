@@ -43,7 +43,7 @@ const WhoAmISection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="font-nehama text-4xl md:text-5xl lg:text-6xl text-foreground text-center mb-14"
+          className="text-4xl md:text-5xl lg:text-6xl text-foreground text-center mb-14 font-mono"
         >
           {t('who_am_i_title')}
         </motion.h2>

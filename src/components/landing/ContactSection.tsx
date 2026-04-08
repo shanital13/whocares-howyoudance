@@ -46,7 +46,7 @@ const ContactSection = () => {
             </h2>
             
             {/* Secondary line */}
-            <p className="font-nehama text-2xl md:text-3xl text-foreground/80 mb-6 animate-fade-in opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+            <p className="text-2xl md:text-3xl text-foreground/80 mb-6 animate-fade-in opacity-0 font-mono" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
               דברי איתי בוואטספ
             </p>
             
