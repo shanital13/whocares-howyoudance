@@ -94,9 +94,19 @@ const ClassesSection = () => {
             })}
           </div>
         ) : (
-          <p className="text-center text-muted-foreground font-body text-lg">
-            אין שיעורים קרובים כרגע — עקבו אחרינו לעדכונים 💃
-          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            <div className="rounded-[24px] border-2 border-dashed border-muted-foreground/30 bg-muted/40 min-h-[320px] flex flex-col items-center justify-center p-8 text-center">
+              <div className="w-16 h-16 rounded-full bg-muted-foreground/10 flex items-center justify-center mb-4">
+                <span className="text-3xl opacity-40">💃</span>
+              </div>
+              <p className="text-muted-foreground font-body text-lg font-medium mb-2">
+                אין שיעורים קרובים כרגע
+              </p>
+              <p className="text-muted-foreground/60 font-body text-sm">
+                עקבו אחרינו לעדכונים על שיעורים חדשים
+              </p>
+            </div>
+          </div>
         )}
       </div>
 
