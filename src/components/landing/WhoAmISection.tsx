@@ -49,7 +49,62 @@ const WhoAmISection = () => {
         </motion.h2>
 
         {/* Layout: video + text */}
-...
+        <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
+          {/* Video / Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative w-72 h-96 md:w-[400px] md:h-[520px] flex-shrink-0"
+          >
+            {/* Background blob behind video */}
+            <div className="absolute -inset-4 bg-peach rounded-[2rem] rotate-3" />
+            {isVideo ? (
+              <video
+                src={mediaSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="relative w-full h-full object-cover rounded-[1.5rem] shadow-lg"
+              />
+            ) : (
+              <img
+                src={mediaSrc}
+                alt="תמונת מורה"
+                className="relative w-full h-full object-cover rounded-[1.5rem] shadow-lg"
+              />
+            )}
+            {/* Decorative dots */}
+            <div className="absolute -bottom-3 -left-3 flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-primary/40" />
+              <div className="w-2.5 h-2.5 rounded-full bg-primary/25" />
+              <div className="w-2.5 h-2.5 rounded-full bg-primary/15" />
+            </div>
+          </motion.div>
+
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="flex-1 text-center md:text-right"
+          >
+            <p className="font-body text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed">
+              {t('who_am_i_intro')}
+            </p>
+
+            <div className="space-y-4 font-body text-muted-foreground text-base md:text-lg leading-relaxed">
+              <p>{t('who_am_i_paragraph_1')}</p>
+              <p>{t('who_am_i_paragraph_2')}</p>
+              <p className="text-foreground font-medium">
+                {t('who_am_i_highlight')}
+              </p>
+            </div>
+
+            {/* CTA Button */}
             <button
               onClick={scrollToClasses}
               className="mt-8 inline-block px-8 py-3.5 rounded-full text-primary-foreground font-body font-bold text-base shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-95 bg-secondary"
