@@ -14,13 +14,13 @@ interface EventCardProps {
 // Poster-style card variants with different colors and rotations
 const cardStyles = [
   { 
-    bg: 'bg-[hsl(155,35%,52%)]',
+    bg: 'bg-[hsl(351,100%,68%)]',
     rotation: -1.5,
     buttonBg: 'bg-foreground',
     buttonText: 'text-background',
   },
   { 
-    bg: 'bg-[hsl(270,30%,65%)]',
+    bg: 'bg-[hsl(245,100%,70%)]',
     rotation: 1,
     buttonBg: 'bg-background',
     buttonText: 'text-foreground',
@@ -32,7 +32,7 @@ const cardStyles = [
     buttonText: 'text-primary-foreground',
   },
   { 
-    bg: 'bg-[hsl(25,60%,75%)]',
+    bg: 'bg-[hsl(48,100%,88%)]',
     rotation: 2,
     buttonBg: 'bg-foreground',
     buttonText: 'text-background',
