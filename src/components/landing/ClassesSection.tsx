@@ -72,7 +72,7 @@ const ClassesSection = () => {
       </svg>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl text-center mb-16 text-foreground font-sans">השיעורים הקרובים</h2>
+        <h2 className="font-nehama text-4xl md:text-5xl text-center mb-16 text-foreground">השיעורים הקרובים</h2>
 
         {displayedClasses.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">

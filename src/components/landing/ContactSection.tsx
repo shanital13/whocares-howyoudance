@@ -7,7 +7,7 @@ const ContactSection = () => {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
   return (
-    <section id="contact" className="py-20 md:py-28 px-6 relative overflow-hidden bg-indigo-100">
+    <section id="contact" className="py-20 md:py-28 px-6 relative overflow-hidden bg-peach">
       {/* Decorative blobs */}
       <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 rounded-full bg-primary/8 blur-3xl -translate-y-1/2 translate-x-1/4" />
       <div className="absolute bottom-0 left-0 w-48 h-48 md:w-72 md:h-72 rounded-full bg-secondary/8 blur-3xl translate-y-1/3 -translate-x-1/4" />
@@ -39,14 +39,14 @@ const ContactSection = () => {
           {/* Left side: Headlines + Supporting text */}
           <div className="text-center md:text-right flex-1">
             {/* Main headline - broken into 2 lines */}
-            <h2 className="text-4xl md:text-5xl text-foreground leading-tight mb-3 animate-fade-in opacity-0 font-sans lg:text-6xl" style={{ animationFillMode: 'forwards' }}>
+            <h2 className="font-nehama text-4xl md:text-5xl lg:text-6xl text-foreground leading-tight mb-3 animate-fade-in opacity-0" style={{ animationFillMode: 'forwards' }}>
               רוצה
               <br />
-              <span className="font-sans text-5xl text-secondary">לשמוע עוד?</span>
+              <span className="text-primary">לשמוע עוד?</span>
             </h2>
             
             {/* Secondary line */}
-            <p className="text-2xl text-foreground/80 mb-6 animate-fade-in opacity-0 font-sans md:text-4xl font-medium" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+            <p className="font-nehama text-2xl md:text-3xl text-foreground/80 mb-6 animate-fade-in opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
               דברי איתי בוואטספ
             </p>
             
