@@ -39,14 +39,14 @@ const ContactSection = () => {
           {/* Left side: Headlines + Supporting text */}
           <div className="text-center md:text-right flex-1">
             {/* Main headline - broken into 2 lines */}
-            <h2 className="font-nehama text-4xl md:text-5xl lg:text-6xl text-foreground leading-tight mb-3 animate-fade-in opacity-0" style={{ animationFillMode: 'forwards' }}>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground leading-tight mb-3 animate-fade-in opacity-0 font-mono" style={{ animationFillMode: 'forwards' }}>
               רוצה
               <br />
               <span className="text-primary">לשמוע עוד?</span>
             </h2>
             
             {/* Secondary line */}
-            <p className="font-nehama text-2xl md:text-3xl text-foreground/80 mb-6 animate-fade-in opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+            <p className="text-2xl md:text-3xl text-foreground/80 mb-6 animate-fade-in opacity-0 font-mono" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
               דברי איתי בוואטספ
             </p>
             
