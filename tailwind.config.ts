@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Poppins", "sans-serif"],
+        heading: ['"Playfair Display"', 'serif'],
+        display: ['"Playfair Display"', 'serif'],
         body: ["Rubik", "sans-serif"],
         nehama: ["Playpen Sans Hebrew", "cursive"],
       },
