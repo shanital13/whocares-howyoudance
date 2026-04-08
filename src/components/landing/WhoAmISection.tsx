@@ -43,7 +43,7 @@ const WhoAmISection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="font-nehama text-4xl md:text-5xl lg:text-6xl text-foreground text-center mb-14"
+          className="text-4xl md:text-5xl text-foreground text-center mb-14 font-sans lg:text-5xl"
         >
           {t('who_am_i_title')}
         </motion.h2>
@@ -107,7 +107,7 @@ const WhoAmISection = () => {
             {/* CTA Button */}
             <button
               onClick={scrollToClasses}
-              className="mt-8 inline-block px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-body font-bold text-base shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-95"
+              className="mt-8 inline-block px-8 py-3.5 rounded-full text-primary-foreground font-body font-bold text-base shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-95 bg-secondary"
             >
               באה לרקוד 💃
             </button>
