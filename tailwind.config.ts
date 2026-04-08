@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Poppins", "sans-serif"],
+        display: ["Cormorant Garamond", "Georgia", "serif"],
         body: ["Rubik", "sans-serif"],
         nehama: ["Playpen Sans Hebrew", "cursive"],
       },
