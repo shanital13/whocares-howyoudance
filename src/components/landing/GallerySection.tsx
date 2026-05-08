@@ -16,7 +16,7 @@ const images = [
 
 const GallerySection = () => {
   return (
-    <section id="gallery" className="py-24 px-6 bg-muted/30 relative overflow-hidden">
+    <section id="gallery" className="py-24 px-6 bg-background relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl" />
 
       <div className="max-w-6xl mx-auto relative">
