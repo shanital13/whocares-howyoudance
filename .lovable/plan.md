@@ -1,35 +1,34 @@
 
 ## Plan
 
-### 1. Global Gladia CLM font (strict enforcement)
+Note: Your project is built with React + Vite + Tailwind (not Laravel), so changes will be applied to the existing React components and CSS files.
 
-- **tailwind.config.ts**: Set all font families (display, body, nehama) to `'Gladia CLM'` with sans-serif fallback. Remove Secular One and Rubik references.
-- **index.css**: Update the `@import` to properly load Gladia CLM. Set `body` and `html` to use `font-body` (which now maps to Gladia CLM). Update `h1/h2/h3` base styles to use `font-body` instead of `font-display` (since they'll be the same font).
-- **All components**: Remove all explicit `font-display`, `font-body`, `font-nehama`, `font-mono` class usages from every component — the font will inherit globally. This affects ~16 files.
+### 1. Install custom fonts
 
-### 2. "מי אני" (About) section redesign
+Copy the uploaded `Gladia_CLM_Bold.ttf` and `segoeuithibd.ttf` to `public/fonts/`, then update `@font-face` rules in `src/index.css`.
 
-- Change to a **2-column layout**: text on the right, vertical video on the left (desktop). Stack vertically on mobile (video on top).
-- Keep the video in **portrait/vertical orientation** (`aspect-[9/16]`).
-- Replace the current `about-bg.jpg` full-bleed background with a **subtle gradient + soft texture** approach: dark-to-purple gradient with soft neon glow blobs for visual depth, ensuring high text contrast.
-- Remove the neon border frame around the video, use a cleaner subtle shadow instead.
+- **Headlines font** (`Gladia CLM`): Used for "למי איכפת איך את רוקדת", "מי אני?", "אז מה מחכה לך כאן?"
+- **Body font** (`Segoe UI`): Used for all other text site-wide
 
-### 3. "צרו איתי קשר" (Contact) section redesign
+Update `tailwind.config.ts` font families: `font-display` → Gladia CLM, `font-sans`/`font-body` → Segoe UI.
 
-- Integrate the site **logo as a subtle watermark/pattern** in the background — faded, repeated or placed as a large centered element at low opacity.
-- Replace the solid `bg-neon-coral` with a richer gradient background that feels more branded and inviting.
-- Maintain strong CTA emphasis and readability.
+Update `index.css` base styles so `body` uses Segoe UI and headings use Gladia CLM.
 
-### Technical details
+### 2. About section changes
 
-Files to edit:
-- `tailwind.config.ts` — font families
-- `src/index.css` — font import, base styles
-- `src/components/landing/AboutSection.tsx` — 2-col layout, vertical video, new background
-- `src/components/landing/ContactSection.tsx` — logo watermark background
-- `src/components/landing/HeroSection.tsx` — remove font classes
-- `src/components/landing/ServicesSection.tsx` — remove font classes
-- `src/components/landing/Footer.tsx` — remove font classes
-- ~10 other component files — remove explicit font utility classes
+In `AboutSection.tsx`:
+- **Background**: Replace the dark purple gradient with a plain white background (matching the hero/banner section).
+- **Layout swap**: Move video to the left and text to the right (currently reversed via `md:flex-row-reverse` — change to `md:flex-row`). Adjust text colors for readability on white.
 
-No new dependencies needed.
+### 3. Services section — softer colors
+
+In `ServicesSection.tsx`:
+- Replace the current bold/vivid gradient backgrounds on the service cards with softer, pastel-toned gradients (e.g., soft lavender, gentle coral, light mint).
+
+### Files to edit
+- `public/fonts/` — add 2 font files
+- `src/index.css` — `@font-face` rules, base typography
+- `tailwind.config.ts` — font family mappings
+- `src/components/landing/AboutSection.tsx` — white bg, layout swap, text colors
+- `src/components/landing/ServicesSection.tsx` — pastel card colors
+- `src/components/landing/HeroSection.tsx` — ensure headline uses display font

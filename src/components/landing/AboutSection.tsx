@@ -16,19 +16,8 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative py-24 md:py-36 px-6 overflow-hidden"
+      className="relative py-24 md:py-36 px-6 overflow-hidden bg-white"
     >
-      {/* Premium gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(280,40%,12%)] via-[hsl(300,30%,18%)] to-[hsl(340,35%,14%)]" />
-      
-      {/* Soft neon glow accents */}
-      <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] max-w-[500px] max-h-[500px] rounded-full bg-neon-pink/8 blur-[150px]" />
-      <div className="absolute bottom-[-10%] left-[-8%] w-[45vw] h-[45vw] max-w-[450px] max-h-[450px] rounded-full bg-neon-purple/10 blur-[130px]" />
-      <div className="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] max-w-[300px] max-h-[300px] rounded-full bg-neon-cyan/5 blur-[120px]" />
-      
-      {/* Subtle texture overlay */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[#f2f2f2]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Title */}
         <motion.h2
@@ -36,34 +25,13 @@ const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl lg:text-6xl text-white mb-12 md:mb-16 text-center drop-shadow-lg font-sans"
+          className="text-4xl md:text-5xl lg:text-6xl text-foreground mb-12 md:mb-16 text-center drop-shadow-lg font-display"
         >
           {t('who_am_i_title')}
         </motion.h2>
 
-        {/* Two-column layout */}
-        <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 text-red-400">
-          {/* Right column: Text */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex-1 text-center md:text-right"
-          >
-            <p className="text-white text-xl md:text-2xl font-medium mb-6 leading-relaxed font-sans">
-              {t('who_am_i_intro')}
-            </p>
-
-            <div className="space-y-4 text-white/80 text-base md:text-lg leading-relaxed">
-              <p className="font-sans">{t('who_am_i_paragraph_1')}</p>
-              <p className="font-sans">{t('who_am_i_paragraph_2')}</p>
-              <p className="text-white font-medium text-lg md:text-xl font-sans">
-                {t('who_am_i_highlight')}
-              </p>
-            </div>
-          </motion.div>
-
+        {/* Two-column layout: video left, text right */}
+        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
           {/* Left column: Vertical Video */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -73,9 +41,7 @@ const AboutSection = () => {
             className="w-full max-w-[280px] md:max-w-[320px] flex-shrink-0"
           >
             <div className="relative">
-              {/* Subtle glow behind video */}
               <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-neon-pink/20 via-neon-purple/15 to-neon-cyan/10 blur-2xl" />
-              
               <video
                 src="/about-video.mp4"
                 autoPlay
@@ -84,6 +50,27 @@ const AboutSection = () => {
                 playsInline
                 className="relative w-full aspect-[9/16] object-cover rounded-2xl shadow-2xl shadow-black/40"
               />
+            </div>
+          </motion.div>
+
+          {/* Right column: Text */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="flex-1 text-center md:text-right"
+          >
+            <p className="text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed">
+              {t('who_am_i_intro')}
+            </p>
+
+            <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+              <p>{t('who_am_i_paragraph_1')}</p>
+              <p>{t('who_am_i_paragraph_2')}</p>
+              <p className="text-foreground font-medium text-lg md:text-xl">
+                {t('who_am_i_highlight')}
+              </p>
             </div>
           </motion.div>
         </div>
