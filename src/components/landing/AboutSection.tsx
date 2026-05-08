@@ -16,7 +16,7 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative py-24 md:py-36 px-6 overflow-hidden bg-white"
+      className="relative py-24 md:py-36 px-6 overflow-hidden bg-background"
     >
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Title */}
