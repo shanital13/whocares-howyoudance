@@ -115,7 +115,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
           .maybeSingle();
 
         if (existingReg) {
-          setErrors({ submit: 'כבר נרשמת לשיעור הזה! 💃' });
+          setErrors({ submit: 'כבר נרשמת לשיעור הזה! ​' });
           setSubmitting(false);
           return;
         }
@@ -203,7 +203,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
 
               {/* Title */}
               <div className="mb-3 text-right">
-                <div className="text-2xl mb-1">💃</div>
+                <div className="text-2xl mb-1">​</div>
                 <h2 className="text-2xl text-foreground leading-tight mb-1">
                   {content.title}
                 </h2>
@@ -378,7 +378,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                   : `${PUNCH_CARD_ENTRIES} כניסות — ${PUNCH_CARD_PRICE} ₿ במזומן`
                 }
               </p>
-              <p className="text-3xl mt-6">💃</p>
+              <p className="text-3xl mt-6">​</p>
             </motion.div>
           )}
         </AnimatePresence>
