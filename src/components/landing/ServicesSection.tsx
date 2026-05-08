@@ -83,7 +83,7 @@ const ServicesSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 onClick={() => setOpenService(service)}
-                className={`relative rounded-3xl p-8 md:p-10 aspect-square flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-2 border-white/10`}
+                className={`relative w-full rounded-3xl p-8 md:p-10 aspect-square flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-2 border-white/10`}
               >
                 <span className="text-5xl mb-4 group-hover:scale-110 transition-transform">{service.emoji}</span>
                 <span className="font-display text-xl md:text-2xl text-white leading-snug drop-shadow-md">
