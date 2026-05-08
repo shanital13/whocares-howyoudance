@@ -18,8 +18,8 @@ const HeroSection = () => {
           איך את רוקדת
         </h1>
 
-        <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-md mx-auto animate-fade-in opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-          מרחב של תנועה, חופש וריקוד — בלי שיפוט, בלי "נכון" ו"לא נכון"
+        <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-md mx-auto animate-fade-in opacity-0 font-sans" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+          שיעורי מחול ומרחבי תנועה לשחרור ביקורת עצמית, תנועה ומלא פאן !
         </p>
 
         <div className="animate-fade-in opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
@@ -27,7 +27,7 @@ const HeroSection = () => {
             onClick={scrollToAbout}
             className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-primary text-primary-foreground text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1"
           >
-            בואי לרקוד 💃
+            מי מצטרפת לחגיגה ? 💃
           </button>
         </div>
       </div>

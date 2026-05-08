@@ -52,7 +52,7 @@ const ContactSection = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-white/90 text-lg md:text-xl mb-10"
         >
-          השאירי פרטים ואחזור אלייך
+          מוזמנת לשאול הכל !!
         </motion.p>
 
         <motion.div
@@ -80,7 +80,7 @@ const ContactSection = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="space-y-1"
         >
-          <p className="text-white/95 text-lg">מוזמנת לשאול הכל !!</p>
+          <p className="text-white/95 text-lg">השאירי פרטים ואחזור אלייך :)</p>
           <p className="text-white/70 text-base">זמין לך בוואצאפ</p>
         </motion.div>
       </div>
