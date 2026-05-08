@@ -91,7 +91,7 @@ const ServicesSection = () => {
                 <span className="font-display text-xl md:text-2xl text-white leading-snug drop-shadow-md">
                   {service.title}
                 </span>
-              </motion.button>
+              </motion.div>
             ))}
           </div>
         </div>
