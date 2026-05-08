@@ -56,7 +56,7 @@ const HowItWorksSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="font-nehama text-5xl md:text-7xl text-foreground leading-tight">
+          <h2 className="text-5xl md:text-7xl text-foreground leading-tight">
             איך זה
             <br />
             <span className="text-primary">עובד</span>
@@ -156,8 +156,8 @@ const HowItWorksSection = () => {
                 <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/15">
                   <Icon className="h-7 w-7 text-primary" strokeWidth={2.2} />
                 </div>
-                <h3 className="font-nehama text-2xl text-foreground mb-1">{step.title}</h3>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{step.description}</p>
+                 <h3 className="text-2xl text-foreground mb-1">{step.title}</h3>
+                 <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{step.description}</p>
               </motion.article>
             );
           })}
@@ -180,8 +180,8 @@ const HowItWorksSection = () => {
                   <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/15">
                     <Icon className="h-7 w-7 text-primary" strokeWidth={2.2} />
                   </div>
-                  <h3 className="font-nehama text-2xl text-foreground mb-1">{step.title}</h3>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{step.description}</p>
+                   <h3 className="text-2xl text-foreground mb-1">{step.title}</h3>
+                   <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{step.description}</p>
                 </motion.article>
                 
                 {/* Mobile curved arrow between steps */}
@@ -228,7 +228,7 @@ const HowItWorksSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.5 }}
         >
-          <span className="font-body text-lg">לשיעורים הקרובים</span>
+          <span className="text-lg">לשיעורים הקרובים</span>
           <ChevronDown className="h-8 w-8 animate-float" strokeWidth={2.5} />
         </motion.button>
       </div>

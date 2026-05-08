@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 inset-x-0 z-50 glass">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="font-display text-lg text-primary">
+        <Link to="/" className="text-lg text-primary">
           למי אכפת איך את רוקדת?
         </Link>
         <div className="flex items-center gap-4">

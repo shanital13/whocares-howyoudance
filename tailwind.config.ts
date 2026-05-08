@@ -14,9 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["'Secular One'", "sans-serif"],
-        body: ["Rubik", "sans-serif"],
-        nehama: ["'Secular One'", "cursive"],
+        sans: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
+        display: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
+        body: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
+        nehama: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
+        mono: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

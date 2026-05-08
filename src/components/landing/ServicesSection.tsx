@@ -69,7 +69,7 @@ const ServicesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-display text-4xl md:text-5xl text-foreground text-center mb-16"
+            className="text-4xl md:text-5xl text-foreground text-center mb-16"
           >
             אז מה מחכה לך כאן?
           </motion.h2>
@@ -88,7 +88,7 @@ const ServicesSection = () => {
                 className={`rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-2 border-white/10`}
               >
                 <span className="text-5xl mb-4 group-hover:scale-110 transition-transform">{service.emoji}</span>
-                <span className="font-display text-xl md:text-2xl text-white leading-snug drop-shadow-md">
+                <span className="text-xl md:text-2xl text-white leading-snug drop-shadow-md">
                   {service.title}
                 </span>
               </motion.div>
@@ -101,14 +101,14 @@ const ServicesSection = () => {
       <Dialog open={!!openService} onOpenChange={(open) => !open && setOpenService(null)}>
         <DialogContent className="w-[93vw] max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="font-display text-2xl md:text-3xl text-foreground text-center">
+            <DialogTitle className="text-2xl md:text-3xl text-foreground text-center">
               {openService?.emoji} {openService?.title}
             </DialogTitle>
           </DialogHeader>
           <DialogDescription className="sr-only">
             פרטים על {openService?.title}
           </DialogDescription>
-          <div className="space-y-4 font-body text-muted-foreground text-base leading-relaxed text-center mt-4">
+          <div className="space-y-4 text-muted-foreground text-base leading-relaxed text-center mt-4">
             {openService?.description.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -118,7 +118,7 @@ const ServicesSection = () => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-display text-base shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground text-base shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
             >
               <MessageCircle className="h-5 w-5" />
               רוצה לשמוע עוד?

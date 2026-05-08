@@ -72,7 +72,7 @@ const ClassesSection = () => {
       </svg>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl text-center mb-16 text-foreground font-mono">השיעורים הקרובים</h2>
+        <h2 className="text-4xl md:text-5xl text-center mb-16 text-foreground">השיעורים הקרובים</h2>
 
         {displayedClasses.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
@@ -94,7 +94,7 @@ const ClassesSection = () => {
             })}
           </div>
         ) : (
-          <p className="text-center text-muted-foreground font-body text-lg">
+          <p className="text-center text-muted-foreground text-lg">
             אין שיעורים קרובים כרגע — עקבו אחרינו לעדכונים 💃
           </p>
         )}

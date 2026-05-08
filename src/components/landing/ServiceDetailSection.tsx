@@ -39,10 +39,10 @@ const ServiceDetailSection = ({
           transition={{ duration: 0.6 }}
           className="flex-1 text-center md:text-right"
         >
-          <h3 className="font-display text-3xl md:text-4xl text-foreground mb-6">
+          <h3 className="text-3xl md:text-4xl text-foreground mb-6">
             {title}
           </h3>
-          <div className="space-y-4 font-body text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
+          <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
             {description.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -51,7 +51,7 @@ const ServiceDetailSection = ({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-display text-base shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground text-base shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
           >
             <MessageCircle className="h-5 w-5" />
             {ctaText}

@@ -145,7 +145,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister, isPast 
         {/* TITLE */}
         <div className="relative z-10 flex-1">
           <h3 
-            className="text-foreground font-display font-bold text-3xl md:text-4xl leading-tight mb-3 tracking-tight"
+            className="text-foreground font-bold text-3xl md:text-4xl leading-tight mb-3 tracking-tight"
             style={{ lineHeight: '1.1' }}
           >
             {danceClass.name.split(' ').map((word, i) => (
@@ -153,7 +153,7 @@ const EventCard = ({ danceClass, variant, registrationCount, onRegister, isPast 
             ))}
           </h3>
           {danceClass.description && (
-            <p className="text-foreground/70 text-sm font-body leading-relaxed mb-3">
+            <p className="text-foreground/70 text-sm leading-relaxed mb-3">
               {danceClass.description}
             </p>
           )}

@@ -33,13 +33,13 @@ const SidebarNav = ({ onNavigate }: { onNavigate?: () => void }) => {
       <div className="p-6 border-b border-sidebar-border">
         <Link
           to="/"
-          className="flex items-center gap-2 text-primary font-body text-sm hover:text-primary/80 transition-colors"
+          className="flex items-center gap-2 text-primary text-sm hover:text-primary/80 transition-colors"
           onClick={onNavigate}
         >
           <ArrowRight className="h-4 w-4" />
           חזרה לאתר
         </Link>
-        <h2 className="font-nehama text-xl mt-3 text-sidebar-foreground">פאנל ניהול</h2>
+        <h2 className="text-xl mt-3 text-sidebar-foreground">פאנל ניהול</h2>
       </div>
 
       {/* Navigation */}
@@ -72,7 +72,7 @@ const SidebarNav = ({ onNavigate }: { onNavigate?: () => void }) => {
       {/* Footer */}
       <div className="p-4 border-t border-sidebar-border">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-sidebar-foreground/50 truncate font-body">{user?.email}</span>
+          <span className="text-xs text-sidebar-foreground/50 truncate">{user?.email}</span>
           <Button
             variant="ghost"
             size="icon"
@@ -94,7 +94,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
     <div className="min-h-screen flex flex-col md:flex-row bg-[hsl(0,0%,97%)]">
       {/* Mobile Header */}
       <header className="md:hidden flex items-center justify-between px-5 py-3.5 border-b border-sidebar-border bg-sidebar">
-        <h2 className="font-nehama text-lg text-sidebar-foreground">פאנל ניהול</h2>
+        <h2 className="text-lg text-sidebar-foreground">פאנל ניהול</h2>
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="h-9 w-9">

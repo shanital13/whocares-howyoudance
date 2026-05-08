@@ -1,38 +1,35 @@
 
-# Homepage Redesign Plan
+## Plan
 
-## 1. Copy Uploaded Assets
-- Copy the neon gradient PDF background image to `src/assets/about-bg.jpg` for the About section background.
-- Copy the uploaded video to `public/about-video.mp4` (replace existing).
+### 1. Global Gladia CLM font (strict enforcement)
 
-## 2. Rebuild About Section (`AboutSection.tsx`)
-- Use the neon gradient image as a full-bleed background.
-- Large centered video with a decorative neon glow/shadow frame around it.
-- Hebrew title above the video, subtitle/text below.
-- Remove the old side-by-side layout with small video.
-- Keep CMS content integration (`useSiteContent`) for editable text.
+- **tailwind.config.ts**: Set all font families (display, body, nehama) to `'Gladia CLM'` with sans-serif fallback. Remove Secular One and Rubik references.
+- **index.css**: Update the `@import` to properly load Gladia CLM. Set `body` and `html` to use `font-body` (which now maps to Gladia CLM). Update `h1/h2/h3` base styles to use `font-body` instead of `font-display` (since they'll be the same font).
+- **All components**: Remove all explicit `font-display`, `font-body`, `font-nehama`, `font-mono` class usages from every component — the font will inherit globally. This affects ~16 files.
 
-## 3. Remove WhoAmISection
-- Remove `WhoAmISection` from `Index.tsx` (it's currently not used there, but clean up any remaining references).
-- The new AboutSection replaces it entirely.
+### 2. "מי אני" (About) section redesign
 
-## 4. Rebuild Services Section (`ServicesSection.tsx`)
-- Keep the colorful service cards grid.
-- Apply stronger neon brand colors to the cards.
-- Remove the `ServiceDetailSection` components from `Index.tsx` — no more long text blocks below the cards.
-- Each card opens a **modal/dialog** with the service description when clicked.
-- Use the existing `Dialog` component from shadcn for the modals.
+- Change to a **2-column layout**: text on the right, vertical video on the left (desktop). Stack vertically on mobile (video on top).
+- Keep the video in **portrait/vertical orientation** (`aspect-[9/16]`).
+- Replace the current `about-bg.jpg` full-bleed background with a **subtle gradient + soft texture** approach: dark-to-purple gradient with soft neon glow blobs for visual depth, ensuring high text contrast.
+- Remove the neon border frame around the video, use a cleaner subtle shadow instead.
 
-## 5. Refresh Hero Section (`HeroSection.tsx`)
-- Keep the current structure but make it cleaner and softer.
-- Reduce the number of decorative blobs; keep it more minimal.
-- Ensure the rainbow headline and CTA remain prominent.
+### 3. "צרו איתי קשר" (Contact) section redesign
 
-## 6. Update Index.tsx
-- Remove all `ServiceDetailSection` instances.
-- Page flow: Hero → About → Services → Contact → Footer.
+- Integrate the site **logo as a subtle watermark/pattern** in the background — faded, repeated or placed as a large centered element at low opacity.
+- Replace the solid `bg-neon-coral` with a richer gradient background that feels more branded and inviting.
+- Maintain strong CTA emphasis and readability.
 
-## Technical Details
-- The neon background image extracted from the PDF will be used as a CSS background-image on the About section.
-- Service modals will use `Dialog` from `src/components/ui/dialog.tsx` with RTL-friendly styling.
-- No new dependencies needed — framer-motion and radix dialog are already installed.
+### Technical details
+
+Files to edit:
+- `tailwind.config.ts` — font families
+- `src/index.css` — font import, base styles
+- `src/components/landing/AboutSection.tsx` — 2-col layout, vertical video, new background
+- `src/components/landing/ContactSection.tsx` — logo watermark background
+- `src/components/landing/HeroSection.tsx` — remove font classes
+- `src/components/landing/ServicesSection.tsx` — remove font classes
+- `src/components/landing/Footer.tsx` — remove font classes
+- ~10 other component files — remove explicit font utility classes
+
+No new dependencies needed.
