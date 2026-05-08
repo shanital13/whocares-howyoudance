@@ -76,33 +76,9 @@ const AboutSection = () => {
         </div>
       </div>
     </section>
-
-          {/* Left column: Vertical Video */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="w-full max-w-[280px] md:max-w-[320px] flex-shrink-0"
-          >
-            <div className="relative">
-              {/* Subtle glow behind video */}
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-neon-pink/20 via-neon-purple/15 to-neon-cyan/10 blur-2xl" />
-              
-              <video
-                src="/about-video.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="relative w-full aspect-[9/16] object-cover rounded-2xl shadow-2xl shadow-black/40"
-              />
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
   );
 };
+
+export default AboutSection;
 
 export default AboutSection;
