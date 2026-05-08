@@ -1,0 +1,2 @@
+UPDATE public.site_content SET value = 'אני יוגב וקודם כל ממש נעים להכיר.' WHERE key = 'who_am_i_intro';
+UPDATE public.site_content SET value = 'אני אגלה לכן סוד קטן, אנחנו לא הולכים להופיע בפסטיבל כרמיאל ולא לתת פייט ללהקת בת שבע 😊' WHERE key = 'who_am_i_paragraph_2';

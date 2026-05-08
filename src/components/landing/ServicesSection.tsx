@@ -15,7 +15,7 @@ const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד 💃
 const services = [
   {
     id: 'classes-copenhagen',
-    title: 'שיעורי מחול בקופנהגן',
+    title: 'שיעורי מחול פרונטליים - קופנגן',
     emoji: '💃',
     gradient: 'from-[hsl(280,70%,72%)] to-[hsl(340,100%,65%)]',
     border: 'border-[hsl(280,70%,72%)]',
@@ -28,7 +28,7 @@ const services = [
   {
     id: 'online-classes',
     title: 'ליווי אונליין',
-    emoji: '🌍',
+    emoji: '​',
     gradient: 'from-[hsl(175,90%,55%)] to-[hsl(145,70%,55%)]',
     border: 'border-[hsl(175,90%,55%)]',
     description: [
@@ -69,7 +69,7 @@ const ServicesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-4xl md:text-5xl text-foreground text-center mb-16"
+            className="text-4xl md:text-5xl text-foreground text-center mb-16 font-sans"
           >
             אז מה מחכה לך כאן?
           </motion.h2>
@@ -85,10 +85,10 @@ const ServicesSection = () => {
                 onClick={() => setOpenService(service)}
                 role="button"
                 tabIndex={0}
-                className={`rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-2 border-white/10 font-extralight`}
+                className="rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex-col text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br from-[hsl(280,70%,72%)] to-[hsl(340,100%,65%)] border-white/10 font-extralight border-2 flex items-center justify-start"
               >
                 <span className="text-5xl mb-4 group-hover:scale-110 transition-transform">{service.emoji}</span>
-                <span className="text-xl md:text-2xl text-white leading-snug drop-shadow-md">
+                <span className="text-xl text-white leading-snug drop-shadow-md font-sans md:text-4xl font-semibold">
                   {service.title}
                 </span>
               </motion.div>
