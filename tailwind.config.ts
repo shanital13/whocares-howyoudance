@@ -14,11 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
-        display: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
-        body: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
-        nehama: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
-        mono: ["'Gladia CLM'", "'Secular One'", "sans-serif"],
+        sans: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
+        display: ["'Gladia CLM'", "sans-serif"],
+        body: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
+        nehama: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
+        mono: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
