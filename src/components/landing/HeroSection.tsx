@@ -12,7 +12,7 @@ const HeroSection = () => {
       <div className="absolute bottom-[-5%] left-[-8%] w-[40vw] h-[40vw] max-w-[350px] max-h-[350px] rounded-full bg-neon-cyan/10 blur-[120px]" />
 
       <div className="relative z-10 text-center max-w-3xl mx-auto">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] mb-8 animate-fade-in text-rainbow font-sans">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] mb-8 animate-fade-in text-rainbow font-display">
           למי איכפת
           <br />
           איך את רוקדת
