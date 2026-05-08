@@ -1,34 +1,33 @@
 
-## Plan
+## Changes
 
-Note: Your project is built with React + Vite + Tailwind (not Laravel), so changes will be applied to the existing React components and CSS files.
+### 1. Unified Background Color
+The Banner (Hero) uses `bg-background`, which maps to CSS variable `--background: 48 100% 94%` → `hsl(48, 100%, 94%)` ≈ `#fff3c2`. 
 
-### 1. Install custom fonts
+The About section uses `bg-white` and the Contact section uses a gradient. I'll:
+- Change About section from `bg-white` to `bg-background`
+- Change Contact section to use `bg-background` instead of its gradient
+- Check all other sections and align them to `bg-background`
 
-Copy the uploaded `Gladia_CLM_Bold.ttf` and `segoeuithibd.ttf` to `public/fonts/`, then update `@font-face` rules in `src/index.css`.
+### 2. Contact Section Updates
+- Change headline from "מוכנה להתחיל לרקוד?" to "מתרגשת לקראת התנועה החדשה שלך בעולם?"
+- Apply `font-display` (Gladia CLM) to the headline
+- Apply the `text-rainbow` gradient class (same as the banner) to the headline
+- Change body text color from `text-white/90` and `text-white/70` to `text-muted-foreground` (the standard gray used across the site)
+- Remove the decorative gradient background, watermarks, and SVG waves (since the section will now use `bg-background`)
 
-- **Headlines font** (`Gladia CLM`): Used for "למי איכפת איך את רוקדת", "מי אני?", "אז מה מחכה לך כאן?"
-- **Body font** (`Segoe UI`): Used for all other text site-wide
+### 3. "Talk to Me" Button
+- Change button background from white (`bg-white`) to WhatsApp green (`#25D366`)
+- Update text color to white for contrast
+- Keep the prominent rounded-full styling
 
-Update `tailwind.config.ts` font families: `font-display` → Gladia CLM, `font-sans`/`font-body` → Segoe UI.
+### 4. Layout Verification
+- About section already has video on the left and text on the right in the current code (confirmed in RTL context)
+- Font rules already applied: `font-display` for headlines, `font-sans` for body
+- Services section pastel tones already in place
 
-Update `index.css` base styles so `body` uses Segoe UI and headings use Gladia CLM.
-
-### 2. About section changes
-
-In `AboutSection.tsx`:
-- **Background**: Replace the dark purple gradient with a plain white background (matching the hero/banner section).
-- **Layout swap**: Move video to the left and text to the right (currently reversed via `md:flex-row-reverse` — change to `md:flex-row`). Adjust text colors for readability on white.
-
-### 3. Services section — softer colors
-
-In `ServicesSection.tsx`:
-- Replace the current bold/vivid gradient backgrounds on the service cards with softer, pastel-toned gradients (e.g., soft lavender, gentle coral, light mint).
-
-### Files to edit
-- `public/fonts/` — add 2 font files
-- `src/index.css` — `@font-face` rules, base typography
-- `tailwind.config.ts` — font family mappings
-- `src/components/landing/AboutSection.tsx` — white bg, layout swap, text colors
-- `src/components/landing/ServicesSection.tsx` — pastel card colors
-- `src/components/landing/HeroSection.tsx` — ensure headline uses display font
+## Files to modify
+- `src/components/landing/AboutSection.tsx` — change `bg-white` to `bg-background`
+- `src/components/landing/ContactSection.tsx` — headline text/font/gradient, body text color, button color, background
+- `src/components/landing/ServicesSection.tsx` — verify `bg-background` (already set)
+- Any other section files that don't use `bg-background`
