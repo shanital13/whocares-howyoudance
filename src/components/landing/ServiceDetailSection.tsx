@@ -12,7 +12,7 @@ interface ServiceDetailProps {
 }
 
 const WHATSAPP_NUMBER = '972501234567';
-const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד 💃';
+const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד ​';
 
 const ServiceDetailSection = ({
   id,
@@ -66,7 +66,7 @@ const ServiceDetailSection = ({
           transition={{ duration: 0.6, delay: 0.1 }}
           className="w-full max-w-xs md:max-w-sm aspect-square rounded-3xl bg-foreground/5 flex items-center justify-center"
         >
-          <span className="text-6xl">💃</span>
+          <span className="text-6xl">​</span>
         </motion.div>
       </div>
     </section>

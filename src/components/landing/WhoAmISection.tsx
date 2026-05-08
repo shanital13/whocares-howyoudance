@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useSiteContent } from '@/hooks/use-site-content';
 
 const DEFAULTS = {
-  who_am_i_title: 'מי אני?',
+  who_am_i_title: 'קצת עלי..',
   who_am_i_intro: 'אני יוגב.',
   who_am_i_paragraph_1: 'רקדן ומורה למחול מודרני, ואני מאמין שריקוד צריך להיות מקום שבו אפשר להשתחרר — לא מקום שבו שופטים אותך.',
   who_am_i_paragraph_2: 'השיעורים שלי נועדו במיוחד למתחילות, עם קצב לימוד נעים, הרבה חזרות וכוראיגרפיות שמקשיבות לגוף.',
@@ -109,7 +109,7 @@ const WhoAmISection = () => {
               onClick={scrollToClasses}
               className="mt-8 inline-block px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-95"
             >
-              באה לרקוד 💃
+              באה לרקוד ​
             </button>
           </motion.div>
         </div>

@@ -27,7 +27,7 @@ const HeroSection = () => {
             onClick={scrollToAbout}
             className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-primary text-primary-foreground text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1"
           >
-            מי מצטרפת לחגיגה ? 💃
+            מי מצטרפת לחגיגה ? ​
           </button>
         </div>
       </div>

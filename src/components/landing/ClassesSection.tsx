@@ -95,7 +95,7 @@ const ClassesSection = () => {
           </div>
         ) : (
           <p className="text-center text-muted-foreground text-lg">
-            אין שיעורים קרובים כרגע — עקבו אחרינו לעדכונים 💃
+            אין שיעורים קרובים כרגע — עקבו אחרינו לעדכונים ​
           </p>
         )}
       </div>

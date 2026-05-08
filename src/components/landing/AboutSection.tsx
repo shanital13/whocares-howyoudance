@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useSiteContent } from '@/hooks/use-site-content';
 
 const DEFAULTS = {
-  who_am_i_title: 'מי אני?',
+  who_am_i_title: 'קצת עלי..',
   who_am_i_intro: 'קודם כל ממש נעים להכיר :)',
   who_am_i_paragraph_1: 'אני יוגב ואני מעביר שיעורי מחול ומרחבי תנועה שמהטרה העיקרית שלהן לשחרר ביקורת עצמית, שיפוטיות ולתת לכן להיות הכי חופשיות בגוף שלכן כשאתן רוקדות. בסטודיו, בבית או במסיבה.',
   who_am_i_paragraph_2: 'אני אגלה לכן סוד קטן, אנחנו לא הולכים להופיע בפסטיבל כרמיאל ולא לתת פייט ללהקת בת שבע 😊',
@@ -25,7 +25,7 @@ const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl lg:text-6xl text-foreground mb-12 md:mb-16 text-center drop-shadow-lg font-display"
+          className="text-4xl lg:text-6xl text-foreground mb-12 md:mb-16 text-center drop-shadow-lg font-display text-zinc-950 md:text-7xl"
         >
           {t('who_am_i_title')}
         </motion.h2>

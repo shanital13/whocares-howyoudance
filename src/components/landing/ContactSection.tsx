@@ -2,7 +2,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const WHATSAPP_NUMBER = '972501234567';
-const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד על השיעורים 💃';
+const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד על השיעורים ​';
 
 const ContactSection = () => {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
