@@ -21,8 +21,8 @@ const GallerySection = () => {
 
       <div className="max-w-6xl mx-auto relative">
         <div className="text-center mb-16">
-          <span className="text-primary font-display text-sm tracking-wider mb-3 block">✦ גלריה</span>
-          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">רגעים מהשיעורים</h2>
+          <span className="text-primary text-sm tracking-wider mb-3 block">✦ גלריה</span>
+          <h2 className="text-4xl md:text-5xl text-foreground mb-4">רגעים מהשיעורים</h2>
           <p className="text-muted-foreground text-lg">כל שיעור הוא חוויה בלתי נשכחת</p>
         </div>
 
