@@ -17,8 +17,8 @@ const services = [
     id: 'classes-copenhagen',
     title: 'שיעורי מחול פרונטליים - קופנגן',
     emoji: '💃',
-    gradient: 'from-[hsl(280,70%,72%)] to-[hsl(340,100%,65%)]',
-    border: 'border-[hsl(280,70%,72%)]',
+    gradient: 'from-[hsl(280,60%,88%)] to-[hsl(310,55%,85%)]',
+    border: 'border-[hsl(280,60%,88%)]',
     description: [
       'שיעורי ריקוד וזוז בסטודיו בקופנהגן — מקום שבו אפשר לנשום, לזוז ולהרגיש חופשיה.',
       'השיעורים מתאימים לכל רמה, עם דגש על הנאה ותנועה חופשית.',
@@ -29,8 +29,8 @@ const services = [
     id: 'online-classes',
     title: 'ליווי אונליין',
     emoji: '​',
-    gradient: 'from-[hsl(175,90%,55%)] to-[hsl(145,70%,55%)]',
-    border: 'border-[hsl(175,90%,55%)]',
+    gradient: 'from-[hsl(175,50%,82%)] to-[hsl(155,45%,80%)]',
+    border: 'border-[hsl(175,50%,82%)]',
     description: [
       'רוקדות מכל מקום בעולם — מהסלון, מהחדר, מהגינה.',
       'שיעורים חיים בזום עם אנרגיה של סטודיו אמיתי.',
@@ -41,8 +41,8 @@ const services = [
     id: 'workshops',
     title: 'סדנאות וריטריטים',
     emoji: '✨',
-    gradient: 'from-[hsl(340,100%,65%)] to-[hsl(14,90%,65%)]',
-    border: 'border-[hsl(340,100%,65%)]',
+    gradient: 'from-[hsl(340,55%,85%)] to-[hsl(14,60%,82%)]',
+    border: 'border-[hsl(340,55%,85%)]',
     description: [
       'חוויות ריקוד מעמיקות — סדנאות של כמה שעות או ריטריטים של סוף שבוע.',
       'זמן לצלול פנימה, לגלות שכבות חדשות בתנועה ולפגוש נשים מדהימות.',
