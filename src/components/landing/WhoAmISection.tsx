@@ -43,7 +43,7 @@ const WhoAmISection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl lg:text-6xl text-foreground text-center mb-14 font-mono"
+          className="text-4xl md:text-5xl lg:text-6xl text-foreground text-center mb-14"
         >
           {t('who_am_i_title')}
         </motion.h2>
@@ -92,11 +92,11 @@ const WhoAmISection = () => {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="flex-1 text-center md:text-right"
           >
-            <p className="font-body text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed">
+            <p className="text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed">
               {t('who_am_i_intro')}
             </p>
 
-            <div className="space-y-4 font-body text-muted-foreground text-base md:text-lg leading-relaxed">
+            <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
               <p>{t('who_am_i_paragraph_1')}</p>
               <p>{t('who_am_i_paragraph_2')}</p>
               <p className="text-foreground font-medium">
@@ -107,7 +107,7 @@ const WhoAmISection = () => {
             {/* CTA Button */}
             <button
               onClick={scrollToClasses}
-              className="mt-8 inline-block px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-body font-bold text-base shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-95"
+              className="mt-8 inline-block px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-95"
             >
               באה לרקוד 💃
             </button>

@@ -204,18 +204,18 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               {/* Title */}
               <div className="mb-3 text-right">
                 <div className="text-2xl mb-1">💃</div>
-                <h2 className="font-nehama text-2xl text-foreground leading-tight mb-1">
+                <h2 className="text-2xl text-foreground leading-tight mb-1">
                   {content.title}
                 </h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {content.description}
                 </p>
               </div>
 
               {/* למי מתאים */}
               <div className="mb-3 bg-peach rounded-xl p-3 text-right">
-                <p className="font-body font-medium text-foreground text-sm mb-1">למי מתאים?</p>
-                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                <p className="font-medium text-foreground text-sm mb-1">למי מתאים?</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {content.forWhom}
                 </p>
               </div>
@@ -223,14 +223,14 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               {/* Pricing */}
               <div className="mb-3 text-right space-y-1">
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
-                  <span className="font-body text-sm text-foreground">כניסה חד פעמית</span>
+                  <span className="font-semibold text-foreground text-sm">₿ {SINGLE_PRICE}</span>
+                  <span className="text-sm text-foreground">כניסה חד פעמית</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-body font-semibold text-foreground text-sm">₿ {PUNCH_CARD_PRICE}</span>
-                  <span className="font-body text-sm text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
+                  <span className="font-semibold text-foreground text-sm">₿ {PUNCH_CARD_PRICE}</span>
+                  <span className="text-sm text-foreground">כרטיסיה של {PUNCH_CARD_ENTRIES} כניסות</span>
                 </div>
-                <p className="font-body text-xs text-muted-foreground pt-1">
+                <p className="text-xs text-muted-foreground pt-1">
                   התשלום במזומן בבאט בהגעה לשיעור
                 </p>
               </div>
@@ -291,7 +291,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setEntryType('single')}
-                    className={`relative rounded-xl border-2 py-2.5 px-3 text-center transition-all duration-200 font-body text-sm font-medium
+                    className={`relative rounded-xl border-2 py-2.5 px-3 text-center transition-all duration-200 text-sm font-medium
                       ${entryType === 'single'
                         ? 'border-primary bg-primary/10 text-primary'
                         : 'border-border/50 bg-background text-foreground hover:border-primary/50'
@@ -306,7 +306,7 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                   </button>
                   <button
                     onClick={() => setEntryType('punch_card')}
-                    className={`relative rounded-xl border-2 py-2.5 px-3 text-center transition-all duration-200 font-body text-sm font-medium
+                    className={`relative rounded-xl border-2 py-2.5 px-3 text-center transition-all duration-200 text-sm font-medium
                       ${entryType === 'punch_card'
                         ? 'border-primary bg-primary/10 text-primary'
                         : 'border-border/50 bg-background text-foreground hover:border-primary/50'
@@ -324,14 +324,14 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </div>
 
               {errors.submit && (
-                <p className="text-base font-semibold text-destructive text-center mb-2 font-body">{errors.submit}</p>
+                <p className="text-base font-semibold text-destructive text-center mb-2">{errors.submit}</p>
               )}
 
               {/* Submit button */}
               <button
                 onClick={handleSubmit}
                 disabled={submitting}
-                className="w-full py-3 rounded-full font-nehama text-lg text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100 disabled:opacity-60 disabled:pointer-events-none"
+                className="w-full py-3 rounded-full text-lg text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl active:scale-100 disabled:opacity-60 disabled:pointer-events-none"
                 style={{ background: isWaitlist ? 'hsl(var(--foreground))' : 'hsl(var(--primary))' }}
               >
                 {submitting ? 'שומרת...' : isWaitlist ? 'הרשמה לרשימת המתנה 📋' : 'שומרת מקום ✨'}
@@ -363,22 +363,22 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
                 <Check className="h-10 w-10 text-success" strokeWidth={2.5} />
               </motion.div>
 
-              <h2 className="font-nehama text-4xl text-foreground mb-3">
+              <h2 className="text-4xl text-foreground mb-3">
                 {isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉'}
               </h2>
-              <p className="font-body text-muted-foreground text-base leading-relaxed mb-2">
+              <p className="text-muted-foreground text-base leading-relaxed mb-2">
                 {isWaitlist
                   ? `${fullName.trim()}, נעדכן אותך ברגע שיתפנה מקום 💛`
                   : `${fullName.trim()}, נתראה בשיעור!`
                 }
               </p>
-              <p className="font-body text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {entryType === 'single'
                   ? `לשלם ${SINGLE_PRICE} ₿ במזומן בהגעה`
                   : `${PUNCH_CARD_ENTRIES} כניסות — ${PUNCH_CARD_PRICE} ₿ במזומן`
                 }
               </p>
-              <p className="font-body text-3xl mt-6">💃</p>
+              <p className="text-3xl mt-6">💃</p>
             </motion.div>
           )}
         </AnimatePresence>

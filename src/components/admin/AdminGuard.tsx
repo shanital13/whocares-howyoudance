@@ -8,7 +8,7 @@ const AdminGuard = ({ children }: { children: ReactNode }) => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <p className="text-muted-foreground font-body">טוען...</p>
+        <p className="text-muted-foreground">טוען...</p>
       </div>
     );
   }
