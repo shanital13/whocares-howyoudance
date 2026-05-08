@@ -27,7 +27,7 @@ const AboutSection = () => {
       <div className="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] max-w-[300px] max-h-[300px] rounded-full bg-neon-cyan/5 blur-[120px]" />
       
       {/* Subtle texture overlay */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      <div className="absolute inset-0 opacity-[0.03] bg-[#f2f2f2]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Title */}
@@ -42,7 +42,7 @@ const AboutSection = () => {
         </motion.h2>
 
         {/* Two-column layout */}
-        <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
+        <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 text-red-400">
           {/* Right column: Text */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
