@@ -10,13 +10,13 @@ import {
 } from '@/components/ui/dialog';
 
 const WHATSAPP_NUMBER = '972501234567';
-const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד 💃';
+const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד ​';
 
 const services = [
   {
     id: 'classes-copenhagen',
     title: 'שיעורי מחול פרונטליים - קופנגן',
-    emoji: '💃',
+    emoji: '​',
     gradient: 'from-[hsl(280,60%,88%)] to-[hsl(310,55%,85%)]',
     border: 'border-[hsl(280,60%,88%)]',
     description: [
@@ -85,7 +85,7 @@ const ServicesSection = () => {
                 onClick={() => setOpenService(service)}
                 role="button"
                 tabIndex={0}
-                className={`rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex-col text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-white/20 font-extralight border-2 flex items-center justify-start`}
+                className={`rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex-col text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-white/20 font-extralight border-2 flex items-center justify-center`}
               >
                 <span className="text-5xl mb-4 group-hover:scale-110 transition-transform">{service.emoji}</span>
                 <span className="text-xl text-white leading-snug drop-shadow-md font-sans md:text-4xl font-semibold">
