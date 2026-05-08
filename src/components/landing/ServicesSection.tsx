@@ -85,7 +85,7 @@ const ServicesSection = () => {
                 onClick={() => setOpenService(service)}
                 role="button"
                 tabIndex={0}
-                className="rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex-col text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br from-[hsl(280,60%,88%)] to-[hsl(340,70%,85%)] border-white/20 font-extralight border-2 flex items-center justify-start"
+                className={`rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex-col text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-white/20 font-extralight border-2 flex items-center justify-start`}
               >
                 <span className="text-5xl mb-4 group-hover:scale-110 transition-transform">{service.emoji}</span>
                 <span className="text-xl text-white leading-snug drop-shadow-md font-sans md:text-4xl font-semibold">
