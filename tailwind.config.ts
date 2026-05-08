@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Poppins", "sans-serif"],
+        display: ["'Secular One'", "sans-serif"],
         body: ["Rubik", "sans-serif"],
-        nehama: ["Playpen Sans Hebrew", "cursive"],
+        nehama: ["'Secular One'", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -63,6 +63,12 @@ export default {
         peach: {
           DEFAULT: "hsl(var(--peach))",
         },
+        "neon-pink": "hsl(var(--neon-pink))",
+        "neon-cyan": "hsl(var(--neon-cyan))",
+        "neon-green": "hsl(var(--neon-green))",
+        "neon-yellow": "hsl(var(--neon-yellow))",
+        "neon-coral": "hsl(var(--neon-coral))",
+        "neon-purple": "hsl(var(--neon-purple))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

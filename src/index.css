@@ -1,78 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans+Hebrew:wght@400;700&family=Poppins:wght@700&family=Rubik:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&family=Rubik:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Gladia CLM';
+  src: url('https://fonts.cdnfonts.com/css/gladia-clm');
+  font-display: swap;
+}
+
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 12%;
+    --background: 48 100% 94%;
+    --foreground: 280 30% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 12%;
+    --card: 48 100% 96%;
+    --card-foreground: 280 30% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 12%;
+    --popover: 48 100% 96%;
+    --popover-foreground: 280 30% 15%;
 
-    --primary: 351 100% 68%;
+    --primary: 340 85% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 245 100% 70%;
+    --secondary: 280 60% 72%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 48 40% 90%;
+    --muted-foreground: 280 15% 45%;
 
-    --accent: 351 100% 68%;
+    --accent: 175 70% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --peach: 14 100% 95%;
+    --peach: 14 100% 85%;
+
+    --neon-pink: 340 100% 65%;
+    --neon-cyan: 175 90% 55%;
+    --neon-green: 145 70% 55%;
+    --neon-yellow: 48 100% 65%;
+    --neon-coral: 14 90% 65%;
+    --neon-purple: 280 70% 72%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 92%;
-    --input: 0 0% 92%;
-    --ring: 351 100% 68%;
+    --border: 48 30% 85%;
+    --input: 48 30% 85%;
+    --ring: 340 85% 65%;
 
     --radius: 1.25rem;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 12%;
-    --sidebar-primary: 351 100% 68%;
+    --sidebar-foreground: 280 30% 15%;
+    --sidebar-primary: 340 85% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 95%;
-    --sidebar-accent-foreground: 0 0% 12%;
-    --sidebar-border: 0 0% 92%;
-    --sidebar-ring: 351 100% 68%;
+    --sidebar-accent: 48 40% 92%;
+    --sidebar-accent-foreground: 280 30% 15%;
+    --sidebar-border: 48 30% 85%;
+    --sidebar-ring: 340 85% 65%;
 
-    --success: 160 45% 55%;
+    --success: 145 70% 55%;
     --success-foreground: 0 0% 100%;
     --warning: 35 65% 65%;
-    --warning-foreground: 0 0% 12%;
+    --warning-foreground: 280 30% 15%;
   }
 
   .dark {
-    --background: 220 20% 10%;
-    --foreground: 30 20% 93%;
-    --card: 220 18% 14%;
-    --card-foreground: 30 20% 93%;
-    --popover: 220 18% 14%;
-    --popover-foreground: 30 20% 93%;
-    --primary: 340 40% 65%;
+    --background: 260 25% 8%;
+    --foreground: 48 80% 92%;
+    --card: 260 20% 12%;
+    --card-foreground: 48 80% 92%;
+    --popover: 260 20% 12%;
+    --popover-foreground: 48 80% 92%;
+    --primary: 340 80% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 200 35% 60%;
+    --secondary: 280 50% 60%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 220 15% 20%;
-    --muted-foreground: 30 15% 65%;
-    --accent: 15 50% 65%;
-    --accent-foreground: 220 20% 12%;
+    --muted: 260 15% 18%;
+    --muted-foreground: 48 30% 65%;
+    --accent: 175 60% 45%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 60% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 25%;
-    --input: 220 15% 25%;
-    --ring: 340 40% 65%;
+    --border: 260 15% 22%;
+    --input: 260 15% 22%;
+    --ring: 340 80% 60%;
   }
 }
 
@@ -95,7 +108,7 @@
   h1 {
     @apply font-display font-bold;
     font-size: 56px;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   h2 {
@@ -112,6 +125,22 @@
 }
 
 @layer utilities {
+  .text-rainbow {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--neon-pink)),
+      hsl(var(--neon-coral)),
+      hsl(var(--neon-yellow)),
+      hsl(var(--neon-green)),
+      hsl(var(--neon-cyan)),
+      hsl(var(--neon-purple)),
+      hsl(var(--neon-pink))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .story-link * {
     @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
   }
