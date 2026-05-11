@@ -22,7 +22,7 @@ const ContactSection = () => {
           <p className="text-xs tracking-[0.3em] uppercase text-hoodie-coral mb-4 font-sans">
             Contact
           </p>
-          <h2 className="text-3xl md:text-5xl text-foreground font-display leading-[1.15]">
+          <h2 className="text-3xl md:text-5xl text-hoodie-gradient font-display leading-[1.15]">
             מתרגשת לקראת התנועה החדשה שלך בעולם?
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl mt-6 font-sans">
