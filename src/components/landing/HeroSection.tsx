@@ -7,12 +7,12 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-6 overflow-hidden bg-background">
-      {/* Soft decorative blobs */}
-      <div className="absolute top-[-8%] right-[-3%] w-[45vw] h-[45vw] max-w-[400px] max-h-[400px] rounded-full bg-neon-pink/10 blur-[120px]" />
-      <div className="absolute bottom-[-5%] left-[-8%] w-[40vw] h-[40vw] max-w-[350px] max-h-[350px] rounded-full bg-neon-cyan/10 blur-[120px]" />
+      {/* Soft organic decorative blobs */}
+      <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] max-w-[480px] max-h-[480px] rounded-full bg-hoodie-coral/15 blur-[140px]" />
+      <div className="absolute bottom-[-8%] left-[-8%] w-[45vw] h-[45vw] max-w-[420px] max-h-[420px] rounded-full bg-hoodie-teal/15 blur-[140px]" />
 
       <div className="relative z-10 text-center max-w-3xl mx-auto">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] mb-8 animate-fade-in text-rainbow font-display">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] mb-8 animate-fade-in text-hoodie-gradient font-display">
           למי איכפת
           <br />
           איך את רוקדת
@@ -25,7 +25,7 @@ const HeroSection = () => {
         <div className="animate-fade-in opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
           <button
             onClick={scrollToAbout}
-            className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-primary text-primary-foreground text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+            className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-hoodie-coral text-white text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1"
           >
             מי מצטרפת לחגיגה ? ​
           </button>
