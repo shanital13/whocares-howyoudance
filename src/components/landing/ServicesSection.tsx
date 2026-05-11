@@ -107,7 +107,7 @@ const ServicesSection = () => {
         <DialogContent className="w-[93vw] max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl md:text-3xl text-foreground text-center">
-              {openService?.emoji} {openService?.title}
+              {openService?.title}
             </DialogTitle>
           </DialogHeader>
           <DialogDescription className="sr-only">
