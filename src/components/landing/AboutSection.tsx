@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion';
 import { useSiteContent } from '@/hooks/use-site-content';
+import WavyFrame from '@/components/decor/WavyFrame';
+import TropicalLeaf from '@/components/decor/TropicalLeaf';
+import Sparkle from '@/components/decor/Sparkle';
 
 const DEFAULTS = {
   who_am_i_title: 'קצת עלי..',
@@ -16,8 +19,11 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative py-24 md:py-36 px-6 overflow-hidden bg-background"
+      className="relative py-24 md:py-36 px-6 overflow-hidden bg-background dot-pattern"
     >
+      <Sparkle color="hsl(var(--hoodie-coral))" className="absolute top-16 right-10 w-4 h-4 opacity-70" />
+      <Sparkle color="hsl(var(--hoodie-yellow))" className="absolute bottom-20 left-12 w-5 h-5 opacity-60" />
+
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Title */}
         <motion.h2
@@ -38,22 +44,32 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="w-full max-w-[280px] md:max-w-[320px] flex-shrink-0"
+            className="w-full max-w-[280px] md:max-w-[320px] flex-shrink-0 relative"
           >
-            <div className="relative">
-              <div className="absolute -inset-6 rounded-3xl bg-hoodie-coral/10 blur-2xl" />
-              <div className="relative frame-thin">
+            <TropicalLeaf
+              color="hsl(var(--hoodie-teal))"
+              variant="palm"
+              className="absolute -top-10 -right-8 w-20 h-24 md:w-28 md:h-32 opacity-80 rotate-12 z-10"
+            />
+            <TropicalLeaf
+              color="hsl(var(--hoodie-orange))"
+              variant="monstera"
+              className="absolute -bottom-8 -left-8 w-20 h-24 md:w-24 md:h-28 opacity-75 -rotate-12 z-10"
+            />
+            <WavyFrame bgColor="bg-hoodie-coral/40" rotate={-3}>
+              <div className="bg-white p-2">
                 <video
                   src="/about-video.mp4"
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="w-full aspect-[9/16] object-cover rounded-xl"
+                  className="w-full aspect-[9/16] object-cover"
                 />
               </div>
-            </div>
+            </WavyFrame>
           </motion.div>
+
 
           {/* Right column: Text */}
           <motion.div
@@ -71,7 +87,7 @@ const AboutSection = () => {
               <p>{t('who_am_i_paragraph_1')}</p>
               <p>{t('who_am_i_paragraph_2')}</p>
               <p className="text-foreground font-medium text-lg md:text-xl">
-                {t('who_am_i_highlight')}
+                <span className="hand-underline">{t('who_am_i_highlight')}</span>
               </p>
             </div>
           </motion.div>
