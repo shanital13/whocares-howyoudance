@@ -16,9 +16,9 @@ const services = [
   {
     id: 'classes-copenhagen',
     title: 'שיעורי מחול פרונטליים - קופנגן',
-    emoji: '​',
-    gradient: 'from-[hsl(280,60%,88%)] to-[hsl(310,55%,85%)]',
-    border: 'border-[hsl(280,60%,88%)]',
+    tagline: 'בסטודיו בקופנהגן — מקום לנשום, לזוז ולהרגיש חופשיה.',
+    cardBg: 'bg-hoodie-coral/10',
+    imageGradient: 'from-hoodie-coral/40 to-hoodie-orange/30',
     description: [
       'שיעורי ריקוד וזוז בסטודיו בקופנהגן — מקום שבו אפשר לנשום, לזוז ולהרגיש חופשיה.',
       'השיעורים מתאימים לכל רמה, עם דגש על הנאה ותנועה חופשית.',
@@ -28,9 +28,9 @@ const services = [
   {
     id: 'online-classes',
     title: 'ליווי אונליין',
-    emoji: '​',
-    gradient: 'from-[hsl(175,50%,82%)] to-[hsl(155,45%,80%)]',
-    border: 'border-[hsl(175,50%,82%)]',
+    tagline: 'רוקדות מכל מקום בעולם — מהסלון, מהחדר, מהגינה.',
+    cardBg: 'bg-hoodie-teal/10',
+    imageGradient: 'from-hoodie-teal/40 to-hoodie-yellow/25',
     description: [
       'רוקדות מכל מקום בעולם — מהסלון, מהחדר, מהגינה.',
       'שיעורים חיים בזום עם אנרגיה של סטודיו אמיתי.',
@@ -40,9 +40,9 @@ const services = [
   {
     id: 'workshops',
     title: 'סדנאות וריטריטים',
-    emoji: '✨',
-    gradient: 'from-[hsl(340,55%,85%)] to-[hsl(14,60%,82%)]',
-    border: 'border-[hsl(340,55%,85%)]',
+    tagline: 'חוויות ריקוד מעמיקות — סדנאות וריטריטים של סוף שבוע.',
+    cardBg: 'bg-hoodie-yellow/15',
+    imageGradient: 'from-hoodie-yellow/50 to-hoodie-magenta/30',
     description: [
       'חוויות ריקוד מעמיקות — סדנאות של כמה שעות או ריטריטים של סוף שבוע.',
       'זמן לצלול פנימה, לגלות שכבות חדשות בתנועה ולפגוש נשים מדהימות.',
@@ -85,12 +85,17 @@ const ServicesSection = () => {
                 onClick={() => setOpenService(service)}
                 role="button"
                 tabIndex={0}
-                className={`rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex-col text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-white/20 font-extralight border-2 flex items-center justify-center`}
+                className={`rounded-3xl p-5 md:p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group ${service.cardBg} border border-white/40 flex flex-col text-center`}
               >
-                <span className="text-5xl mb-4 group-hover:scale-110 transition-transform">{service.emoji}</span>
-                <span className="text-xl text-white leading-snug drop-shadow-md font-sans md:text-4xl font-semibold">
+                <div className="frame-thin mb-5">
+                  <div className={`w-full aspect-[3/4] rounded-xl bg-gradient-to-br ${service.imageGradient}`} />
+                </div>
+                <h3 className="text-xl md:text-2xl text-foreground font-display mb-2 leading-snug">
                   {service.title}
-                </span>
+                </h3>
+                <p className="text-muted-foreground text-sm md:text-base font-sans leading-relaxed">
+                  {service.tagline}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -102,7 +107,7 @@ const ServicesSection = () => {
         <DialogContent className="w-[93vw] max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl md:text-3xl text-foreground text-center">
-              {openService?.emoji} {openService?.title}
+              {openService?.title}
             </DialogTitle>
           </DialogHeader>
           <DialogDescription className="sr-only">

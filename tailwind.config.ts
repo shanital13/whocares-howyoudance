@@ -71,6 +71,13 @@ export default {
         "neon-yellow": "hsl(var(--neon-yellow))",
         "neon-coral": "hsl(var(--neon-coral))",
         "neon-purple": "hsl(var(--neon-purple))",
+        hoodie: {
+          magenta: "hsl(var(--hoodie-magenta))",
+          coral: "hsl(var(--hoodie-coral))",
+          orange: "hsl(var(--hoodie-orange))",
+          yellow: "hsl(var(--hoodie-yellow))",
+          teal: "hsl(var(--hoodie-teal))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

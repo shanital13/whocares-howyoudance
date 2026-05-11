@@ -41,15 +41,17 @@ const AboutSection = () => {
             className="w-full max-w-[280px] md:max-w-[320px] flex-shrink-0"
           >
             <div className="relative">
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-neon-pink/20 via-neon-purple/15 to-neon-cyan/10 blur-2xl" />
-              <video
-                src="/about-video.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="relative w-full aspect-[9/16] object-cover rounded-2xl shadow-2xl shadow-black/40"
-              />
+              <div className="absolute -inset-6 rounded-3xl bg-hoodie-coral/10 blur-2xl" />
+              <div className="relative frame-thin">
+                <video
+                  src="/about-video.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full aspect-[9/16] object-cover rounded-xl"
+                />
+              </div>
             </div>
           </motion.div>
 
