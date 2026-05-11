@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { useSiteContent } from '@/hooks/use-site-content';
-import WavyFrame from '@/components/decor/WavyFrame';
-import TropicalLeaf from '@/components/decor/TropicalLeaf';
-import Sparkle from '@/components/decor/Sparkle';
+import Blob from '@/components/decor/Blob';
+import GalleryFrame from '@/components/decor/GalleryFrame';
 
 const DEFAULTS = {
   who_am_i_title: 'קצת עלי..',
@@ -19,65 +18,58 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative py-24 md:py-36 px-6 overflow-hidden bg-background dot-pattern"
+      className="relative py-24 md:py-32 px-6 overflow-hidden bg-background"
     >
-      <Sparkle color="hsl(var(--hoodie-coral))" className="absolute top-16 right-10 w-4 h-4 opacity-70" />
-      <Sparkle color="hsl(var(--hoodie-yellow))" className="absolute bottom-20 left-12 w-5 h-5 opacity-60" />
+      <Blob
+        variant={2}
+        color="hsl(var(--hoodie-yellow))"
+        className="-top-32 -right-40 w-[520px] h-[520px] opacity-25"
+      />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-4xl lg:text-6xl text-foreground mb-12 md:mb-16 text-center drop-shadow-lg font-display text-zinc-950 md:text-7xl"
+          className="text-center mb-16"
         >
-          {t('who_am_i_title')}
-        </motion.h2>
+          <p className="text-xs tracking-[0.3em] uppercase text-hoodie-coral mb-3 font-sans">
+            About
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-display">
+            {t('who_am_i_title')}
+          </h2>
+        </motion.div>
 
-        {/* Two-column layout: video left, text right */}
-        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-          {/* Left column: Vertical Video */}
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-20">
+          {/* Left: Video */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="w-full max-w-[280px] md:max-w-[320px] flex-shrink-0 relative"
+            className="w-full max-w-[360px] mx-auto md:mx-0"
           >
-            <TropicalLeaf
-              color="hsl(var(--hoodie-teal))"
-              variant="palm"
-              className="absolute -top-10 -right-8 w-20 h-24 md:w-28 md:h-32 opacity-80 rotate-12 z-10"
-            />
-            <TropicalLeaf
-              color="hsl(var(--hoodie-orange))"
-              variant="monstera"
-              className="absolute -bottom-8 -left-8 w-20 h-24 md:w-24 md:h-28 opacity-75 -rotate-12 z-10"
-            />
-            <WavyFrame bgColor="bg-hoodie-coral/40" rotate={-3}>
-              <div className="bg-white p-2">
-                <video
-                  src="/about-video.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full aspect-[9/16] object-cover"
-                />
-              </div>
-            </WavyFrame>
+            <GalleryFrame borderColor="hsl(var(--hoodie-magenta))" borderWidth={2}>
+              <video
+                src="/about-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full aspect-[3/4] object-cover block"
+              />
+            </GalleryFrame>
           </motion.div>
 
-
-          {/* Right column: Text */}
+          {/* Right: Text */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex-1 text-center md:text-right"
+            className="text-right"
           >
             <p className="text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed">
               {t('who_am_i_intro')}
@@ -86,8 +78,8 @@ const AboutSection = () => {
             <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
               <p>{t('who_am_i_paragraph_1')}</p>
               <p>{t('who_am_i_paragraph_2')}</p>
-              <p className="text-foreground font-medium text-lg md:text-xl">
-                <span className="hand-underline">{t('who_am_i_highlight')}</span>
+              <p className="text-hoodie-magenta font-bold text-lg md:text-xl pt-2">
+                {t('who_am_i_highlight')}
               </p>
             </div>
           </motion.div>
