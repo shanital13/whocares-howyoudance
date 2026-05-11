@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
 import { useSiteContent } from '@/hooks/use-site-content';
-import Blob from '@/components/decor/Blob';
-import GalleryFrame from '@/components/decor/GalleryFrame';
 
 const DEFAULTS = {
   who_am_i_title: 'קצת עלי..',
@@ -18,14 +16,8 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative py-24 md:py-32 px-6 overflow-hidden bg-background"
+      className="relative py-24 md:py-32 px-6 overflow-hidden"
     >
-      <Blob
-        variant={2}
-        color="hsl(var(--hoodie-yellow))"
-        className="-top-32 -right-40 w-[520px] h-[520px] opacity-25"
-      />
-
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -43,15 +35,21 @@ const AboutSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-20">
-          {/* Left: Video */}
+          {/* Left: Video with floating glow */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="w-full max-w-[360px] mx-auto md:mx-0"
+            className="w-full max-w-[380px] mx-auto md:mx-0"
           >
-            <GalleryFrame borderColor="hsl(var(--hoodie-magenta))" borderWidth={2}>
+            <div
+              className="relative rounded-lg overflow-hidden"
+              style={{
+                boxShadow:
+                  '0 30px 60px -20px rgba(0,0,0,0.25), 0 0 90px -20px hsl(var(--hoodie-magenta) / 0.30), 0 0 60px -30px hsl(var(--hoodie-teal) / 0.25)',
+              }}
+            >
               <video
                 src="/about-video.mp4"
                 autoPlay
@@ -60,7 +58,7 @@ const AboutSection = () => {
                 playsInline
                 className="w-full aspect-[3/4] object-cover block"
               />
-            </GalleryFrame>
+            </div>
           </motion.div>
 
           {/* Right: Text */}

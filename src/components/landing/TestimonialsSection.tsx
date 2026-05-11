@@ -22,7 +22,7 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => (
-  <section className="py-24 md:py-32 px-6 bg-background relative overflow-hidden">
+  <section className="py-24 md:py-32 px-6 relative overflow-hidden">
     <div className="max-w-6xl mx-auto relative z-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
