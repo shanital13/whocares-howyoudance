@@ -87,7 +87,7 @@ const AboutSection = () => {
               <p>{t('who_am_i_paragraph_1')}</p>
               <p>{t('who_am_i_paragraph_2')}</p>
               <p className="text-foreground font-medium text-lg md:text-xl">
-                {t('who_am_i_highlight')}
+                <span className="hand-underline">{t('who_am_i_highlight')}</span>
               </p>
             </div>
           </motion.div>
