@@ -85,12 +85,17 @@ const ServicesSection = () => {
                 onClick={() => setOpenService(service)}
                 role="button"
                 tabIndex={0}
-                className={`rounded-3xl p-8 md:p-10 min-h-[220px] sm:min-h-[250px] flex-col text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-gradient-to-br ${service.gradient} border-white/20 font-extralight border-2 flex items-center justify-center`}
+                className={`rounded-3xl p-5 md:p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group ${service.cardBg} border border-white/40 flex flex-col text-center`}
               >
-                <span className="text-5xl mb-4 group-hover:scale-110 transition-transform">{service.emoji}</span>
-                <span className="text-xl text-white leading-snug drop-shadow-md font-sans md:text-4xl font-semibold">
+                <div className="frame-thin mb-5">
+                  <div className={`w-full aspect-[3/4] rounded-xl bg-gradient-to-br ${service.imageGradient}`} />
+                </div>
+                <h3 className="text-xl md:text-2xl text-foreground font-display mb-2 leading-snug">
                   {service.title}
-                </span>
+                </h3>
+                <p className="text-muted-foreground text-sm md:text-base font-sans leading-relaxed">
+                  {service.tagline}
+                </p>
               </motion.div>
             ))}
           </div>
