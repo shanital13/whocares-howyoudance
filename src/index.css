@@ -147,20 +147,24 @@
 }
 
 @layer utilities {
-  .text-rainbow {
+  .text-rainbow,
+  .text-hoodie-gradient {
     background: linear-gradient(
       90deg,
-      hsl(var(--neon-pink)),
-      hsl(var(--neon-coral)),
-      hsl(var(--neon-yellow)),
-      hsl(var(--neon-green)),
-      hsl(var(--neon-cyan)),
-      hsl(var(--neon-purple)),
-      hsl(var(--neon-pink))
+      #833363,
+      #F4525A,
+      #F27D52,
+      #F6BC59,
+      #1D9D8A
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
+  }
+
+  .frame-thin {
+    @apply bg-white p-2 border border-[hsl(40,25%,82%)] rounded-2xl shadow-[0_10px_30px_-15px_rgba(0,0,0,0.15)];
   }
 
   .story-link * {
