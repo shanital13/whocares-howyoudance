@@ -166,7 +166,6 @@ const ServicesSection = () => {
             <h2 className="text-4xl md:text-5xl text-foreground font-display">
               אז מה מחכה לך כאן?
             </h2>
-            <div className="mx-auto mt-5 h-px w-24 bg-hoodie-magenta/40" />
           </motion.div>
 
           {isMobile ? (

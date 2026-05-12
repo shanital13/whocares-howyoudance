@@ -1,30 +1,29 @@
-# Enrich the Cloud Backdrop with Sunset Warmth
+Implement a focused CSS/layout fix to make the site read as one continuous fixed cloud canvas.
 
-Single, focused change: re-render `src/assets/cloudscape.jpg` with deeper, diffused pink + nectarine glow in the cloud shadows. No code or layout changes — the existing fixed backdrop will display the new image automatically.
+1. Lock the background layer
+- Update `src/components/decor/CloudBackdrop.tsx` to remove all scroll/parallax logic: no `useEffect`, `useRef`, scroll listeners, transforms, `requestAnimationFrame`, oversized height, or negative top offset.
+- Render the cloud image on a single fixed full-viewport layer with:
+  - `background-attachment: fixed`
+  - `background-size: cover`
+  - `background-position: center center`
+  - `background-repeat: no-repeat`
+- Keep the soft readability wash, but it will also be fixed and non-animated.
 
-## What changes
+2. Make the page canvas transparent
+- Update `src/index.css` so `html`, `body`, and `#root` do not paint an opaque background over the cloud layer.
+- Add a landing-page transparency guard so section-level containers render with `background: transparent !important`.
 
-Use `imagegen--edit_image` on the existing `src/assets/cloudscape.jpg` with this direction:
+3. Remove visible section divisions on the public homepage
+- Update `src/pages/Index.tsx` to mark the public landing page for the transparency guard.
+- Add explicit transparent backgrounds to Hero, About, Services, Testimonials, Contact, and Footer roots.
+- Remove decorative divider lines between sections, specifically the small horizontal section title rules in Services and Testimonials.
+- Remove section-level overflow styling only where it contributes to clipping or visual fragmentation; keep required internal carousel layout intact.
 
-> Enhance this dreamy pastel cloudscape by infusing warm sunset tones — deep blush pink and soft nectarine orange — specifically into the **shadow areas** and undersides of the clouds, as if golden-hour light is grazing through the mist. Keep the highlights cream and airy. Bump saturation of the pink and peach hues only in select pockets to create rich warm "glow zones," while the rest stays pale and ethereal. The result must remain a 100% soft-focus, blurred, painterly atmosphere — no hard edges, no solid color blocks, no defined shapes. Slightly increase overall depth and contrast between shadow and highlight, but never make it heavy or dark. Light, breathable, soulful.
+4. Preserve content styling without changing business logic
+- Do not change registration, admin, CMS, webhook, or Supabase logic.
+- Keep existing cards, buttons, carousel behavior, text, and imagery unless they directly create page-wide seams.
 
-Output saved back to `src/assets/cloudscape.jpg` (overwrites). Aspect ratio: `9:16` (matches the current tall, viewport-cover usage).
-
-## What does NOT change
-
-- `CloudBackdrop.tsx` — keep static, fixed, `background-size: cover`.
-- Section transparency, layout, padding — untouched.
-- Cream overlay (`bg-background/30`) — untouched. The image lives behind it, so warmth shows through softly without bleeding into content.
-- No new colors in the design tokens.
-- No business logic, no copy.
-
-## Verification
-
-After regeneration:
-- Visual check in preview at mobile + desktop: warm pink pockets visible in shadow zones, highlights still cream, content still readable.
-- If the cream overlay mutes the warmth too much, lower it from `/30` to `/20`. Otherwise leave it.
-
-## Files
-
-**Edit (image only):** `src/assets/cloudscape.jpg`
-**Possibly tweak (1 token):** `src/components/decor/CloudBackdrop.tsx` overlay opacity, only if warmth reads too faint.
+Verification after implementation
+- Confirm `CloudBackdrop` has no scroll/animation code left.
+- Confirm the cloud layer uses fixed attachment, cover sizing, and centered positioning.
+- Confirm public homepage section roots are transparent and no divider lines remain between Hero through Footer.
