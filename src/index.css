@@ -121,6 +121,19 @@
     line-height: 1.6;
   }
 
+  /* Seamless cloud canvas — landing page sections stay fully transparent */
+  body.cloud-canvas,
+  body.cloud-canvas #root {
+    background: transparent !important;
+  }
+  body.cloud-canvas main,
+  body.cloud-canvas main > section,
+  body.cloud-canvas main > footer {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Segoe UI Custom', 'Segoe UI', sans-serif;
     font-weight: bold;
