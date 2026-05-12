@@ -68,18 +68,6 @@ const ServicesSection = () => {
   return (
     <>
       <section id="services" className="relative py-24 md:py-32 px-6 overflow-hidden">
-        {/* Very light teal wash — almost off-white, soft fade at edges */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-hoodie-teal/[0.06]"
-          style={{
-            maskImage:
-              'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
-            WebkitMaskImage:
-              'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
-          }}
-        />
-
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

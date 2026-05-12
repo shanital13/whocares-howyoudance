@@ -4,12 +4,12 @@ import ServicesSection from '@/components/landing/ServicesSection';
 import TestimonialsSection from '@/components/landing/TestimonialsSection';
 import ContactSection from '@/components/landing/ContactSection';
 import Footer from '@/components/landing/Footer';
-import PageBlobs from '@/components/decor/PageBlobs';
+import CloudBackdrop from '@/components/decor/CloudBackdrop';
 
 const Index = () => {
   return (
     <main className="relative min-h-screen bg-background overflow-hidden">
-      <PageBlobs />
+      <CloudBackdrop />
       <div className="relative z-10">
         <HeroSection />
         <AboutSection />
