@@ -37,7 +37,7 @@ const services: Service[] = [
   {
     id: 'classes-copenhagen',
     title: 'שיעורי מחול פרונטליים - קופנגן',
-    tagline: 'חוויות ריקוד מעמיקות — סדנאות וריטריטים .',
+    tagline: 'שיעורים באי הקסום הזה באווירה סופר שונה ומשחררת.',
     image: studio1,
     tilt: '-rotate-2',
     description: [
