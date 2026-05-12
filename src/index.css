@@ -139,6 +139,10 @@
      background-attachment: scroll keeps the layer pinned to the viewport
      without the URL-bar resize jump. */
   @media (max-width: 768px) {
+    [aria-roledescription="carousel"],
+    [aria-roledescription="carousel"] > div {
+      touch-action: pan-y;
+    }
     .cloud-backdrop {
       background-attachment: scroll !important;
       background-size: cover !important;

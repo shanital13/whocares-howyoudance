@@ -1,24 +1,44 @@
+## Problem
 
-Goal: make the cloud background rock-solid on mobile (Safari/Chrome) without changing the desktop look.
+The Services and Testimonials carousels are frozen on mobile and won't swipe. They use Embla Carousel (not native CSS scroll), so the user-suggested `overflow-x: auto` rules don't apply — but the underlying issue is real: Embla isn't picking up touch drags.
 
-Background: `background-attachment: fixed` is known to be buggy on mobile (resizes/jumps when the URL bar shows/hides, sometimes ignored entirely). The fix is to render the cloud image on a `position: fixed` layer instead of relying on `background-attachment: fixed` on mobile.
+Two likely culprits identified from the code:
 
-Changes (CSS only, scoped to mobile via `@media (max-width: 768px)`):
+1. The site is rendered in RTL (`html { direction: rtl }` in `src/index.css`), but Embla is initialized without `direction: 'rtl'`. In RTL contexts Embla's drag handler can misbehave and feel "stuck", especially when combined with `containScroll: 'trimSnaps'`.
+2. Embla's viewport sets `touch-action: pan-y pinch-zoom` by default, which is correct — but a wrapping element with restrictive `touch-action` (or the `-mx-6` overflow situation) can swallow the horizontal gesture. We'll set explicit `touch-action: pan-y` on the carousel root to be safe.
 
-1. `src/components/decor/CloudBackdrop.tsx`
-   - Add a stable class name (e.g. `cloud-backdrop`) to the existing fixed wrapper div so we can target it from CSS.
-   - Keep the current inline styles for desktop (background-attachment: fixed + cover + center) untouched.
+## Changes
 
-2. `src/index.css` — append a mobile-only block:
-   - `@media (max-width: 768px) { .cloud-backdrop { background-attachment: scroll !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important; transform: translateZ(0); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; } }`
-   - Because the wrapper is already `position: fixed; inset: 0`, switching `background-attachment` from `fixed` to `scroll` on mobile gives the stable "fixed pseudo-element" behavior the user described: the layer itself stays pinned to the viewport, and the image no longer fights the URL-bar resize.
-   - `translateZ(0)` promotes the layer to its own compositor layer for smooth scrolling.
-   - The cream wash overlay already covers it, no change needed.
+### 1. `src/components/landing/ServicesSection.tsx`
+- Add `direction: 'rtl'` to the Embla `opts`:
+  ```ts
+  opts={{ align: 'center', loop: false, containScroll: 'trimSnaps', direction: 'rtl' }}
+  ```
+- Add `touch-pan-y` Tailwind class to the `<Carousel>` so the root explicitly allows vertical page scroll while letting Embla capture horizontal drags.
 
-3. Desktop untouched
-   - No changes outside the `@media (max-width: 768px)` block.
-   - No JS, no parallax, no business logic touched.
+### 2. `src/components/landing/TestimonialsSection.tsx`
+- Same two changes as above.
 
-Verification
-- Desktop preview: background still uses `background-attachment: fixed`, looks identical.
-- Mobile (≤768px): the `.cloud-backdrop` layer stays pinned via `position: fixed` while `background-attachment: scroll` avoids the iOS Safari resize bug; clouds stay centered and cover the viewport during scroll and URL-bar transitions.
+### 3. `src/index.css` (safety net)
+- Append a small mobile-only rule that guarantees touch gestures aren't blocked on the Embla viewport:
+  ```css
+  @media (max-width: 768px) {
+    [aria-roledescription="carousel"],
+    [aria-roledescription="carousel"] > div {
+      touch-action: pan-y;
+    }
+  }
+  ```
+
+No changes to Embla version, no swap to native CSS scroll-snap (the existing Polaroid/Testimonial card layouts and the active-slide scaling logic depend on Embla's `selectedScrollSnap`).
+
+## Verification
+
+- Open the preview at mobile viewport (≤768px).
+- Confirm finger/drag swipe moves both carousels and dots update.
+- Confirm vertical page scroll still works when starting the gesture on a card.
+- Desktop grid layout unchanged.
+
+## Notes
+
+- The user's request to use native `overflow-x: auto` + CSS scroll-snap would require ripping out Embla and rewriting both sections, losing the active-slide scaling and dot sync. The proposed fix achieves the same outcome (swipeable, snappy, no scrollbar) using the existing Embla integration.
