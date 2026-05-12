@@ -27,7 +27,7 @@ const AboutSection = () => {
           className="text-center mb-16"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-hoodie-coral mb-3 font-sans">
-            About
+            ​
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-display">
             {t('who_am_i_title')}
@@ -69,14 +69,14 @@ const AboutSection = () => {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-right"
           >
-            <p className="text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed">
+            <p className="text-foreground text-xl md:text-2xl font-medium mb-6 leading-relaxed text-gray-950">
               {t('who_am_i_intro')}
             </p>
 
             <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-              <p>{t('who_am_i_paragraph_1')}</p>
-              <p>{t('who_am_i_paragraph_2')}</p>
-              <p className="text-hoodie-magenta font-bold text-lg md:text-xl pt-2">
+              <p className="text-slate-950">{t('who_am_i_paragraph_1')}</p>
+              <p className="text-slate-950">{t('who_am_i_paragraph_2')}</p>
+              <p className="text-hoodie-magenta font-bold text-lg md:text-xl pt-2 text-red-500">
                 {t('who_am_i_highlight')}
               </p>
             </div>

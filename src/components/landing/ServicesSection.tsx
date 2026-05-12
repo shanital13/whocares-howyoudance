@@ -37,7 +37,7 @@ const services: Service[] = [
   {
     id: 'classes-copenhagen',
     title: 'שיעורי מחול פרונטליים - קופנגן',
-    tagline: 'בסטודיו בקופנהגן — מקום לנשום, לזוז ולהרגיש חופשיה.',
+    tagline: 'חוויות ריקוד מעמיקות — סדנאות וריטריטים .',
     image: studio1,
     tilt: '-rotate-2',
     description: [
@@ -161,7 +161,7 @@ const ServicesSection = () => {
             className="text-center mb-16"
           >
             <p className="text-xs tracking-[0.3em] uppercase text-hoodie-coral mb-3 font-sans">
-              Services
+              ​
             </p>
             <h2 className="text-4xl md:text-5xl text-foreground font-display">
               אז מה מחכה לך כאן?

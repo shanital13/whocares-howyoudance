@@ -12,8 +12,8 @@ import { cn } from '@/lib/utils';
 
 const testimonials = [
   {
-    quote: 'יוגב יצר בשבילי מרחב שלא הכרתי. סוף סוף יכולתי לרקוד בלי לשפוט את עצמי.',
-    name: 'מיכל',
+    quote: '"כבחורה מלאה תמיד יש בי את המקום של "כמה מקום אני תופסת בעולם" ולאורך כל השיעורים מה שעבר לי בראש זה- מותר לך. וגם לך יש מקום !',
+    name: '​אוראל',
     role: 'משתתפת קבועה',
     bg: 'bg-hoodie-orange',
   },
@@ -81,10 +81,10 @@ const TestimonialsSection = () => {
           className="text-center mb-16"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-hoodie-coral mb-3 font-sans">
-            Testimonials
+            ​
           </p>
           <h2 className="text-4xl md:text-5xl text-foreground font-display">
-            מה אומרות עליי
+            ​נשים משתפות
           </h2>
         </motion.div>
 
