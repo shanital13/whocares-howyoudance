@@ -8,17 +8,17 @@ import CloudBackdrop from '@/components/decor/CloudBackdrop';
 
 const Index = () => {
   return (
-    <main className="relative min-h-screen bg-background overflow-hidden">
+    <>
       <CloudBackdrop />
-      <div className="relative z-10">
+      <main className="relative min-h-screen">
         <HeroSection />
         <AboutSection />
         <ServicesSection />
         <TestimonialsSection />
         <ContactSection />
         <Footer />
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 
