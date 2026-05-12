@@ -63,7 +63,7 @@ const ContactSection = () => {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center h-14 w-14 rounded-full text-white shadow-[0_15px_30px_-10px_rgba(214,36,159,0.55)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_40px_-10px_rgba(214,36,159,0.65)] active:scale-95"
+            className="inline-flex items-center justify-center h-14 w-14 rounded-full text-white ring-2 ring-white/70 shadow-[0_18px_40px_-10px_rgba(214,36,159,0.65)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_26px_48px_-10px_rgba(214,36,159,0.75)] active:scale-95"
             style={{
               background:
                 'radial-gradient(circle at 30% 110%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%)',

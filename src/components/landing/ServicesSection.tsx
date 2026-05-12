@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import {
   Dialog,
@@ -8,6 +8,15 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from '@/components/ui/carousel';
+import CarouselDots from '@/components/decor/CarouselDots';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import studio1 from '@/assets/studio-1.jpg';
 import studio2 from '@/assets/studio-2.jpg';
 import studio3 from '@/assets/studio-3.jpg';
@@ -15,14 +24,16 @@ import studio3 from '@/assets/studio-3.jpg';
 const WHATSAPP_NUMBER = '972526398428';
 const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד ​';
 
-const services: {
+type Service = {
   id: string;
   title: string;
   tagline: string;
   image: string;
   tilt: string;
   description: string[];
-}[] = [
+};
+
+const services: Service[] = [
   {
     id: 'classes-copenhagen',
     title: 'שיעורי מחול פרונטליים - קופנגן',
@@ -61,13 +72,86 @@ const services: {
   },
 ];
 
+const PolaroidCard = ({
+  service,
+  onOpen,
+  isActive,
+  inCarousel,
+}: {
+  service: Service;
+  onOpen: () => void;
+  isActive?: boolean;
+  inCarousel?: boolean;
+}) => (
+  <div
+    className={cn(
+      'flex flex-col items-center transition-transform duration-300',
+      inCarousel && (isActive ? 'scale-[1.05]' : 'scale-[0.92] opacity-80'),
+    )}
+  >
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        'group relative bg-white p-3 pb-14 shadow-[0_18px_40px_-15px_rgba(0,0,0,0.35)] transform transition-all duration-500 ease-out md:hover:rotate-0 md:hover:-translate-y-2 md:hover:scale-[1.03] md:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.45)] w-full max-w-[300px] focus:outline-none focus:ring-2 focus:ring-hoodie-magenta/50',
+        service.tilt,
+      )}
+      aria-label={service.title}
+    >
+      <span
+        aria-hidden="true"
+        className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-hoodie-yellow/40 rotate-[-4deg] shadow-sm"
+      />
+      <div className="relative w-full aspect-[4/5] overflow-hidden">
+        <img
+          src={service.image}
+          alt={service.title}
+          className="w-full h-full object-cover block"
+          loading="lazy"
+        />
+        <div className="hidden md:flex absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 flex-col justify-end text-right">
+          <h3 className="text-white font-display text-xl leading-tight mb-2">
+            {service.title}
+          </h3>
+          <p className="text-white/90 text-sm font-sans leading-relaxed">
+            {service.tagline}
+          </p>
+        </div>
+      </div>
+    </button>
+
+    <div className="md:hidden text-center mt-5 px-2">
+      <h3 className="text-foreground font-display text-xl leading-tight mb-2">
+        {service.title}
+      </h3>
+      <p className="text-muted-foreground text-sm font-sans leading-relaxed">
+        {service.tagline}
+      </p>
+    </div>
+  </div>
+);
+
 const ServicesSection = () => {
-  const [openService, setOpenService] = useState<typeof services[0] | null>(null);
+  const [openService, setOpenService] = useState<Service | null>(null);
+  const isMobile = useIsMobile();
+  const [api, setApi] = useState<CarouselApi>();
+  const [selected, setSelected] = useState(0);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+
+  useEffect(() => {
+    if (!api) return;
+    const onSelect = () => setSelected(api.selectedScrollSnap());
+    onSelect();
+    api.on('select', onSelect);
+    api.on('reInit', onSelect);
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
 
   return (
     <>
-      <section id="services" className="relative py-24 md:py-32 px-6 overflow-hidden">
+      <section id="services" className="relative py-20 md:py-28 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -85,59 +169,47 @@ const ServicesSection = () => {
             <div className="mx-auto mt-5 h-px w-24 bg-hoodie-magenta/40" />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
-            {services.map((service, i) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="flex flex-col items-center"
+          {isMobile ? (
+            <>
+              <Carousel
+                setApi={setApi}
+                opts={{ align: 'center', loop: false, containScroll: 'trimSnaps' }}
+                className="-mx-6"
               >
-                {/* Polaroid frame */}
-                <button
-                  type="button"
-                  onClick={() => setOpenService(service)}
-                  className={`group relative bg-white p-3 pb-14 shadow-[0_18px_40px_-15px_rgba(0,0,0,0.35)] transform ${service.tilt} transition-all duration-500 ease-out md:hover:rotate-0 md:hover:-translate-y-2 md:hover:scale-[1.03] md:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.45)] w-full max-w-[300px] focus:outline-none focus:ring-2 focus:ring-hoodie-magenta/50`}
-                  aria-label={service.title}
+                <CarouselContent className="px-[7.5%]">
+                  {services.map((service, i) => (
+                    <CarouselItem key={service.id} className="basis-[85%]">
+                      <PolaroidCard
+                        service={service}
+                        onOpen={() => setOpenService(service)}
+                        isActive={selected === i}
+                        inCarousel
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+              <CarouselDots
+                count={services.length}
+                active={selected}
+                onSelect={(i) => api?.scrollTo(i)}
+              />
+            </>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+              {services.map((service, i) => (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  {/* Tape accent */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-hoodie-yellow/40 rotate-[-4deg] shadow-sm"
-                  />
-                  <div className="relative w-full aspect-[4/5] overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover block"
-                      loading="lazy"
-                    />
-                    {/* Desktop hover overlay */}
-                    <div className="hidden md:flex absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 flex-col justify-end text-right">
-                      <h3 className="text-white font-display text-xl leading-tight mb-2">
-                        {service.title}
-                      </h3>
-                      <p className="text-white/90 text-sm font-sans leading-relaxed">
-                        {service.tagline}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                {/* Mobile-only always-visible text */}
-                <div className="md:hidden text-center mt-5 px-2">
-                  <h3 className="text-foreground font-display text-xl leading-tight mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm font-sans leading-relaxed">
-                    {service.tagline}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  <PolaroidCard service={service} onOpen={() => setOpenService(service)} />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
