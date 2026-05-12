@@ -1,29 +1,32 @@
-## Fix background blobs + restore contact headline gradient
+## Plan: Cloud-scape background + Instagram brand gradient
 
-### Problem
-- `PageBlobs` uses `fixed inset-0` with blobs placed at `top-[120%]`, `top-[200%]` etc. Fixed positioning is relative to the viewport, so those off-screen blobs never render — only the first 2 hero blobs are visible, making the rest of the page look like a flat cream canvas.
-- Opacities (20–35%) are too soft to read as "ink clouds bleeding into cream".
-- Contact section headline is solid `text-foreground` (black) instead of the HOODIE smear gradient used by the hero.
+### 1. Add the uploaded cloud image as a site-wide background
+- Copy `user-uploads://WhatsApp_Image_2026-05-12_at_08.54.21.jpeg` → `src/assets/cloudscape.jpg`.
+- Replace `PageBlobs` with a new `CloudBackdrop` component (`src/components/decor/CloudBackdrop.tsx`):
+  - `absolute inset-0 h-full w-full` so it stretches the full document.
+  - Imports the cloud asset and renders it as a repeating/tiled vertical background using `background-image`, `background-size: 100% auto`, `background-repeat: repeat-y`, so the same cloud texture flows seamlessly from Hero down through Footer.
+  - Soft top/bottom mask (`mask-image: linear-gradient`) on each tile seam so the repeat is invisible — just one continuous misty sky.
+  - A very light cream-tinted overlay (`bg-background/35`) on top to keep readability without introducing new colors (only the cream already in the palette + the image's own pastel tones).
+- `src/pages/Index.tsx`: swap `<PageBlobs />` for `<CloudBackdrop />`. Keep `relative z-10` wrapper for content.
+- Delete `PageBlobs.tsx` (no longer used).
 
-### Changes
+### 2. Remove remaining section dividers / solid color breaks
+Audit and strip any per-section backgrounds, borders, or gradient washes so the cloud canvas shows through every section:
+- `HeroSection.tsx`, `AboutSection.tsx`, `ServicesSection.tsx`, `TestimonialsSection.tsx`, `ContactSection.tsx`, `Footer.tsx` — remove `bg-*`, `border-t/b`, and any decorative gradient strips between sections. Keep only typography, spacing, and content cards.
+- The teal-tinted Services background and any testimonials background get removed (replaced by the universal cloud canvas).
 
-**1. `src/components/decor/PageBlobs.tsx` — rebuild as a full-page absolute layer**
-- Replace `fixed inset-0` with `absolute inset-0 h-full w-full` so the layer stretches the entire scroll height, not just the viewport.
-- Add ~12 large, irregularly placed blobs distributed across hero → about → services → testimonials → contact regions, using top values within `0%–100%` of the layer (not viewport).
-- Bump opacity range to **35–55%** (`bg-hoodie-magenta/45`, `bg-hoodie-coral/50`, `bg-hoodie-orange/40`, `bg-hoodie-yellow/45`, `bg-hoodie-teal/35`).
-- Keep heavy `blur-[120px]` to `blur-[160px]` for the soft-focus ink-cloud look.
-- Vary sizes (480px–760px), use negative offsets so blobs bleed off both edges, and overlap section boundaries (e.g. one straddling about↔services, one straddling services↔testimonials).
-- Add a couple of mix-blend or subtle off-axis ovals (`rounded-[60%_40%_50%_50%]`) for the organic watercolor feel.
+### 3. Instagram button — official brand gradient
+In `ContactSection.tsx`, restyle the Instagram link:
+- Circular button filled with the classic Instagram radial gradient (purple → red → orange → yellow), white icon, soft shadow.
+- Implementation: inline `style={{ background: 'radial-gradient(circle at 30% 110%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%)' }}` with `text-white`.
+- Keep size/spacing identical to current; remove the neutral border.
 
-**2. `src/pages/Index.tsx` — host the layer correctly**
-- The `<main>` already has `overflow-hidden` and `relative`. Confirm `PageBlobs` is the first child inside `<main>` so the absolute layer covers the full document height of the page.
-- No structural change beyond ensuring positioning works (PageBlobs becomes absolute, parent stays relative).
+### 4. Readability check
+- Confirm body text (`text-foreground`, `text-muted-foreground`) stays legible over the cloud image — the cream overlay + existing dark foreground tokens should be enough. No new color tokens added.
 
-**3. `src/components/landing/ContactSection.tsx` — restore gradient headline**
-- Replace the headline class:
-  - From: `className="text-3xl md:text-5xl text-foreground font-display leading-[1.15]"`
-  - To: `className="text-3xl md:text-5xl text-hoodie-gradient font-display leading-[1.15]"`
-- `text-hoodie-gradient` already exists in `index.css` and is the same multi-color HOODIE smear used by the hero, so visual parity is automatic.
+### Files touched
+- create: `src/assets/cloudscape.jpg`, `src/components/decor/CloudBackdrop.tsx`
+- edit: `src/pages/Index.tsx`, `src/components/landing/{Hero,About,Services,Testimonials,Contact}Section.tsx`, `src/components/landing/Footer.tsx`
+- delete: `src/components/decor/PageBlobs.tsx`
 
-### Out of scope
-- No copy changes, no layout changes to sections, no new tokens, no changes to ServicesSection / AboutSection / TestimonialsSection content. Blob colors use existing `hoodie-*` tokens.
+No copy changes. No new color tokens. No business-logic changes.
