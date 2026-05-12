@@ -92,8 +92,8 @@ const TestimonialsSection = () => {
           <>
             <Carousel
               setApi={setApi}
-              opts={{ align: 'center', loop: false, containScroll: 'trimSnaps' }}
-              className="-mx-6"
+              opts={{ align: 'center', loop: false, containScroll: 'trimSnaps', direction: 'rtl' }}
+              className="-mx-6 touch-pan-y"
             >
               <CarouselContent className="px-[7.5%]">
                 {testimonials.map((t, i) => (
