@@ -74,8 +74,8 @@ const AboutSection = () => {
             </p>
 
             <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-              <p>{t('who_am_i_paragraph_1')}</p>
-              <p>{t('who_am_i_paragraph_2')}</p>
+              <p className="text-slate-950">{t('who_am_i_paragraph_1')}</p>
+              <p className="text-slate-950">{t('who_am_i_paragraph_2')}</p>
               <p className="text-hoodie-magenta font-bold text-lg md:text-xl pt-2 text-red-500">
                 {t('who_am_i_highlight')}
               </p>
