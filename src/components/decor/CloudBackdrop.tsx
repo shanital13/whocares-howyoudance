@@ -7,7 +7,7 @@ import cloudscape from '@/assets/cloudscape.jpg';
 const CloudBackdrop = () => (
   <div
     aria-hidden="true"
-    className="pointer-events-none fixed inset-0 -z-10"
+    className="cloud-backdrop pointer-events-none fixed inset-0 -z-10"
     style={{
       backgroundImage: `url(${cloudscape})`,
       backgroundAttachment: 'fixed',

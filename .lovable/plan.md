@@ -1,29 +1,24 @@
-Implement a focused CSS/layout fix to make the site read as one continuous fixed cloud canvas.
 
-1. Lock the background layer
-- Update `src/components/decor/CloudBackdrop.tsx` to remove all scroll/parallax logic: no `useEffect`, `useRef`, scroll listeners, transforms, `requestAnimationFrame`, oversized height, or negative top offset.
-- Render the cloud image on a single fixed full-viewport layer with:
-  - `background-attachment: fixed`
-  - `background-size: cover`
-  - `background-position: center center`
-  - `background-repeat: no-repeat`
-- Keep the soft readability wash, but it will also be fixed and non-animated.
+Goal: make the cloud background rock-solid on mobile (Safari/Chrome) without changing the desktop look.
 
-2. Make the page canvas transparent
-- Update `src/index.css` so `html`, `body`, and `#root` do not paint an opaque background over the cloud layer.
-- Add a landing-page transparency guard so section-level containers render with `background: transparent !important`.
+Background: `background-attachment: fixed` is known to be buggy on mobile (resizes/jumps when the URL bar shows/hides, sometimes ignored entirely). The fix is to render the cloud image on a `position: fixed` layer instead of relying on `background-attachment: fixed` on mobile.
 
-3. Remove visible section divisions on the public homepage
-- Update `src/pages/Index.tsx` to mark the public landing page for the transparency guard.
-- Add explicit transparent backgrounds to Hero, About, Services, Testimonials, Contact, and Footer roots.
-- Remove decorative divider lines between sections, specifically the small horizontal section title rules in Services and Testimonials.
-- Remove section-level overflow styling only where it contributes to clipping or visual fragmentation; keep required internal carousel layout intact.
+Changes (CSS only, scoped to mobile via `@media (max-width: 768px)`):
 
-4. Preserve content styling without changing business logic
-- Do not change registration, admin, CMS, webhook, or Supabase logic.
-- Keep existing cards, buttons, carousel behavior, text, and imagery unless they directly create page-wide seams.
+1. `src/components/decor/CloudBackdrop.tsx`
+   - Add a stable class name (e.g. `cloud-backdrop`) to the existing fixed wrapper div so we can target it from CSS.
+   - Keep the current inline styles for desktop (background-attachment: fixed + cover + center) untouched.
 
-Verification after implementation
-- Confirm `CloudBackdrop` has no scroll/animation code left.
-- Confirm the cloud layer uses fixed attachment, cover sizing, and centered positioning.
-- Confirm public homepage section roots are transparent and no divider lines remain between Hero through Footer.
+2. `src/index.css` — append a mobile-only block:
+   - `@media (max-width: 768px) { .cloud-backdrop { background-attachment: scroll !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important; transform: translateZ(0); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; } }`
+   - Because the wrapper is already `position: fixed; inset: 0`, switching `background-attachment` from `fixed` to `scroll` on mobile gives the stable "fixed pseudo-element" behavior the user described: the layer itself stays pinned to the viewport, and the image no longer fights the URL-bar resize.
+   - `translateZ(0)` promotes the layer to its own compositor layer for smooth scrolling.
+   - The cream wash overlay already covers it, no change needed.
+
+3. Desktop untouched
+   - No changes outside the `@media (max-width: 768px)` block.
+   - No JS, no parallax, no business logic touched.
+
+Verification
+- Desktop preview: background still uses `background-attachment: fixed`, looks identical.
+- Mobile (≤768px): the `.cloud-backdrop` layer stays pinned via `position: fixed` while `background-attachment: scroll` avoids the iOS Safari resize bug; clouds stay centered and cover the viewport during scroll and URL-bar transitions.

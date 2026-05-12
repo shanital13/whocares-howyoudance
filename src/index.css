@@ -134,6 +134,23 @@
     box-shadow: none !important;
   }
 
+  /* Mobile fix: background-attachment: fixed is unreliable on iOS Safari/Chrome.
+     The .cloud-backdrop wrapper is already position: fixed, so switching to
+     background-attachment: scroll keeps the layer pinned to the viewport
+     without the URL-bar resize jump. */
+  @media (max-width: 768px) {
+    .cloud-backdrop {
+      background-attachment: scroll !important;
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      transform: translateZ(0);
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Segoe UI Custom', 'Segoe UI', sans-serif;
     font-weight: bold;
