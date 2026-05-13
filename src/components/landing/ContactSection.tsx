@@ -26,7 +26,7 @@ const ContactSection = () => {
             מתרגשת לקראת התנועה החדשה שלך בעולם?
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl mt-6 font-sans">
-            דברי איתי בוואצאפ או באינסטגרם :)
+            דברי איתי בוואצאפ  :)
           </p>
         </motion.div>
 
