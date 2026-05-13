@@ -366,12 +366,14 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose, successTi
               </motion.div>
 
               <h2 className="text-4xl text-foreground mb-3">
-                {isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉'}
+                {successTitle ?? (isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉')}
               </h2>
               <p className="text-muted-foreground text-base leading-relaxed mb-2">
-                {isWaitlist
-                  ? `${fullName.trim()}, נעדכן אותך ברגע שיתפנה מקום 💛`
-                  : `${fullName.trim()}, נתראה בשיעור!`
+                {successMessage
+                  ? `${fullName.trim()}, ${successMessage}`
+                  : isWaitlist
+                    ? `${fullName.trim()}, נעדכן אותך ברגע שיתפנה מקום 💛`
+                    : `${fullName.trim()}, נתראה בשיעור!`
                 }
               </p>
               <p className="text-sm text-muted-foreground">
