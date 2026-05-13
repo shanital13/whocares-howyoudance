@@ -16,6 +16,8 @@ interface Props {
   danceClass: DanceClass | null;
   isWaitlist?: boolean;
   onClose: () => void;
+  successTitle?: string;
+  successMessage?: string;
 }
 
 interface LevelContent {
@@ -53,7 +55,7 @@ const defaultContent: LevelContent = {
   forWhom: 'מתאים לכל מי שרוצה לרקוד ולהנות.',
 };
 
-const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) => {
+const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose, successTitle, successMessage }: Props) => {
   const [entryType, setEntryType] = useState<'single' | 'punch_card' | null>(null);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -364,12 +366,14 @@ const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) 
               </motion.div>
 
               <h2 className="text-4xl text-foreground mb-3">
-                {isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉'}
+                {successTitle ?? (isWaitlist ? 'נרשמת לרשימת המתנה! 📋' : 'המקום שמור! 🎉')}
               </h2>
               <p className="text-muted-foreground text-base leading-relaxed mb-2">
-                {isWaitlist
-                  ? `${fullName.trim()}, נעדכן אותך ברגע שיתפנה מקום 💛`
-                  : `${fullName.trim()}, נתראה בשיעור!`
+                {successMessage
+                  ? `${fullName.trim()}, ${successMessage}`
+                  : isWaitlist
+                    ? `${fullName.trim()}, נעדכן אותך ברגע שיתפנה מקום 💛`
+                    : `${fullName.trim()}, נתראה בשיעור!`
                 }
               </p>
               <p className="text-sm text-muted-foreground">

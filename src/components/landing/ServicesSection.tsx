@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import {
@@ -20,9 +20,14 @@ import { cn } from '@/lib/utils';
 import studio1 from '@/assets/studio-1.jpg';
 import studio2 from '@/assets/studio-2.jpg';
 import studio3 from '@/assets/studio-3.jpg';
+import WeeklyScheduleOverlay from './WeeklyScheduleOverlay';
+import RegistrationDialog from './RegistrationDialog';
+import type { DanceClass } from '@/lib/types';
 
 const WHATSAPP_NUMBER = '972526398428';
 const WHATSAPP_MESSAGE = 'היי! אני מעוניינת לשמוע עוד ​';
+
+const COPENHAGEN_ID = 'classes-copenhagen';
 
 type Service = {
   id: string;
@@ -35,7 +40,7 @@ type Service = {
 
 const services: Service[] = [
   {
-    id: 'classes-copenhagen',
+    id: COPENHAGEN_ID,
     title: 'שיעורי מחול פרונטליים - קופנגן',
     tagline: 'שיעורים באי הקסום הזה באווירה סופר שונה ומשחררת.',
     image: studio1,
@@ -74,65 +79,102 @@ const services: Service[] = [
 
 const PolaroidCard = ({
   service,
-  onOpen,
+  onCardClick,
   isActive,
   inCarousel,
+  onBookSchedule,
+  isMobile,
+  expanded,
 }: {
   service: Service;
-  onOpen: () => void;
+  onCardClick: () => void;
   isActive?: boolean;
   inCarousel?: boolean;
-}) => (
-  <div
-    className={cn(
-      'flex flex-col items-center transition-transform duration-300',
-      inCarousel && (isActive ? 'scale-[1.05]' : 'scale-[0.92] opacity-80'),
-    )}
-  >
-    <button
-      type="button"
-      onClick={onOpen}
+  onBookSchedule: (dc: DanceClass) => void;
+  isMobile: boolean;
+  expanded: boolean;
+}) => {
+  const isCopenhagen = service.id === COPENHAGEN_ID;
+  return (
+    <div
       className={cn(
-        'group relative bg-white p-3 pb-14 shadow-[0_18px_40px_-15px_rgba(0,0,0,0.35)] transform transition-all duration-500 ease-out md:hover:rotate-0 md:hover:-translate-y-2 md:hover:scale-[1.03] md:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.45)] w-full max-w-[300px] focus:outline-none focus:ring-2 focus:ring-hoodie-magenta/50',
-        service.tilt,
+        'flex flex-col items-center transition-transform duration-300',
+        inCarousel && (isActive ? 'scale-[1.05]' : 'scale-[0.92] opacity-80'),
       )}
-      aria-label={service.title}
     >
-      <span
-        aria-hidden="true"
-        className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-hoodie-yellow/40 rotate-[-4deg] shadow-sm"
-      />
-      <div className="relative w-full aspect-[4/5] overflow-hidden">
-        <img
-          src={service.image}
-          alt={service.title}
-          className="w-full h-full object-cover block"
-          loading="lazy"
+      <button
+        type="button"
+        onClick={onCardClick}
+        className={cn(
+          'group relative bg-white p-3 pb-14 shadow-[0_18px_40px_-15px_rgba(0,0,0,0.35)] transform transition-all duration-500 ease-out md:hover:rotate-0 md:hover:-translate-y-2 md:hover:scale-[1.03] md:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.45)] w-full max-w-[300px] focus:outline-none focus:ring-2 focus:ring-hoodie-magenta/50',
+          service.tilt,
+        )}
+        aria-label={service.title}
+      >
+        <span
+          aria-hidden="true"
+          className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-hoodie-yellow/40 rotate-[-4deg] shadow-sm"
         />
-        <div className="hidden md:flex absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 flex-col justify-end text-right">
-          <h3 className="text-white font-display text-xl leading-tight mb-2">
-            {service.title}
-          </h3>
-          <p className="text-white/90 text-sm font-sans leading-relaxed">
-            {service.tagline}
-          </p>
+        <div className="relative w-full aspect-[4/5] overflow-hidden">
+          <img
+            src={service.image}
+            alt={service.title}
+            className="w-full h-full object-cover block"
+            loading="lazy"
+          />
+          {isCopenhagen ? (
+            <div className="hidden md:block absolute inset-0">
+              <WeeklyScheduleOverlay variant="desktop-overlay" onBook={(it) => onBookSchedule(it.danceClass)} />
+            </div>
+          ) : (
+            <div className="hidden md:flex absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 flex-col justify-end text-right">
+              <h3 className="text-white font-display text-xl leading-tight mb-2">
+                {service.title}
+              </h3>
+              <p className="text-white/90 text-sm font-sans leading-relaxed">
+                {service.tagline}
+              </p>
+            </div>
+          )}
         </div>
-      </div>
-    </button>
+      </button>
 
-    <div className="md:hidden text-center mt-5 px-2">
-      <h3 className="text-foreground font-display text-xl leading-tight mb-2">
-        {service.title}
-      </h3>
-      <p className="text-muted-foreground text-sm font-sans leading-relaxed">
-        {service.tagline}
-      </p>
+      <div className="md:hidden text-center mt-5 px-2">
+        <h3 className="text-foreground font-display text-xl leading-tight mb-2">
+          {service.title}
+        </h3>
+        <p className="text-muted-foreground text-sm font-sans leading-relaxed">
+          {service.tagline}
+        </p>
+      </div>
+
+      {isCopenhagen && isMobile && (
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="mobile-schedule"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full max-w-[300px] overflow-hidden"
+            >
+              <WeeklyScheduleOverlay
+                variant="mobile-expanded"
+                onBook={(it) => onBookSchedule(it.danceClass)}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 const ServicesSection = () => {
   const [openService, setOpenService] = useState<Service | null>(null);
+  const [bookingClass, setBookingClass] = useState<DanceClass | null>(null);
+  const [mobileScheduleOpen, setMobileScheduleOpen] = useState(false);
   const isMobile = useIsMobile();
   const [api, setApi] = useState<CarouselApi>();
   const [selected, setSelected] = useState(0);
@@ -148,6 +190,17 @@ const ServicesSection = () => {
       api.off('select', onSelect);
     };
   }, [api]);
+
+  const handleCardClick = (service: Service) => {
+    if (service.id === COPENHAGEN_ID) {
+      if (isMobile) {
+        setMobileScheduleOpen((v) => !v);
+        return;
+      }
+      // On desktop, hover already shows schedule; click still opens the description dialog.
+    }
+    setOpenService(service);
+  };
 
   return (
     <>
@@ -180,9 +233,12 @@ const ServicesSection = () => {
                     <CarouselItem key={service.id} className="basis-[85%]">
                       <PolaroidCard
                         service={service}
-                        onOpen={() => setOpenService(service)}
+                        onCardClick={() => handleCardClick(service)}
                         isActive={selected === i}
                         inCarousel
+                        onBookSchedule={(dc) => setBookingClass(dc)}
+                        isMobile={isMobile}
+                        expanded={mobileScheduleOpen && service.id === COPENHAGEN_ID}
                       />
                     </CarouselItem>
                   ))}
@@ -204,7 +260,13 @@ const ServicesSection = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <PolaroidCard service={service} onOpen={() => setOpenService(service)} />
+                  <PolaroidCard
+                    service={service}
+                    onCardClick={() => handleCardClick(service)}
+                    onBookSchedule={(dc) => setBookingClass(dc)}
+                    isMobile={false}
+                    expanded={false}
+                  />
                 </motion.div>
               ))}
             </div>
@@ -240,6 +302,13 @@ const ServicesSection = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <RegistrationDialog
+        danceClass={bookingClass}
+        onClose={() => setBookingClass(null)}
+        successTitle="המקום שלך שמור! 🎉"
+        successMessage="המקום שמור — נתראה בסטודיו 💛 אישור נשלח לכתובת המייל שלך."
+      />
     </>
   );
 };
