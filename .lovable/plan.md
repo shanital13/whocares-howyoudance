@@ -1,44 +1,51 @@
-## Problem
+## Goal
+Add a weekly schedule UI on the "שיעורי מחול פרונטליים - קופנגן" service card. Desktop: reveal on hover (transparent overlay over the polaroid image). Mobile: expand below the card on tap. Each schedule row gets a "שריינו מקום" button that opens the existing registration form. Confirmation message replaces the form on success.
 
-The Services and Testimonials carousels are frozen on mobile and won't swipe. They use Embla Carousel (not native CSS scroll), so the user-suggested `overflow-x: auto` rules don't apply — but the underlying issue is real: Embla isn't picking up touch drags.
+## Data source
+Use the existing `dance_classes` table (already has `is_recurring`, `recurring_day`, `time`, `name`, `level`, `description`, `location`, `arrival_instructions`). Seed the 5 weekly recurring rows so the user can manage them later from the admin CMS.
 
-Two likely culprits identified from the code:
+Initial seed (location: Copenhagen, is_recurring=true):
+- Mon 09:30 — שיעור ביניים (level: intermediate)
+- Tue 09:30 — שיעור מתקדמות (advanced)
+- Tue 11:00 — שיעור מתקדמות (advanced)
+- Thu 09:30 — שיעור מתחילות (beginner)
+- Thu 11:00 — שיעור מתקדמות (advanced)
 
-1. The site is rendered in RTL (`html { direction: rtl }` in `src/index.css`), but Embla is initialized without `direction: 'rtl'`. In RTL contexts Embla's drag handler can misbehave and feel "stuck", especially when combined with `containScroll: 'trimSnaps'`.
-2. Embla's viewport sets `touch-action: pan-y pinch-zoom` by default, which is correct — but a wrapping element with restrictive `touch-action` (or the `-mx-6` overflow situation) can swallow the horizontal gesture. We'll set explicit `touch-action: pan-y` on the carousel root to be safe.
+`recurring_day` uses 0=Sun … 6=Sat. Description left empty for the user to fill via admin.
 
-## Changes
+## Current-week logic
+A new helper `getWeeklySchedule()`:
+- Reads recurring classes from `dance_classes` where `is_recurring = true` AND location matches Copenhagen.
+- Computes the actual date for each `recurring_day` within the current week (Sun→Sat).
+- Filters out days that already passed today (so on Wednesday only Thu+ remain).
+- Resets automatically each Sunday.
+- Returns `{ id, name, level, time, date (Date), dayLabel }[]` ordered chronologically.
+- Each item is presented to `RegistrationDialog` as a `DanceClass` so the existing booking flow works unchanged.
 
-### 1. `src/components/landing/ServicesSection.tsx`
-- Add `direction: 'rtl'` to the Embla `opts`:
-  ```ts
-  opts={{ align: 'center', loop: false, containScroll: 'trimSnaps', direction: 'rtl' }}
-  ```
-- Add `touch-pan-y` Tailwind class to the `<Carousel>` so the root explicitly allows vertical page scroll while letting Embla capture horizontal drags.
+## UI
+New component `WeeklyScheduleOverlay.tsx`:
+- Transparent panel (`bg-white/15 backdrop-blur-md`), Gladia/display font for headings, rounded, no heavy borders — "floating on the clouds".
+- Rows: day + time on the right, class name center, "שריינו מקום" pill button on the left.
+- Empty state: "השבוע הסתיים — נתראה ביום ראשון ✨".
 
-### 2. `src/components/landing/TestimonialsSection.tsx`
-- Same two changes as above.
+Integration in `ServicesSection.tsx`:
+- Desktop: replace the existing dark hover overlay on the Copenhagen card with the schedule overlay (same opacity-0 → group-hover:opacity-100 transition). Other two cards keep their current hover behavior.
+- Mobile: tapping the Copenhagen card toggles an expanded panel rendered directly under the polaroid (no modal) instead of opening the description dialog. Other cards keep current dialog behavior.
+- Card title/tagline still visible (mobile under the card, desktop in a small top strip of the overlay so it doesn't get hidden).
 
-### 3. `src/index.css` (safety net)
-- Append a small mobile-only rule that guarantees touch gestures aren't blocked on the Embla viewport:
-  ```css
-  @media (max-width: 768px) {
-    [aria-roledescription="carousel"],
-    [aria-roledescription="carousel"] > div {
-      touch-action: pan-y;
-    }
-  }
-  ```
+## Booking flow
+Reuse `RegistrationDialog`:
+- Clicking "שריינו מקום" sets the selected schedule item (mapped to a `DanceClass`) and opens the dialog.
+- The dialog already handles Name / Phone / Email validation, insert into `registrations`, Make.com webhook, and shows a success state.
+- Update the success copy to: "המקום שלך שמור! נתראה בסטודיו 💛 אישור נשלח למייל שלך." (Hebrew equivalent of the requested English line) only for these weekly bookings.
 
-No changes to Embla version, no swap to native CSS scroll-snap (the existing Polaroid/Testimonial card layouts and the active-slide scaling logic depend on Embla's `selectedScrollSnap`).
+## Files
+- New: `src/components/landing/WeeklyScheduleOverlay.tsx`
+- New: `src/hooks/use-weekly-schedule.ts` (React Query fetch + week filtering)
+- Edit: `src/components/landing/ServicesSection.tsx` (hover/tap behavior for Copenhagen card, mount overlay, wire booking)
+- Edit: `src/components/landing/RegistrationDialog.tsx` (optional `successMessage` prop for the new copy)
+- Migration: insert the 5 seed rows into `dance_classes` (one-time, idempotent on `name+recurring_day+time+location`).
 
-## Verification
-
-- Open the preview at mobile viewport (≤768px).
-- Confirm finger/drag swipe moves both carousels and dots update.
-- Confirm vertical page scroll still works when starting the gesture on a card.
-- Desktop grid layout unchanged.
-
-## Notes
-
-- The user's request to use native `overflow-x: auto` + CSS scroll-snap would require ripping out Embla and rewriting both sections, losing the active-slide scaling and dot sync. The proposed fix achieves the same outcome (swipeable, snappy, no scrollbar) using the existing Embla integration.
+## Out of scope
+- Capacity / waitlist for recurring classes (can be added later via `max_participants`).
+- Admin CMS edits — the existing admin classes page already manages `dance_classes`, so no new admin UI needed.
