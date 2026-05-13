@@ -16,6 +16,8 @@ interface Props {
   danceClass: DanceClass | null;
   isWaitlist?: boolean;
   onClose: () => void;
+  successTitle?: string;
+  successMessage?: string;
 }
 
 interface LevelContent {
@@ -53,7 +55,7 @@ const defaultContent: LevelContent = {
   forWhom: 'מתאים לכל מי שרוצה לרקוד ולהנות.',
 };
 
-const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose }: Props) => {
+const RegistrationDialog = ({ danceClass, isWaitlist = false, onClose, successTitle, successMessage }: Props) => {
   const [entryType, setEntryType] = useState<'single' | 'punch_card' | null>(null);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
