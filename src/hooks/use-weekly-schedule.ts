@@ -41,7 +41,7 @@ export function useWeeklySchedule() {
       if (error) throw error;
 
       const now = new Date();
-      const weekStart = startOfWeekSunday(now);
+      const weekStart = getScheduleWeekStart(now);
 
       const items: WeeklyScheduleItem[] = [];
       for (const row of data ?? []) {
