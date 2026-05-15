@@ -16,10 +16,17 @@ const HEBREW_DAYS = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמי
 
 const COPENHAGEN_LOCATIONS = ['קופנהגן', 'קו פנגן', 'copenhagen', 'Copenhagen'];
 
-function startOfWeekSunday(d: Date) {
-  const out = new Date(d);
+// Schedule resets every Friday: from Fri/Sat we show next week's classes,
+// from Sun–Thu we show the current week's remaining classes.
+function getScheduleWeekStart(now: Date) {
+  const out = new Date(now);
   out.setHours(0, 0, 0, 0);
-  out.setDate(out.getDate() - out.getDay()); // Sunday
+  const dow = out.getDay(); // 0=Sun..6=Sat
+  if (dow >= 5) {
+    out.setDate(out.getDate() + (7 - dow)); // jump to next Sunday
+  } else {
+    out.setDate(out.getDate() - dow); // current week's Sunday
+  }
   return out;
 }
 
