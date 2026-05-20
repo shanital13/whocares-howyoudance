@@ -14,11 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
+        sans: ["'Rubik'", "sans-serif"],
         display: ["'Gladia CLM'", "sans-serif"],
-        body: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
+        body: ["'Rubik'", "sans-serif"],
         nehama: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
-        mono: ["'Segoe UI Custom'", "'Segoe UI'", "sans-serif"],
+        mono: ["'Rubik'", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
