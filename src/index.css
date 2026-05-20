@@ -119,12 +119,12 @@
   html {
     direction: rtl;
     scroll-behavior: smooth;
-    font-family: 'Segoe UI Custom', 'Segoe UI', sans-serif;
+    font-family: 'Rubik', sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Segoe UI Custom', 'Segoe UI', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-size: 18px;
     line-height: 1.6;
   }
