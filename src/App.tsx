@@ -13,6 +13,7 @@ import AdminClassDetail from "./pages/admin/AdminClassDetail";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminRevenue from "./pages/admin/AdminRevenue";
 import AdminContent from "./pages/admin/AdminContent";
+import AccessibilityWidget from "./components/a11y/AccessibilityWidget";
 
 const queryClient = new QueryClient();
 
