@@ -1,31 +1,60 @@
-## Goal
-Change the Weekly Schedule reset day from Sunday to Friday so users see next week's classes from Friday morning onward.
+# Final Polish: Body Font, Mobile Spacing, A11y Widget
 
-## Change (single file)
-`src/hooks/use-weekly-schedule.ts` — replace `startOfWeekSunday` + filtering logic.
+Three scoped CSS/asset changes. No database, layout, hover, or carousel logic touched.
 
-New rule:
-- If today is Sun–Thu (0–4): show the current week's remaining upcoming classes (Mon/Tue/Thu of this week that haven't passed yet).
-- If today is Fri or Sat (5–6): show **next week's** classes (the upcoming Mon/Tue/Thu).
+## 1. Body font → Rubik (headings untouched)
 
-Implementation:
-```ts
-function getScheduleWeekStart(now: Date) {
-  const d = new Date(now);
-  d.setHours(0, 0, 0, 0);
-  const dow = d.getDay(); // 0=Sun..6=Sat
-  if (dow >= 5) {
-    // Friday or Saturday → jump to next Sunday (start of next week)
-    d.setDate(d.getDate() + (7 - dow));
-  } else {
-    // Sun–Thu → current week's Sunday
-    d.setDate(d.getDate() - dow);
-  }
-  return d;
+- Copy uploaded `Rubik.ttf` to `public/fonts/Rubik.ttf`.
+- In `src/index.css`:
+  - Add `@font-face` for `'Rubik'`.
+  - Change `html`, `body`, and `button/input/textarea/select` `font-family` to `'Rubik', sans-serif`.
+  - Leave the existing `h1–h6` rule alone (still `'Segoe UI Custom'`) so headings are unchanged.
+- In `tailwind.config.ts`:
+  - Update `fontFamily.sans` and `fontFamily.body` to `['Rubik', 'sans-serif']`.
+  - Leave `fontFamily.display` and the heading-specific families as-is.
+
+## 2. Reduce mobile vertical spacing by ~30%
+
+Scoped, CSS-only — no layout/markup changes.
+
+Add a mobile-only block in `src/index.css` under `@layer utilities` (or base):
+
+```text
+@media (max-width: 767px) {
+  main > section { padding-top: 70%; padding-bottom: 70%; }  /* of original */
+  /* applied via calc on common Tailwind py-* values used by sections */
 }
 ```
 
-Then keep the existing loop, but only skip past-dated items when we are showing the **current** week (Sun–Thu). For Fri/Sat we are already on next week, so no `date < now` filter is needed (all dates are in the future anyway, but the guard becomes harmless).
+Concretely: target `main > section` and reduce its vertical padding and margin to 70% using CSS custom overrides (e.g. `padding-block: clamp(...)` or direct `padding-top/bottom` overrides matching the existing `py-*` scale). Margins between sections shrunk the same way. No horizontal padding, no layout structure, no hover or carousel rules touched.
 
-## Out of scope
-No changes to CSS, layout, z-index, padding, hover/click behavior, carousel, RegistrationDialog, or the `registrations` table write path.
+## 3. Lightweight accessibility widget
+
+Add a self-contained floating widget — no third-party script, fully in-app, keyboard accessible.
+
+- New `src/components/a11y/AccessibilityWidget.tsx`:
+  - Floating button bottom-left (RTL site → bottom-left avoids covering existing bottom-right elements; confirm no conflict).
+  - Opens a small panel (shadcn `Popover`) with controls:
+    - Increase / decrease / reset text size (toggles `html` class `a11y-text-lg` / `a11y-text-xl` that scales `font-size` on `html`).
+    - High contrast toggle (adds `a11y-contrast` class on `html` — defined in `index.css` with token overrides).
+    - Highlight focus toggle (adds `a11y-focus` class → strong `:focus-visible` outline globally).
+  - All buttons have `aria-label`s; panel has `role="dialog"` via Popover; trigger has `aria-label="נגישות"`.
+  - Persists settings in `localStorage`.
+- Mount once in `src/App.tsx` so it appears on every route.
+- Add the matching CSS classes in `src/index.css` (uses semantic tokens, no hardcoded colors except the high-contrast override).
+
+## Carousel verification
+
+After CSS changes, visually verify the homepage carousels still swipe (testimonials/gallery). The existing mobile rule `[aria-roledescription="carousel"] { touch-action: pan-y }` stays untouched.
+
+## Files
+
+- `public/fonts/Rubik.ttf` (new, copied from upload)
+- `src/index.css` (font-face, body font, mobile spacing, a11y classes)
+- `tailwind.config.ts` (sans/body → Rubik)
+- `src/components/a11y/AccessibilityWidget.tsx` (new)
+- `src/App.tsx` (mount widget)
+
+## Out of scope (frozen)
+
+Database, RLS, admin logic, hover animations, carousel scroll behavior, heading fonts, layouts.
