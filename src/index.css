@@ -225,3 +225,45 @@
     @apply inline-flex items-center justify-center rounded-md font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg;
   }
 }
+
+/* Mobile: tighten vertical rhythm between sections by ~30% */
+@media (max-width: 767px) {
+  main > section {
+    padding-top: calc(var(--section-py, 4rem) * 0.7) !important;
+    padding-bottom: calc(var(--section-py, 4rem) * 0.7) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  main > section > * + * {
+    margin-top: calc(1rem * 0.7);
+  }
+}
+
+/* ===== Accessibility widget user preferences ===== */
+html.a11y-text-lg { font-size: 112.5%; }
+html.a11y-text-xl { font-size: 125%; }
+
+html.a11y-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 10%;
+  --border: 0 0% 0%;
+  --ring: 0 0% 0%;
+}
+html.a11y-contrast img,
+html.a11y-contrast video {
+  filter: contrast(1.15);
+}
+
+html.a11y-focus :focus-visible {
+  outline: 3px solid hsl(48 100% 50%) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 3px hsl(0 0% 0%) !important;
+}
